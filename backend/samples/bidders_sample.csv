@@ -1,0 +1,3 @@
+vendor_id,name,gstin,amount_cr,submitted_at,registered_address,avg_annual_turnover_cr,net_worth_cr,solvency_amount_cr,years_in_operation,similar_projects_5y,similar_projects_value_cr,technical_staff,iso9001_valid_until,gst_registered,pan_available,blacklisted,ownership_disclosure,power_of_attorney,claims_msme_exemption,emd_amount_lakh,bid_validity_days
+X001,Northwind Infra Pvt Ltd,27AABCN1234K1Z5,41.20,2026-03-14T11:20:00+05:30,"12, Link Road, Pune, Maharashtra 411001",14.2,6.1,5,11,4,19.5,40,2027-05-31,yes,yes,no,yes,yes,no,20,180
+X002,Southgate Civil Works LLP,27AAFFS9876L1Z5,43.75,2026-03-15T16:05:00+05:30,"88, Station Road, Nashik, Maharashtra 422001",9.1,2.4,3.5,4,2,7.2,18,2025-12-31,yes,yes,no,yes,yes,no,20,120

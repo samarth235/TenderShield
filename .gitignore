@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Runtime data (SQLite DB, generated PDFs, tamper backups)
+backend/var/
+
+# Environment
+.env
+backend/.env
+
+# Node / frontend
+node_modules/
+dist/
+
+# Hardhat / blockchain
+blockchain/artifacts/
+blockchain/cache/
+blockchain/typechain-types/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

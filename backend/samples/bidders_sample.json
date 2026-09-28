@@ -1,0 +1,19 @@
+{
+  "bidders": [
+    {
+      "vendor_id": "X101",
+      "name": "Eastline Projects Limited",
+      "amount_cr": 38.9,
+      "submitted_at": "2026-03-14T09:45:00+05:30",
+      "directors": [{"name": "Rohit Sen", "din": "09123456"}],
+      "facts": {
+        "avg_annual_turnover_cr": 16.0, "net_worth_cr": 7.5, "solvency_amount_cr": 6.0,
+        "years_in_operation": 15, "similar_projects_5y": 6, "similar_projects_value_cr": 31.0,
+        "technical_staff": 64, "iso9001_valid_until": "2027-09-30", "gst_registered": true,
+        "pan_available": true, "blacklisted": false, "ownership_disclosure": true,
+        "power_of_attorney": true, "claims_msme_exemption": false,
+        "emd_amount_lakh": 20, "bid_validity_days": 180
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+name: backend-ci
+
+on:
+  push:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      TS_EXTRACTOR: pattern
+      TS_EMBEDDING_BACKEND: tfidf
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint
+        run: ruff check app tests scripts
+
+      - name: Unit + API tests
+        run: pytest
+
+      - name: Hero demo rehearsal (end-to-end, offline)
+        env:
+          TS_DATA_DIR: ${{ runner.temp }}/tendershield-demo
+        run: python -m scripts.hero_demo
+
+      - name: Check OpenAPI schema is up to date
+        run: |
+          python -m scripts.export_openapi
+          git diff --exit-code ../docs/openapi.json || (echo "::error::docs/openapi.json is stale - run 'make openapi' and commit" && exit 1)

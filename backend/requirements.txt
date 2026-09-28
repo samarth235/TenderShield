@@ -1,0 +1,18 @@
+# TenderShield Nexus backend - runtime dependencies
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.8
+python-multipart>=0.0.9
+python-dotenv>=1.0
+# Document processing
+pypdf>=5.0
+reportlab>=4.2
+# Entity resolution
+rapidfuzz>=3.9
+# Graph intelligence
+networkx>=3.3
+# ML / semantic similarity
+numpy>=1.26
+scikit-learn>=1.5
+# LLM requirement extraction (optional at runtime; falls back to pattern extractor)
+anthropic>=1,<2
