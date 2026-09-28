@@ -26,3 +26,7 @@ blockchain/typechain-types/
 .DS_Store
 .idea/
 .vscode/
+
+# Local Claude Code / editor launch configs
+.claude/
+*.tsbuildinfo

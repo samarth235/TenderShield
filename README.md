@@ -9,10 +9,10 @@ TenderShield Nexus is a procurement assurance layer that turns tender records in
 | Path | Owner | Status |
 |---|---|---|
 | `backend/` | Backend + AI/ML | implemented: FastAPI, rule extraction (pattern + Claude), compliance engine, entity resolution, NetworkX graph, document similarity, Isolation Forest, reasoning, counterfactuals, audit chain, evidence bundles |
-| `frontend/` | Frontend | to be added (React + TypeScript). Consumes [`docs/backend-api.md`](docs/backend-api.md) / [`docs/openapi.json`](docs/openapi.json) |
+| `frontend/` | Frontend | implemented: React + TypeScript investigation dashboard (Vite, TanStack Query, Cytoscape). See [`frontend/README.md`](frontend/README.md) |
 | `blockchain/` | Blockchain + dossier | to be added (Solidity + Hardhat, PDF dossier). Hand-off described in [`docs/backend-api.md` §4](docs/backend-api.md#4-blockchain-hand-off) |
 | `docs/` | shared | API contract, pipeline and design notes, OpenAPI schema |
-| `.github/workflows/` | shared | `backend-ci.yml`: lint, tests, offline hero-demo rehearsal, OpenAPI freshness check |
+| `.github/workflows/` | shared | `backend-ci.yml`: lint, tests, offline hero-demo rehearsal, OpenAPI freshness check. `frontend-ci.yml`: type-check + build |
 
 ## Quick start (backend)
 
@@ -23,6 +23,14 @@ make demo      # rehearse the full hero demo in the terminal
 make run       # API on http://localhost:8000  (docs: /docs)
 ```
 
-Then call `POST http://localhost:8000/api/demo/load?analyze=true` and open the findings.
+## Quick start (dashboard)
+
+```bash
+make web-setup # npm install
+make run       # terminal 1: API on :8000
+make web       # terminal 2: dashboard on http://localhost:5173
+```
+
+Click **Load demonstration tender**, then follow the sidebar from 00 to 06.
 
 The demo runs completely offline. Claude-based rule extraction and neural embeddings are optional (see `backend/README.md`).

@@ -1,0 +1,110 @@
+/*
+ * TenderShield Nexus design tokens.
+ * Direction: "forensic ledger" - warm paper canvas, ink-navy chrome, IBM Plex type,
+ * one amber brand accent, and a strict semantic palette for evidence states.
+ */
+:root {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Surfaces */
+  --bg: #f4f2ec;
+  --surface: #ffffff;
+  --surface-2: #faf9f5;
+  --surface-3: #f0ede5;
+  --chrome: #101826;
+  --chrome-2: #18233a;
+  --chrome-ink: #c9d1e0;
+  --chrome-ink-dim: #7d8aa3;
+
+  /* Ink */
+  --ink: #141821;
+  --ink-2: #454b57;
+  --ink-3: #7b808b;
+  --ink-inverse: #ffffff;
+
+  /* Lines */
+  --line: #e3dfd4;
+  --line-strong: #cfc9bb;
+
+  /* Brand + interaction */
+  --brand: #e0952b;
+  --brand-soft: #fbefd9;
+  --accent: #2c46c4;
+  --accent-soft: #e8ecfb;
+  --focus: #2c46c4;
+
+  /* Evidence semantics */
+  --high: #c2410c;
+  --high-soft: #fdebe1;
+  --medium: #b7791f;
+  --medium-soft: #fbf1dc;
+  --low: #52627d;
+  --low-soft: #e9edf3;
+  --pass: #2f7d4f;
+  --pass-soft: #e3f2e8;
+  --fail: #b42318;
+  --fail-soft: #fce8e6;
+  --unknown: #6d4fd1;
+  --unknown-soft: #efeafd;
+  --na: #8c919a;
+  --na-soft: #efefef;
+
+  /* Evidence families */
+  --fam-corporate: #2c46c4;
+  --fam-behavioural: #c2410c;
+  --fam-document: #0f7c74;
+  --fam-model: #6d4fd1;
+
+  /* Geometry */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 0 rgba(20, 24, 33, 0.04), 0 1px 2px rgba(20, 24, 33, 0.06);
+  --shadow: 0 1px 0 rgba(20, 24, 33, 0.04), 0 6px 20px -8px rgba(20, 24, 33, 0.16);
+  --shadow-lg: 0 24px 60px -20px rgba(16, 24, 38, 0.35);
+
+  --sidebar-w: 248px;
+  --side-col: 400px;
+  --gutter: 28px;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0c1119;
+  --surface: #131a25;
+  --surface-2: #171f2c;
+  --surface-3: #1d2736;
+  --chrome: #080c13;
+  --chrome-2: #111a28;
+  --ink: #e7eaf0;
+  --ink-2: #b3bac7;
+  --ink-3: #7f8898;
+  --line: #243044;
+  --line-strong: #33415a;
+  --brand-soft: #3a2a12;
+  --accent: #8fa2ff;
+  --accent-soft: #1d2748;
+  --focus: #8fa2ff;
+  --high: #ff8a5b;
+  --high-soft: #3b1d12;
+  --medium: #f0b75a;
+  --medium-soft: #372a13;
+  --low: #9fb0cc;
+  --low-soft: #1f2837;
+  --pass: #5fcf8e;
+  --pass-soft: #143020;
+  --fail: #ff7b72;
+  --fail-soft: #3a1714;
+  --unknown: #b39dff;
+  --unknown-soft: #261f45;
+  --na: #8c919a;
+  --na-soft: #222833;
+  --fam-corporate: #8fa2ff;
+  --fam-behavioural: #ff8a5b;
+  --fam-document: #4fd1c5;
+  --fam-model: #b39dff;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}

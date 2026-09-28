@@ -3,7 +3,7 @@ PY ?= python3.12
 VENV := backend/.venv
 BIN := $(VENV)/bin
 
-.PHONY: setup setup-ml run seed demo test lint openapi clean
+.PHONY: setup setup-ml run seed demo test lint openapi clean web-setup web web-build
 
 setup:            ## Create the backend virtualenv and install dependencies
 	cd backend && $(PY) -m venv .venv && .venv/bin/pip install -U pip && .venv/bin/pip install -r requirements-dev.txt
@@ -31,3 +31,12 @@ openapi:          ## Regenerate docs/openapi.json for the frontend
 
 clean:            ## Delete generated data (database + PDFs)
 	rm -rf backend/var
+
+web-setup:        ## Install frontend dependencies
+	cd frontend && npm install
+
+web:              ## Start the dashboard on http://localhost:5173 (needs `make run` in another terminal)
+	cd frontend && npm run dev
+
+web-build:        ## Type-check and build the dashboard into frontend/dist
+	cd frontend && npm run build
