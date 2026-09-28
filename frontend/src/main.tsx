@@ -9,7 +9,7 @@ import "./styles/app.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import { Layout } from "./components/Layout";
 import { LoadingBlock, ToastProvider } from "./components/ui";
@@ -19,7 +19,6 @@ import { Findings } from "./pages/Findings";
 import { Integrity } from "./pages/Integrity";
 import { Intelligence } from "./pages/Intelligence";
 import { Overview } from "./pages/Overview";
-import { Rulebook } from "./pages/Rulebook";
 
 // Cytoscape is the heaviest dependency; load it only when the graph page opens.
 const GraphPage = lazy(() => import("./pages/Graph").then((m) => ({ default: m.GraphPage })));
@@ -33,7 +32,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/", element: <Overview /> },
-      { path: "/rulebook", element: <Rulebook /> },
+      { path: "/rulebook", element: <Navigate to="/compliance" replace /> },
       { path: "/compliance", element: <Compliance /> },
       {
         path: "/graph",

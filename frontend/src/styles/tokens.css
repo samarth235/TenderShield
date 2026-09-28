@@ -1,60 +1,58 @@
 /*
  * TenderShield Nexus design tokens.
- * Direction: "forensic ledger" - warm paper canvas, ink-navy chrome, IBM Plex type,
- * one amber brand accent, and a strict semantic palette for evidence states.
+ * Direction: "forensic ledger" - neutral canvas, black text, deep navy brand,
+ * IBM Plex type, and a muted semantic palette for evidence states.
  */
 :root {
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Surfaces */
-  --bg: #f4f2ec;
+  --bg: #f4f5f7;
   --surface: #ffffff;
-  --surface-2: #faf9f5;
-  --surface-3: #f0ede5;
-  --chrome: #101826;
-  --chrome-2: #18233a;
-  --chrome-ink: #c9d1e0;
-  --chrome-ink-dim: #7d8aa3;
+  --surface-2: #f8f9fb;
+  --surface-3: #eceff4;
+  --chrome: #14233c;
+  --chrome-2: #1f3354;
 
-  /* Ink */
-  --ink: #141821;
-  --ink-2: #454b57;
-  --ink-3: #7b808b;
+  /* Ink: body text is black; lighter steps are reserved for secondary labels */
+  --ink: #000000;
+  --ink-2: #1f2328;
+  --ink-3: #555b66;
   --ink-inverse: #ffffff;
 
   /* Lines */
-  --line: #e3dfd4;
-  --line-strong: #cfc9bb;
+  --line: #dde2ea;
+  --line-strong: #c3cad6;
 
-  /* Brand + interaction */
-  --brand: #e0952b;
-  --brand-soft: #fbefd9;
-  --accent: #2c46c4;
-  --accent-soft: #e8ecfb;
-  --focus: #2c46c4;
+  /* Brand + interaction: deep navy with a steel-blue accent */
+  --brand: #1f3a68;
+  --brand-soft: #e3e9f3;
+  --accent: #245a8d;
+  --accent-soft: #e2ecf5;
+  --focus: #245a8d;
 
-  /* Evidence semantics */
-  --high: #c2410c;
-  --high-soft: #fdebe1;
-  --medium: #b7791f;
-  --medium-soft: #fbf1dc;
-  --low: #52627d;
-  --low-soft: #e9edf3;
-  --pass: #2f7d4f;
-  --pass-soft: #e3f2e8;
-  --fail: #b42318;
-  --fail-soft: #fce8e6;
-  --unknown: #6d4fd1;
-  --unknown-soft: #efeafd;
-  --na: #8c919a;
-  --na-soft: #efefef;
+  /* Evidence semantics: muted, print-safe tones */
+  --high: #9b2c2c;
+  --high-soft: #f5e4e3;
+  --medium: #9a5a1e;
+  --medium-soft: #f4eadf;
+  --low: #4a5a73;
+  --low-soft: #e7ebf1;
+  --pass: #1f6b47;
+  --pass-soft: #e1efe7;
+  --fail: #a12626;
+  --fail-soft: #f6e2e1;
+  --unknown: #5a3f8c;
+  --unknown-soft: #ebe6f4;
+  --na: #767b84;
+  --na-soft: #eceef1;
 
   /* Evidence families */
-  --fam-corporate: #2c46c4;
-  --fam-behavioural: #c2410c;
-  --fam-document: #0f7c74;
-  --fam-model: #6d4fd1;
+  --fam-corporate: #1f4e8c;
+  --fam-behavioural: #9a5a1e;
+  --fam-document: #1d6b6b;
+  --fam-model: #5a3f8c;
 
   /* Geometry */
   --radius-sm: 6px;
@@ -71,39 +69,40 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #0c1119;
-  --surface: #131a25;
-  --surface-2: #171f2c;
-  --surface-3: #1d2736;
-  --chrome: #080c13;
-  --chrome-2: #111a28;
-  --ink: #e7eaf0;
-  --ink-2: #b3bac7;
-  --ink-3: #7f8898;
-  --line: #243044;
-  --line-strong: #33415a;
-  --brand-soft: #3a2a12;
-  --accent: #8fa2ff;
-  --accent-soft: #1d2748;
-  --focus: #8fa2ff;
-  --high: #ff8a5b;
-  --high-soft: #3b1d12;
-  --medium: #f0b75a;
-  --medium-soft: #372a13;
+  --bg: #0e131b;
+  --surface: #151c27;
+  --surface-2: #19212e;
+  --surface-3: #202a39;
+  --chrome: #0a0f17;
+  --chrome-2: #1a2537;
+  --ink: #eef1f5;
+  --ink-2: #c9cfd9;
+  --ink-3: #939bab;
+  --line: #263245;
+  --line-strong: #35435b;
+  --brand: #8ea8cf;
+  --brand-soft: #1c2a42;
+  --accent: #8ea8cf;
+  --accent-soft: #1c2a42;
+  --focus: #8ea8cf;
+  --high: #d9776b;
+  --high-soft: #3a1c19;
+  --medium: #d09a62;
+  --medium-soft: #36291a;
   --low: #9fb0cc;
   --low-soft: #1f2837;
-  --pass: #5fcf8e;
-  --pass-soft: #143020;
-  --fail: #ff7b72;
-  --fail-soft: #3a1714;
-  --unknown: #b39dff;
-  --unknown-soft: #261f45;
+  --pass: #6fb28c;
+  --pass-soft: #16301f;
+  --fail: #dc7770;
+  --fail-soft: #3a1a18;
+  --unknown: #a896d3;
+  --unknown-soft: #261f3d;
   --na: #8c919a;
   --na-soft: #222833;
-  --fam-corporate: #8fa2ff;
-  --fam-behavioural: #ff8a5b;
-  --fam-document: #4fd1c5;
-  --fam-model: #b39dff;
+  --fam-corporate: #8ea8cf;
+  --fam-behavioural: #d09a62;
+  --fam-document: #6fb0ad;
+  --fam-model: #a896d3;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.6);
   color-scheme: dark;

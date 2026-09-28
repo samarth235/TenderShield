@@ -1,30 +1,10 @@
-import {
-  ArrowRight,
-  BookOpenText,
-  CheckCircle2,
-  FileStack,
-  Grid3x3,
-  History,
-  Play,
-  RefreshCw,
-  ShieldAlert,
-  Users,
-} from "lucide-react";
+import { ArrowRight, BookOpenText, FileStack, Grid3x3, History, Play, ShieldAlert, Users } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { ErrorCard } from "../components/NotLoaded";
 import { Badge, Button, Card, LevelBadge, LoadingBlock, PageHead, StatTile, StatusBadge } from "../components/ui";
-import { CATEGORY_LABEL, fmtCr, fmtDateTime, fmtMs, levelColor, prettyTitle, STAGE_LABEL } from "../lib/format";
-import {
-  isNotLoaded,
-  useAnalysisReport,
-  useCompliance,
-  useFindings,
-  useLoadDemo,
-  useRules,
-  useRunAnalysis,
-  useTender,
-} from "../lib/hooks";
+import { CATEGORY_LABEL, fmtCr, fmtDateTime, levelColor, prettyTitle, shortTitle } from "../lib/format";
+import { isNotLoaded, useCompliance, useFindings, useLoadDemo, useRules, useTender } from "../lib/hooks";
 
 const LIFECYCLE = ["UNDERSTAND", "VERIFY", "CONNECT", "DETECT", "EXPLAIN", "CHALLENGE", "REVIEW", "REPORT", "COMMIT", "VERIFY"];
 
@@ -40,7 +20,6 @@ function Landing() {
   return (
     <div className="stack" style={{ gap: 22 }}>
       <section className="hero">
-        <div className="hero__grid" />
         <div className="stack" style={{ position: "relative", gap: 16 }}>
           <Badge tone="brand">Explainable tender assurance</Badge>
           <h1>Turn fragmented procurement records into evidence you can defend.</h1>
@@ -53,9 +32,9 @@ function Landing() {
             <Button variant="brand" size="lg" icon={<Play size={16} />} loading={load.isPending} onClick={() => load.mutate()}>
               Load demonstration tender
             </Button>
-            <span style={{ color: "#8d99b0", fontSize: 13 }}>TN-2026-014 · 6 bidders · 120 historical tenders · runs offline</span>
+            <span className="dim" style={{ fontSize: 13 }}>TN-2026-014 · 6 bidders · 120 historical tenders · runs offline</span>
           </div>
-          {load.isError && <p style={{ color: "#ffb4a8" }}>{String(load.error)} — is the API running (`make run`)?</p>}
+          {load.isError && <p style={{ color: "var(--fail)" }}>{String(load.error)} — is the API running (`make run`)?</p>}
           <div className="lifecycle">
             {LIFECYCLE.map((s, i) => (
               <span key={i}>{s}</span>
@@ -88,79 +67,6 @@ function Landing() {
   );
 }
 
-function Pipeline() {
-  const report = useAnalysisReport();
-  const tender = useTender();
-  const run = useRunAnalysis();
-  const stages = report.data?.stages;
-  const completed = new Set(tender.data?.completed_stages ?? []);
-  const artifactFor: Record<string, string> = {
-    extract_rules: "rule_extraction",
-    ingest_evidence: "compliance",
-    compliance: "compliance",
-    entity_resolution: "entities",
-    document_similarity: "similarity",
-    relationship_graph: "graph",
-    behaviour_analysis: "behaviour",
-    reasoning: "findings",
-  };
-  const metric = (stage: string, s?: Record<string, unknown>): string => {
-    if (!s) return completed.has(artifactFor[stage]) ? "complete" : "pending";
-    switch (stage) {
-      case "extract_rules":
-        return `${s.rules_extracted} rules · ${s.method}`;
-      case "ingest_evidence":
-        return `${s.facts_extracted} facts`;
-      case "compliance":
-        return `${s.evaluations} checks`;
-      case "entity_resolution":
-        return `${s.historical_records_resolved} records linked`;
-      case "document_similarity":
-        return `${s.pairs} pairs · ${s.backend}`;
-      case "relationship_graph":
-        return `${(s.full_graph as { nodes: number }).nodes} nodes`;
-      case "behaviour_analysis":
-        return `${(s.model as { training_pairs?: number }).training_pairs ?? 0} pairs scored`;
-      case "reasoning":
-        return `${s.findings} findings`;
-      default:
-        return "";
-    }
-  };
-  const order = Object.keys(STAGE_LABEL);
-  return (
-    <Card
-      title="Analysis pipeline"
-      icon={<CheckCircle2 size={15} />}
-      flush
-      actions={
-        <>
-          {report.data && <span className="muted mono" style={{ fontSize: 12 }}>total {fmtMs(report.data.duration_ms)}</span>}
-          <Button size="sm" icon={<RefreshCw size={13} />} loading={run.isPending} onClick={() => run.mutate()}>
-            Re-run analysis
-          </Button>
-        </>
-      }
-    >
-      <div className="pipeline">
-        {order.map((name, i) => {
-          const st = stages?.find((x) => x.stage === name);
-          const done = !!st || completed.has(artifactFor[name]);
-          return (
-            <div key={name} className="pipeline__step">
-              {done && <span className="pipeline__bar" />}
-              <span className="pipeline__num">{String(i + 1).padStart(2, "0")}</span>
-              <span className="pipeline__name">{STAGE_LABEL[name]}</span>
-              <span className="pipeline__metric">{metric(name, st?.summary)}</span>
-              {st && <span className="pipeline__time">{fmtMs(st.duration_ms)}</span>}
-            </div>
-          );
-        })}
-      </div>
-    </Card>
-  );
-}
-
 export function Overview() {
   const tender = useTender();
   const rules = useRules();
@@ -189,8 +95,8 @@ export function Overview() {
   return (
     <>
       <PageHead
-        eyebrow={`Tender ${t.tender_id}`}
-        title={t.title}
+        eyebrow={`Tender ${t.tender_id} · Overview`}
+        title={shortTitle(t.title)}
         sub={
           <>
             {t.department} · Estimated value {fmtCr(t.estimated_value_cr)} · Bid deadline {fmtDateTime(t.bid_deadline)}
@@ -221,9 +127,7 @@ export function Overview() {
         />
       </div>
 
-      <Pipeline />
-
-      <div className="grid grid--main-side">
+      <div className="grid grid--overview">
         <Card
           title="Findings requiring attention"
           icon={<ShieldAlert size={15} />}
@@ -260,23 +164,30 @@ export function Overview() {
 
         <Card title="Bidders" icon={<Users size={15} />} flush>
           <table className="table">
+            <thead>
+              <tr>
+                <th>Bidder</th>
+                <th className="num">Bid amount</th>
+                <th style={{ textAlign: "right" }}>Status</th>
+              </tr>
+            </thead>
             <tbody>
               {t.bidders.map((b) => {
                 const inv = involvement(b.vendor_id);
                 return (
                   <tr key={b.vendor_id} className="clickable" onClick={() => navigate(`/graph?focus=${b.vendor_id}`)}>
-                    <td>
+                    <td style={{ minWidth: 0 }}>
                       <div style={{ fontWeight: 600 }}>{b.alias}</div>
-                      <div className="muted" style={{ fontSize: 12 }}>
+                      <div className="muted truncate" style={{ fontSize: 12 }} title={b.name}>
                         {b.name}
                       </div>
                     </td>
                     <td className="num mono nowrap">{fmtCr(b.amount_cr)}</td>
                     <td style={{ textAlign: "right" }}>
-                      <div className="stack stack--sm" style={{ alignItems: "flex-end" }}>
+                      <div className="stack" style={{ alignItems: "flex-end", gap: 4 }}>
                         {statusOf[b.vendor_id] && <StatusBadge status={statusOf[b.vendor_id]} />}
                         {inv.length > 0 && (
-                          <span style={{ fontSize: 11.5, color: levelColor(inv[0].level) }}>
+                          <span className="nowrap" style={{ fontSize: 11.5, fontWeight: 500, color: levelColor(inv[0].level) }}>
                             {inv.length} finding{inv.length > 1 ? "s" : ""}
                           </span>
                         )}

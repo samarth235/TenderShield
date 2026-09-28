@@ -27,7 +27,7 @@ export function Findings() {
   return (
     <>
       <PageHead
-        step="05"
+        step="04"
         eyebrow="Evidence reasoning engine"
         title="Findings"
         sub="Results are kept in three separate categories: objective compliance results, patterns that deserve human examination, and gaps in the evidence. A relationship alone is never treated as proof of misconduct."

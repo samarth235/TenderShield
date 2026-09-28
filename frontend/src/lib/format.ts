@@ -100,3 +100,10 @@ export const STAGE_LABEL: Record<string, string> = {
 };
 
 export const prettyTitle = (t: string) => t.replace(/\s<->\s/g, " ↔ ");
+
+// Drops the boilerplate scope-of-work prefix ("Design, Supply, Installation and O&M of ...")
+// so headings name what is being procured.
+export const shortTitle = (t: string) => {
+  const m = t.match(/^(?:(?:design|supply|installation|installing|commissioning|testing|o&m|operation(?:s)?\s*(?:and|&)\s*maintenance|maintenance)[\s,]*(?:and|&)?\s*)+of\s+(.+)$/i);
+  return (m ? m[1] : t).replace(/\s+and\s+/g, " & ");
+};

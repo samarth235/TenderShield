@@ -1,5 +1,4 @@
 import {
-  BookOpenText,
   Fingerprint,
   Gauge,
   Grid3x3,
@@ -13,26 +12,26 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
+import { shortTitle } from "../lib/format";
 import { useFindings, useHealth, useLoadDemo, useTender } from "../lib/hooks";
 import { Badge, Button, useToast } from "./ui";
 
 const NAV: { to: string; step: string; label: string; icon: ReactNode }[] = [
   { to: "/", step: "00", label: "Overview", icon: <Gauge size={16} /> },
-  { to: "/rulebook", step: "01", label: "Rulebook", icon: <BookOpenText size={16} /> },
-  { to: "/compliance", step: "02", label: "Compliance", icon: <Grid3x3 size={16} /> },
-  { to: "/graph", step: "03", label: "Relationship graph", icon: <Network size={16} /> },
-  { to: "/intelligence", step: "04", label: "Bid intelligence", icon: <ScanSearch size={16} /> },
-  { to: "/findings", step: "05", label: "Findings", icon: <ShieldAlert size={16} /> },
-  { to: "/integrity", step: "06", label: "Evidence integrity", icon: <Fingerprint size={16} /> },
+  { to: "/compliance", step: "01", label: "Rules & compliance", icon: <Grid3x3 size={16} /> },
+  { to: "/graph", step: "02", label: "Relationship graph", icon: <Network size={16} /> },
+  { to: "/intelligence", step: "03", label: "Bid intelligence", icon: <ScanSearch size={16} /> },
+  { to: "/findings", step: "04", label: "Findings", icon: <ShieldAlert size={16} /> },
+  { to: "/integrity", step: "05", label: "Evidence integrity", icon: <Fingerprint size={16} /> },
 ];
 
 export function BrandMark() {
   return (
     <svg className="brand__mark" viewBox="0 0 32 32" aria-hidden>
-      <rect width="32" height="32" rx="8" fill="#1b2740" />
-      <path d="M16 5 7 8.5v6.8c0 5.6 3.8 10.1 9 11.7 5.2-1.6 9-6.1 9-11.7V8.5L16 5Z" fill="none" stroke="#e0952b" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M11.5 15.5h9M16 11v9" stroke="#e0952b" strokeWidth="1.4" strokeLinecap="round" opacity=".55" />
-      <circle cx="16" cy="15.5" r="2.6" fill="#e0952b" />
+      <rect width="32" height="32" rx="8" fill="#1f3a68" />
+      <path d="M16 5 7 8.5v6.8c0 5.6 3.8 10.1 9 11.7 5.2-1.6 9-6.1 9-11.7V8.5L16 5Z" fill="none" stroke="#fff" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M11.5 15.5h9M16 11v9" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" opacity=".45" />
+      <circle cx="16" cy="15.5" r="2.6" fill="#fff" />
     </svg>
   );
 }
@@ -106,16 +105,6 @@ export function Layout() {
             </NavLink>
           ))}
         </nav>
-        <div className="sidebar__footer">
-          <p className="principle">
-            <b>AI</b> finds and explains signals. <b>Rules</b> verify objective conditions. <b>Blockchain</b> protects
-            evidence. <b>The auditor</b> decides.
-          </p>
-          <div className="row" style={{ gap: 6 }}>
-            <span className="fam-dot" style={{ background: online ? "var(--pass)" : "var(--fail)" }} />
-            {online ? `API online · ${health.data.extractor} extractor` : "API offline — run `make run`"}
-          </div>
-        </div>
       </aside>
 
       <div className="main">
@@ -125,7 +114,7 @@ export function Layout() {
               <>
                 <Badge tone="brand">{tender.data.tender_id}</Badge>
                 <span className="topbar__title" title={tender.data.title}>
-                  {tender.data.title}
+                  {shortTitle(tender.data.title)}
                 </span>
                 <Badge tone="outline">{tender.data.status.replace(/_/g, " ").toLowerCase()}</Badge>
               </>

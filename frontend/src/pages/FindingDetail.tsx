@@ -7,7 +7,6 @@ import {
   FlaskConical,
   Gavel,
   History,
-  Lightbulb,
   RotateCcw,
   Save,
   SearchCheck,
@@ -316,11 +315,11 @@ export function FindingDetail() {
       </Link>
 
       <section className="case-head">
-        <div className="case-head__glow" style={{ background: levelColor(level) }} />
+        <span className="case-head__rail" style={{ background: levelColor(level) }} />
         <div className="row row--between" style={{ alignItems: "flex-start", position: "relative" }}>
           <div className="stack" style={{ gap: 12 }}>
             <div className="row">
-              <span className="mono" style={{ color: "var(--brand)", fontSize: 12 }}>
+              <span className="mono" style={{ color: "var(--brand)", fontSize: 12, fontWeight: 600 }}>
                 {f.finding_id}
               </span>
               <span className="muted" style={{ fontSize: 12 }}>
@@ -343,11 +342,11 @@ export function FindingDetail() {
             <span className="muted" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" }}>
               {active ? "Counterfactual level" : "Assessed level"}
             </span>
-            <span className="level-dial__value" style={{ color: levelColor(level) === "var(--ink-3)" ? "#fff" : levelColor(level) }}>
+            <span className="level-dial__value" style={{ color: levelColor(level) }}>
               {level === "INSUFFICIENT_DATA" ? "NO DATA" : level}
             </span>
             {active && (
-              <span style={{ fontSize: 12, color: "#c3cbdb" }}>
+              <span className="muted" style={{ fontSize: 12 }}>
                 was <b>{f.level}</b>
               </span>
             )}
@@ -355,12 +354,12 @@ export function FindingDetail() {
         </div>
         {testable && (
           <div style={{ marginTop: 20, position: "relative" }}>
-            <div className="row row--between" style={{ fontSize: 12, color: "#c3cbdb", marginBottom: 6 }}>
+            <div className="row row--between" style={{ fontSize: 12, marginBottom: 6 }}>
               <span>
-                Evidence support <b className="mono" style={{ color: "#fff" }}>{support.toFixed(2)}</b>
+                Evidence support <b className="mono">{support.toFixed(2)}</b>
                 {active && <span className="mono"> (from {originalSupport.toFixed(2)})</span>}
               </span>
-              <span className="mono">MEDIUM ≥ 0.45 · HIGH ≥ 0.90 + behavioural + 2 families</span>
+              <span className="mono muted">MEDIUM ≥ 0.45 · HIGH ≥ 0.90 + behavioural + 2 families</span>
             </div>
             <Meter value={support} max={maxSupport} color={levelColor(level)} ticks={THRESHOLDS} />
           </div>
@@ -368,124 +367,63 @@ export function FindingDetail() {
       </section>
 
       <div className="grid grid--main-side">
-        <div className="stack" style={{ gap: 18 }}>
-          <Card
-            title={testable ? "Supporting evidence · robustness test" : "Supporting evidence"}
-            icon={testable ? <FlaskConical size={15} /> : <SearchCheck size={15} />}
-            flush
-            actions={
-              testable && (
-                <>
-                  {removedKey.length > 0 && (
-                    <Button size="sm" icon={<RotateCcw size={13} />} onClick={() => setRemoved([])}>
-                      Reset
-                    </Button>
-                  )}
-                  <Button size="sm" variant="primary" icon={<Save size={13} />} disabled={!removedKey.length} loading={record.isPending} onClick={() => record.mutate()}>
-                    Record test
+        <Card
+          title={testable ? "Supporting evidence · robustness test" : "Supporting evidence"}
+          icon={testable ? <FlaskConical size={15} /> : <SearchCheck size={15} />}
+          flush
+          actions={
+            testable && (
+              <>
+                {removedKey.length > 0 && (
+                  <Button size="sm" icon={<RotateCcw size={13} />} onClick={() => setRemoved([])}>
+                    Reset
                   </Button>
-                </>
-              )
-            }
-          >
-            {testable && (
-              <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--line)", background: "var(--surface-2)" }} className="stack stack--sm">
-                <span className="dim" style={{ fontSize: 13 }}>
-                  <b>Does this finding still hold if evidence is removed?</b> Switch items off to re-score the finding live with the same explicit rule.
-                </span>
-                <div className="row">
-                  {presets.map((p) => (
-                    <Button key={p.label} size="sm" onClick={() => setRemoved(p.ids)}>
-                      {p.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {active && (
-              <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--line)" }}>
-                <Callout tone={cf.data!.status === "STILL_SUPPORTED" ? "ok" : cf.data!.status === "DOWNGRADED" ? "warn" : "danger"}>
-                  <b>{humanize(cf.data!.status)}.</b> {cf.data!.explanation}
-                </Callout>
-              </div>
-            )}
-            {f.evidence.map((e) => (
-              <EvidenceRow key={e.evidence_id} item={e} included={!removedSet.has(e.evidence_id)} onToggle={(v) => toggle(e.evidence_id, v)} testable={testable} />
-            ))}
-          </Card>
-
-          <Card title="Why was this flagged?" icon={<Brain size={15} />}>
-            <div className="reason">
-              {f.reasoning.steps.map((s) => {
-                const ids = s.evidence_ids ?? [];
-                const inactive = ids.length > 0 && ids.every((id) => removedSet.has(id));
-                return (
-                  <div key={s.step} className={`reason__step${inactive ? " inactive" : ""}`}>
-                    <span className="reason__num">{s.step}</span>
-                    <div>
-                      <div className="reason__title row" style={{ gap: 8 }}>
-                        {s.label}
-                        {ids.map((id) => (
-                          <span key={id} className="badge badge--outline mono" style={{ height: 18, fontSize: 10.5 }}>
-                            {id}
-                          </span>
-                        ))}
-                      </div>
-                      <p className="reason__body">{s.statement}</p>
-                    </div>
-                  </div>
-                );
-              })}
-              <div className="reason__conclusion">
-                <span className="reason__num" style={{ background: levelColor(level) }}>
-                  <BadgeCheck size={15} />
-                </span>
-                <div>
-                  <div className="reason__title">{active ? `Counterfactual: ${level}` : `Conclusion: ${f.level}`}</div>
-                  <p className="reason__body">{active ? cf.data!.explanation : f.reasoning.conclusion}</p>
-                </div>
+                )}
+                <Button size="sm" variant="primary" icon={<Save size={13} />} disabled={!removedKey.length} loading={record.isPending} onClick={() => record.mutate()}>
+                  Record test
+                </Button>
+              </>
+            )
+          }
+        >
+          {testable && (
+            <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--line)", background: "var(--surface-2)" }} className="stack stack--sm">
+              <span className="dim" style={{ fontSize: 13 }}>
+                <b>Does this finding still hold if evidence is removed?</b> Switch items off to re-score the finding live with the same explicit rule.
+              </span>
+              <div className="row">
+                {presets.map((p) => (
+                  <Button key={p.label} size="sm" onClick={() => setRemoved(p.ids)}>
+                    {p.label}
+                  </Button>
+                ))}
               </div>
             </div>
-          </Card>
-
-          {testable && (
-            <Card title="Finding robustness report" icon={<FlaskConical size={15} />}>
-              <RobustnessPanel fid={f.finding_id} />
-            </Card>
           )}
-        </div>
+          {active && (
+            <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--line)" }}>
+              <Callout tone={cf.data!.status === "STILL_SUPPORTED" ? "ok" : cf.data!.status === "DOWNGRADED" ? "warn" : "danger"}>
+                <b>{humanize(cf.data!.status)}.</b> {cf.data!.explanation}
+              </Callout>
+            </div>
+          )}
+          {f.evidence.map((e) => (
+            <EvidenceRow key={e.evidence_id} item={e} included={!removedSet.has(e.evidence_id)} onToggle={(v) => toggle(e.evidence_id, v)} testable={testable} />
+          ))}
+        </Card>
 
-        <div className="stack" style={{ gap: 18 }}>
+        <div className="stack sticky-side" style={{ gap: 18 }}>
           <Disposition finding={f} />
 
-          <Card title="Before deciding" icon={<Lightbulb size={15} />}>
-            <div className="stack">
-              <div className="row row--between">
-                <span className="section-label">Data quality</span>
-                <Badge tone={f.data_quality.level === "HIGH" ? "pass" : f.data_quality.level === "LOW" ? "unknown" : "medium"}>{f.data_quality.level}</Badge>
+          {f.evidence.some((e) => e.sources.some((s) => s.kind === "document" && s.document_id)) && (
+            <Card title="Source documents">
+              <div className="stack stack--sm">
+                {[...new Map(f.evidence.flatMap((e) => e.sources).filter((s) => s.kind === "document" && s.document_id).map((s) => [s.document_id, s])).values()].map((s) => (
+                  <DocLink key={s.document_id} documentId={s.document_id!} page={s.page} label={s.filename ?? s.document_id} />
+                ))}
               </div>
-              {f.data_quality.notes.map((n) => (
-                <p key={n} className="dim" style={{ fontSize: 13 }}>
-                  {n}
-                </p>
-              ))}
-              <hr className="divider" />
-              <span className="section-label">Alternative explanations</span>
-              <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: "var(--ink-2)" }} className="stack stack--sm">
-                {f.alternative_explanations.map((a) => (
-                  <li key={a}>{a}</li>
-                ))}
-              </ul>
-              <hr className="divider" />
-              <span className="section-label">Recommended verification</span>
-              <ol style={{ margin: 0, paddingLeft: 18, fontSize: 13 }} className="stack stack--sm">
-                {f.recommended_verification.map((a) => (
-                  <li key={a}>{a}</li>
-                ))}
-              </ol>
-              <Callout>{f.disclaimer}</Callout>
-            </div>
-          </Card>
+            </Card>
+          )}
 
           <Card title="Audit trail" icon={<History size={15} />}>
             {f.audit.length === 0 && <p className="muted">No auditor actions yet.</p>}
@@ -511,17 +449,49 @@ export function FindingDetail() {
               ))}
             </div>
           </Card>
-
-          {f.evidence.some((e) => e.sources.some((s) => s.kind === "document" && s.document_id)) && (
-            <Card title="Source documents">
-              <div className="stack stack--sm">
-                {[...new Map(f.evidence.flatMap((e) => e.sources).filter((s) => s.kind === "document" && s.document_id).map((s) => [s.document_id, s])).values()].map((s) => (
-                  <DocLink key={s.document_id} documentId={s.document_id!} page={s.page} label={s.filename ?? s.document_id} />
-                ))}
-              </div>
-            </Card>
-          )}
         </div>
+      </div>
+
+      <div className={testable ? "grid grid--2" : "stack"} style={{ alignItems: "start" }}>
+        <Card title="Why was this flagged?" icon={<Brain size={15} />}>
+          <div className="reason">
+            {f.reasoning.steps.map((s) => {
+              const ids = s.evidence_ids ?? [];
+              const inactive = ids.length > 0 && ids.every((id) => removedSet.has(id));
+              return (
+                <div key={s.step} className={`reason__step${inactive ? " inactive" : ""}`}>
+                  <span className="reason__num">{s.step}</span>
+                  <div>
+                    <div className="reason__title row" style={{ gap: 8 }}>
+                      {s.label}
+                      {ids.map((id) => (
+                        <span key={id} className="badge badge--outline mono" style={{ height: 18, fontSize: 10.5 }}>
+                          {id}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="reason__body">{s.statement}</p>
+                  </div>
+                </div>
+              );
+            })}
+            <div className="reason__conclusion">
+              <span className="reason__num" style={{ background: levelColor(level) }}>
+                <BadgeCheck size={15} />
+              </span>
+              <div>
+                <div className="reason__title">{active ? `Counterfactual: ${level}` : `Conclusion: ${f.level}`}</div>
+                <p className="reason__body">{active ? cf.data!.explanation : f.reasoning.conclusion}</p>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {testable && (
+          <Card title="Finding robustness report" icon={<FlaskConical size={15} />}>
+            <RobustnessPanel fid={f.finding_id} />
+          </Card>
+        )}
       </div>
     </>
   );

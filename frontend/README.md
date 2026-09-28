@@ -20,17 +20,16 @@ npm run typecheck
 
 | Route | Purpose |
 |---|---|
-| `/` | Landing page with a "Load demonstration tender" button. Once loaded: tender summary, key stats, the 8-stage analysis pipeline with timings, findings and bidders |
-| `/rulebook` | Each rule traced from clause to machine rule: clause text and PDF page, AI extraction, deterministic condition, and the result for every bidder |
-| `/compliance` | 6 × 18 compliance matrix. Clicking a cell opens a panel with the expected value, actual value, reason and the evidence excerpt with page link |
+| `/` | Landing page with a "Load demonstration tender" button. Once loaded: tender summary, key stats, findings and bidders |
+| `/compliance` | Rules & compliance: 6 × 18 compliance matrix. Clicking a requirement shows its source clause, the AI extraction and the deterministic check, with the result for every bidder. Clicking a cell opens the expected value, actual value, reason and evidence excerpt with page link. `/rulebook` redirects here |
 | `/graph` | Cytoscape relationship graph (vendors, directors, addresses, co-bidding) and a trace of the connection between any two vendors |
-| `/intelligence` | Proposal-similarity heatmap, section bars, passages side by side, and a behaviour table with flags and Isolation Forest rank |
+| `/intelligence` | Bidder pairs ranked by proposal similarity against the tender median, section bars for the selected pair, and all matching passages side by side in an expandable list |
 | `/findings` | Findings split into investigation signals, compliance and data quality |
-| `/findings/:id` | Evidence card. Toggling evidence on/off re-scores the finding live (counterfactual robustness test). Also shows the reasoning chain, robustness report, auditor disposition and audit trail |
+| `/findings/:id` | Evidence card. Toggling evidence on/off re-scores the finding live (counterfactual robustness test). Also shows the auditor disposition, source documents, audit trail, reasoning chain and robustness report |
 | `/integrity` | Finalise and seal the evidence (SHA-256), view the on-chain payload, verify, and the tamper demo |
 
 ## Design system
 
-Tokens live in `src/styles/tokens.css`. The look is a "forensic ledger": warm paper canvas, ink-navy chrome, one amber brand accent, and a fixed semantic palette for evidence states (`--high`, `--medium`, `--low`, `--pass`, `--fail`, `--unknown`, `--na`) and evidence families (`--fam-*`). Light and dark themes are both supported; use the toggle in the top bar.
+Tokens live in `src/styles/tokens.css`. The look is a "forensic ledger": neutral canvas, black text, a light sidebar, a deep navy brand colour, and a fixed semantic palette for evidence states (`--high`, `--medium`, `--low`, `--pass`, `--fail`, `--unknown`, `--na`) and evidence families (`--fam-*`). Light and dark themes are both supported; use the toggle in the top bar.
 
 Shared components (`Badge`, `Card`, `StatTile`, `Button`, `Drawer`, `Meter`, `Switch`, `Callout`, and others) are in `src/components/ui.tsx`.
