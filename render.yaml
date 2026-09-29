@@ -1,0 +1,16 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Free plan: the disk is ephemeral and the service sleeps after 15 idle minutes.
+# TS_AUTOLOAD_DEMO re-seeds the demo tender on every cold start.
+services:
+  - type: web
+    name: tendershield
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: TS_EXTRACTOR
+        value: pattern
+      - key: TS_AUTOLOAD_DEMO
+        value: "1"

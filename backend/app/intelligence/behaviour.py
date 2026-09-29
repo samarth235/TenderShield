@@ -15,7 +15,6 @@ from datetime import datetime, timezone
 from itertools import combinations
 
 import numpy as np
-from sklearn.ensemble import IsolationForest
 
 from ..config import get_settings
 from ..db import fetch_all, put_artifact
@@ -106,6 +105,8 @@ def score_pairs(features: dict[tuple[str, str], dict], seed: int) -> dict:
     keys = sorted(features)
     if len(keys) < 10:
         return {"trained": False, "reason": "not enough co-bidding pairs to train the model"}
+    from sklearn.ensemble import IsolationForest  # heavy import, deferred until the model is trained
+
     X = np.array([[features[k][f] for f in FEATURES] for k in keys], dtype=float)
     model = IsolationForest(n_estimators=300, contamination=0.02, random_state=seed)
     model.fit(X)

@@ -363,3 +363,23 @@ TenderShield/
 ```
 
 ---
+
+# 🚀 Deployment
+
+The repository ships as one Docker image: the FastAPI backend serves the built React dashboard from the same origin, so no CORS or API-URL configuration is needed.
+
+```bash
+docker build -t tendershield .
+docker run -p 8000:8000 tendershield      # http://localhost:8000
+```
+
+The image bakes in the analysed demo tender, so the dashboard has data from the first request. `render.yaml` deploys it to Render's free plan: in Render, choose **New → Blueprint** and select this repository. On the free plan the disk is ephemeral and the service sleeps after 15 idle minutes, so dispositions, snapshots and uploads reset to the demo state on restart. The first request after sleeping takes about a minute.
+
+| Variable | Default in the image | Meaning |
+|---|---|---|
+| `TS_STATIC_DIR` | `/app/static` | built dashboard served at `/` |
+| `TS_AUTOLOAD_DEMO` | `1` | load and analyse the demo tender if the database is empty |
+| `TS_DATA_DIR` | `/data` | SQLite DB and PDFs |
+| `VITE_TENDERSHIELD_CONTRACT_ADDRESS` (build arg) | MST Testnet deployment | contract used by `/integrity` |
+
+A fresh deployment finalises its own snapshot ID, so committing it on-chain from `/integrity` needs BridgeKey as described in [blockchain setup](blockchain/README.md).
