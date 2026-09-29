@@ -211,7 +211,6 @@ export function GraphPage() {
   return (
     <>
       <PageHead
-        step="02"
         eyebrow="Procurement relationship graph"
         title="Who is connected to whom"
         sub="Vendors, directors, registered premises, contacts, tenders and documents in one multi-relational graph. Co-bidding edges get thicker the more often two bidders have bid in the same tenders. Borders show each vendor's strongest finding."

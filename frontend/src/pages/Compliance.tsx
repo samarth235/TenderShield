@@ -169,7 +169,6 @@ export function Compliance() {
   return (
     <>
       <PageHead
-        step="01"
         eyebrow="AI rule extraction · deterministic compliance"
         title="Rules & compliance"
         sub={`The AI reads each tender clause and proposes a machine-checkable rule; the rule engine then evaluates ${m.vendors.length} bidders × ${m.rules.length} rules. Missing evidence is UNKNOWN, never FAIL. The AI never declares a bidder compliant.`}

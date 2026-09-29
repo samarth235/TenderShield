@@ -135,7 +135,7 @@ button {
 
 .nav__link {
   display: grid;
-  grid-template-columns: 22px 18px 1fr auto;
+  grid-template-columns: 18px 1fr auto;
   align-items: center;
   gap: 8px;
   padding: 8px 10px;
@@ -162,16 +162,6 @@ button {
 }
 
 .nav__link.active svg {
-  color: var(--brand);
-}
-
-.nav__step {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--ink-3);
-}
-
-.nav__link.active .nav__step {
   color: var(--brand);
 }
 
@@ -216,11 +206,18 @@ button {
 }
 
 .topbar__title {
+  max-width: min(54vw, 620px);
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: 13.5px;
   font-weight: 600;
+  line-height: 1.25;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 64ch;
 }
 
 .topbar__spacer {

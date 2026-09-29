@@ -41,7 +41,6 @@ export function Intelligence() {
   return (
     <>
       <PageHead
-        step="03"
         eyebrow="Bid document intelligence"
         title="Proposal similarity"
         sub="Technical proposals are compared pair by pair, at document, section and passage level, against this tender's own baseline. Pairs far above the median deserve a closer read."

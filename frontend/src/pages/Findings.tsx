@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { ErrorCard, NotLoaded } from "../components/NotLoaded";
-import { Badge, Card, LevelBadge, LoadingBlock, PageHead, StatusBadge } from "../components/ui";
+import { Badge, Card, LevelBadge, LoadingBlock, PageHead } from "../components/ui";
 import { CATEGORY_LABEL, humanize, prettyTitle } from "../lib/format";
 import { isNotLoaded, useFindings } from "../lib/hooks";
 
@@ -27,7 +27,6 @@ export function Findings() {
   return (
     <>
       <PageHead
-        step="04"
         eyebrow="Evidence reasoning engine"
         title="Findings"
         sub="Results are kept in three separate categories: objective compliance results, patterns that deserve human examination, and gaps in the evidence. A relationship alone is never treated as proof of misconduct."
@@ -58,7 +57,6 @@ export function Findings() {
               </div>
             </div>
             <div className="row">
-              <StatusBadge status={f.status} />
               <LevelBadge level={f.level} />
             </div>
           </Link>

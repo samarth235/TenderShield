@@ -16,13 +16,13 @@ import { shortTitle } from "../lib/format";
 import { useFindings, useHealth, useLoadDemo, useTender } from "../lib/hooks";
 import { Badge, Button, useToast } from "./ui";
 
-const NAV: { to: string; step: string; label: string; icon: ReactNode }[] = [
-  { to: "/", step: "00", label: "Overview", icon: <Gauge size={16} /> },
-  { to: "/compliance", step: "01", label: "Rules & compliance", icon: <Grid3x3 size={16} /> },
-  { to: "/graph", step: "02", label: "Relationship graph", icon: <Network size={16} /> },
-  { to: "/intelligence", step: "03", label: "Bid intelligence", icon: <ScanSearch size={16} /> },
-  { to: "/findings", step: "04", label: "Findings", icon: <ShieldAlert size={16} /> },
-  { to: "/integrity", step: "05", label: "Evidence integrity", icon: <Fingerprint size={16} /> },
+const NAV: { to: string; label: string; icon: ReactNode }[] = [
+  { to: "/", label: "Overview", icon: <Gauge size={16} /> },
+  { to: "/compliance", label: "Rules & compliance", icon: <Grid3x3 size={16} /> },
+  { to: "/graph", label: "Relationship graph", icon: <Network size={16} /> },
+  { to: "/intelligence", label: "Bid intelligence", icon: <ScanSearch size={16} /> },
+  { to: "/findings", label: "Findings", icon: <ShieldAlert size={16} /> },
+  { to: "/integrity", label: "Evidence integrity", icon: <Fingerprint size={16} /> },
 ];
 
 export function BrandMark() {
@@ -84,7 +84,7 @@ export function Layout() {
         <div className="brand">
           <BrandMark />
           <div>
-            <div className="brand__name">TenderShield Nexus</div>
+            <div className="brand__name">TendorShield</div>
             <div className="brand__tag">Evidence intelligence</div>
           </div>
         </div>
@@ -92,7 +92,6 @@ export function Layout() {
           <div className="nav__label">Investigation workflow</div>
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.to === "/"} className="nav__link">
-              <span className="nav__step">{item.step}</span>
               {item.icon}
               <span>{item.label}</span>
               {item.to === "/findings" && openSignals ? (

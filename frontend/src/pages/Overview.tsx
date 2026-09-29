@@ -24,7 +24,7 @@ function Landing() {
           <Badge tone="brand">Explainable tender assurance</Badge>
           <h1>Turn fragmented procurement records into evidence you can defend.</h1>
           <p>
-            TenderShield Nexus reads the tender, checks every bidder against every requirement, and connects vendors,
+            TendorShield reads the tender, checks every bidder against every requirement, and connects vendors,
             directors, addresses and bidding history into a relationship graph. Each finding is explained, stress-tested
             by removing evidence, decided by a human auditor, and sealed with a cryptographic hash.
           </p>
@@ -155,7 +155,6 @@ export function Overview() {
                 </div>
               </div>
               <div className="row">
-                <StatusBadge status={f.status} />
                 <LevelBadge level={f.level} />
               </div>
             </Link>

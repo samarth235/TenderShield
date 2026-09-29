@@ -142,7 +142,6 @@ export function Integrity() {
   return (
     <>
       <PageHead
-        step="05"
         eyebrow="Evidence commitment + verification"
         title="Evidence integrity"
         sub="Sensitive documents stay off-chain. Only the fingerprint of the finalised evidence state is committed, so any later change to a document, finding or decision is detectable."
