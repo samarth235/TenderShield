@@ -16,12 +16,12 @@ import { LoadingBlock, ToastProvider } from "./components/ui";
 import { Compliance } from "./pages/Compliance";
 import { FindingDetail } from "./pages/FindingDetail";
 import { Findings } from "./pages/Findings";
-import { Integrity } from "./pages/Integrity";
 import { Intelligence } from "./pages/Intelligence";
 import { Overview } from "./pages/Overview";
 
 // Cytoscape is the heaviest dependency; load it only when the graph page opens.
 const GraphPage = lazy(() => import("./pages/Graph").then((m) => ({ default: m.GraphPage })));
+const IntegrityPage = lazy(() => import("./pages/Integrity").then((m) => ({ default: m.Integrity })));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, refetchOnWindowFocus: false } },
@@ -45,7 +45,14 @@ const router = createBrowserRouter([
       { path: "/intelligence", element: <Intelligence /> },
       { path: "/findings", element: <Findings /> },
       { path: "/findings/:findingId", element: <FindingDetail /> },
-      { path: "/integrity", element: <Integrity /> },
+      {
+        path: "/integrity",
+        element: (
+          <Suspense fallback={<LoadingBlock rows={6} />}>
+            <IntegrityPage />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);

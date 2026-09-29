@@ -177,9 +177,7 @@ Investigation evidence needs to remain traceable and tamper-evident.
 
 TenderShield includes an **audit-chain mechanism** for maintaining the integrity of investigation records.
 
-The architecture is designed so that blockchain can provide an additional integrity layer for finalized evidence.
-
-> The current repository contains the audit/evidence architecture; the dedicated Solidity + Hardhat blockchain layer is planned for a future implementation stage.
+The `/integrity` page can anchor a finalized snapshot's SHA-256 hash and audit-chain head on MST Testnet through a BridgeKey-signed transaction. It can then compare the current backend hash with the contract record. Deployment requires a testnet wallet and a configured contract address; see [blockchain setup](blockchain/README.md).
 
 ---
 
@@ -315,14 +313,14 @@ The frontend provides an investigation dashboard for navigating these stages.
 | AI/LLM components | Rule extraction & reasoning    |
 | Document analysis | Evidence & similarity analysis |
 
-### Integrity & Future Blockchain
+### Integrity & Blockchain
 
 | Technology                     | Purpose                                    |
 | ------------------------------ | ------------------------------------------ |
 | Audit Chain                    | Tamper-evident investigation records       |
 | SHA-based integrity mechanisms | Evidence verification                      |
-| Solidity                       | Planned blockchain smart contracts         |
-| Hardhat                        | Planned blockchain development environment |
+| Solidity                       | MST Testnet evidence commitment contract   |
+| Hardhat                        | Contract compilation, tests and deployment |
 
 ---
 

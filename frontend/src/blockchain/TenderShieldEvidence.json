@@ -1,0 +1,180 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "caseId",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "tenderId",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "evidenceHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "auditHeadHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "dossierHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "auditor",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "recordedAt",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "auditorAction",
+        "type": "string"
+      }
+    ],
+    "name": "EvidenceCommitted",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "caseId",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "tenderId",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "evidenceHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "auditHeadHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "dossierHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "auditorAction",
+        "type": "string"
+      }
+    ],
+    "name": "commitEvidence",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "caseId",
+        "type": "string"
+      }
+    ],
+    "name": "evidenceExists",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "caseId",
+        "type": "string"
+      }
+    ],
+    "name": "getEvidence",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "caseId",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "tenderId",
+            "type": "string"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "evidenceHash",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "auditHeadHash",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "dossierHash",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "auditor",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "recordedAt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "auditorAction",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "exists",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct TenderShieldEvidence.EvidenceRecord",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

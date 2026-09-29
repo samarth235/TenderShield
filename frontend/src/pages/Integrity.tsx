@@ -10,18 +10,23 @@ import {
   ShieldCheck,
   ShieldX,
   Stamp,
+  Wallet,
+  ExternalLink,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { api } from "../api/client";
 import type { Snapshot, Verification } from "../api/types";
+import { MST_TESTNET_EXPLORER, TENDERSHIELD_CONTRACT_ADDRESS } from "../blockchain/config";
+import { commitEvidenceToBlockchain, connectWallet, contractConfigured, getEvidence, walletError, type EvidenceRecord } from "../blockchain/wallet";
 import { ErrorCard, NotLoaded } from "../components/NotLoaded";
 import { Badge, Button, Callout, Card, LoadingBlock, PageHead, useToast } from "../components/ui";
 import { fmtDateTime, humanize, shortHash } from "../lib/format";
 import { isNotLoaded, TID, useAuditLog, useSnapshots, useTender } from "../lib/hooks";
 
-function Seal({ result, snapshot }: { result: Verification | null; snapshot: Snapshot | null }) {
-  const state = !result ? "idle" : result.match ? "ok" : "bad";
+function Seal({ result, snapshot, chain, chainChecked }: { result: Verification | null; snapshot: Snapshot | null; chain: EvidenceRecord | null; chainChecked: boolean }) {
+  const chainMatch = !!result && !!chain && chain.caseId === snapshot?.snapshot_id && chain.tenderId === snapshot?.tender_id && chain.evidenceHash.toLowerCase() === `0x${result.current_hash}`.toLowerCase() && chain.evidenceHash.toLowerCase() === `0x${snapshot?.bundle_hash}`.toLowerCase() && (!snapshot?.chain_payload || chain.auditHeadHash.toLowerCase() === `0x${snapshot.chain_payload.audit_head_hash}`.toLowerCase());
+  const state = !result ? "idle" : chain && !chainMatch ? "bad" : !result.match ? "bad" : chainMatch ? "ok" : "idle";
   const Icon = state === "ok" ? ShieldCheck : state === "bad" ? ShieldX : Lock;
   return (
     <div className={`seal seal--${state}`} key={result?.verified_at ?? "idle"}>
@@ -29,9 +34,9 @@ function Seal({ result, snapshot }: { result: Verification | null; snapshot: Sna
         <Icon size={44} strokeWidth={1.6} />
       </div>
       <div className="stack stack--sm" style={{ minWidth: 0 }}>
-        <span className="section-label">{result ? `Verified ${fmtDateTime(result.verified_at)}` : snapshot ? "Evidence committed" : "No evidence committed yet"}</span>
+        <span className="section-label">{result ? `Checked ${fmtDateTime(result.verified_at)}` : snapshot ? "Evidence snapshot finalised" : "No evidence snapshot yet"}</span>
         <span className="seal__status" style={{ color: state === "ok" ? "var(--pass)" : state === "bad" ? "var(--fail)" : "var(--ink)" }}>
-          {state === "ok" ? "✓ Integrity verified" : state === "bad" ? "✗ Integrity mismatch" : snapshot ? "Ready to verify" : "Finalise evidence to seal it"}
+          {state === "ok" ? "✓ Blockchain integrity verified" : state === "bad" ? "✗ Integrity mismatch" : result?.match ? chainChecked ? "Backend hash verified · awaiting blockchain commitment" : "Backend hash verified · blockchain unavailable" : snapshot ? "Ready to verify" : "Finalise evidence to seal it"}
         </span>
         {snapshot && (
           <div className="hash-compare">
@@ -91,14 +96,40 @@ export function Integrity() {
   const [current, setCurrent] = useState<Snapshot | null>(null);
   const [result, setResult] = useState<Verification | null>(null);
   const [doc, setDoc] = useState("DOC-V001-COMP");
+  const [wallet, setWallet] = useState("");
+  const [walletBusy, setWalletBusy] = useState(false);
+  const [walletMessage, setWalletMessage] = useState("");
+  const [dossierHash, setDossierHash] = useState("");
+  const [chain, setChain] = useState<EvidenceRecord | null>(null);
+  const [chainChecked, setChainChecked] = useState(false);
+  const [chainError, setChainError] = useState("");
+  const [chainBusy, setChainBusy] = useState(false);
+  const [txHash, setTxHash] = useState("");
+  const [commitStage, setCommitStage] = useState<"idle" | "wallet" | "pending">("idle");
 
   useEffect(() => {
     if (!current && snapshots.data?.length) setCurrent(snapshots.data[snapshots.data.length - 1]);
   }, [snapshots.data, current]);
   // Snapshot list rows are summaries; fetch the full record (component hashes, chain payload) once selected.
   useEffect(() => {
-    if (current && !current.chain_payload) api.snapshot(current.snapshot_id).then(setCurrent).catch(() => undefined);
+    if (!current || current.chain_payload) return;
+    let active = true;
+    api.snapshot(current.snapshot_id).then((snapshot) => { if (active) setCurrent(snapshot); }).catch(() => undefined);
+    return () => { active = false; };
   }, [current]);
+  useEffect(() => {
+    let active = true;
+    setChain(null);
+    setChainChecked(false);
+    setChainError("");
+    setTxHash("");
+    if (!current || !contractConfigured()) return;
+    try { setTxHash(localStorage.getItem(`ts-mst-tx:${TENDERSHIELD_CONTRACT_ADDRESS}:${current.snapshot_id}`) ?? ""); } catch { /* storage disabled */ }
+    getEvidence(current.snapshot_id).then((record) => {
+      if (active) { setChain(record); setChainChecked(true); }
+    }).catch((error) => { if (active) setChainError(walletError(error)); });
+    return () => { active = false; };
+  }, [current?.snapshot_id]);
 
   const finalize = useMutation({
     mutationFn: () => api.finalize(TID, auditor),
@@ -117,6 +148,42 @@ export function Integrity() {
     mutationFn: (sid: string) => api.verify(sid),
     onSuccess: setResult,
   });
+  async function verifyIntegrity() {
+    if (!current) return;
+    verify.mutate(current.snapshot_id);
+    if (contractConfigured()) {
+      setChainBusy(true);
+      setChainError("");
+      try { setChain(await getEvidence(current.snapshot_id)); setChainChecked(true); }
+      catch (error) { setChainError(walletError(error)); setChainChecked(false); }
+      finally { setChainBusy(false); }
+    }
+  }
+
+  async function connect() {
+    setWalletBusy(true);
+    setWalletMessage("");
+    try { setWallet((await connectWallet()).address); }
+    catch (error) { setWalletMessage(walletError(error)); }
+    finally { setWalletBusy(false); }
+  }
+
+  async function commit() {
+    if (!current?.chain_payload) return;
+    setWalletMessage("");
+    setCommitStage("wallet");
+    try {
+      const committed = await commitEvidenceToBlockchain(current.chain_payload, dossierHash, (hash) => { setTxHash(hash); setCommitStage("pending"); });
+      setWallet(committed.auditor);
+      setTxHash(committed.transactionHash);
+      try { localStorage.setItem(`ts-mst-tx:${TENDERSHIELD_CONTRACT_ADDRESS}:${current.snapshot_id}`, committed.transactionHash); } catch { /* storage disabled */ }
+      setResult(null);
+      toast("Evidence committed on MST Testnet");
+      try { setChain(await getEvidence(current.snapshot_id)); setChainChecked(true); }
+      catch (error) { setChainError(walletError(error)); }
+    } catch (error) { setWalletMessage(walletError(error)); }
+    finally { setCommitStage("idle"); }
+  }
   const tamper = useMutation({
     mutationFn: () => api.tamper(doc),
     onSuccess: (r) => toast(<span>{r.change} in <b>{r.filename}</b>. Now verify.</span>),
@@ -135,8 +202,8 @@ export function Integrity() {
   const steps = [
     { done: dispositions > 0, title: "Record auditor dispositions", body: `${dispositions} disposition(s) in the audit chain.` },
     { done: !!current, title: "Finalise the evidence package", body: "Freeze the rulebook, compliance results, findings, audit trail and document fingerprints into one SHA-256 hash." },
-    { done: !!current, title: "Commit the hash on-chain", body: "The blockchain module stores only the chain payload: case id, evidence hash, audit head, timestamp." },
-    { done: !!result, title: "Verify at any later time", body: "Recompute the hash from the stored evidence and compare it with the committed one." },
+    { done: !!chain, title: "Commit the hash on-chain", body: "BridgeKey signs the snapshot and audit hashes on MST Testnet." },
+    { done: !!result && !!chain && result.match && chain.evidenceHash.toLowerCase() === `0x${result.current_hash}`.toLowerCase(), title: "Verify at any later time", body: "Compare the current backend hash with the immutable MST Testnet record." },
   ];
 
   return (
@@ -154,10 +221,10 @@ export function Integrity() {
 
       <div className="grid grid--main-side">
         <div className="stack" style={{ gap: 18 }}>
-          <Seal result={result} snapshot={current} />
+          <Seal result={result} snapshot={current} chain={chain} chainChecked={chainChecked} />
 
           <div className="row">
-            <Button variant="primary" size="lg" icon={<Fingerprint size={16} />} disabled={!current} loading={verify.isPending} onClick={() => current && verify.mutate(current.snapshot_id)}>
+            <Button variant="primary" size="lg" icon={<Fingerprint size={16} />} disabled={!current} loading={verify.isPending || chainBusy} onClick={verifyIntegrity}>
               Verify integrity
             </Button>
             {current && (
@@ -166,6 +233,7 @@ export function Integrity() {
               </span>
             )}
           </div>
+          {chainError && <Callout tone="danger">MST Testnet read failed: {chainError}</Callout>}
 
           <Card title="Tamper demonstration" icon={<FileWarning size={15} />}>
             <div className="stack">
@@ -215,6 +283,40 @@ export function Integrity() {
         </div>
 
         <div className="stack" style={{ gap: 18 }}>
+          <Card title="Blockchain auditor" icon={<Wallet size={15} />}>
+            <div className="stack stack--sm">
+              <span className="muted" style={{ fontSize: 12 }}>Network · MST Testnet (91562037)</span>
+              <span className="muted" style={{ fontSize: 12 }}>Wallet · <span className="mono">{wallet || "Not connected"}</span></span>
+              {!contractConfigured() && <Callout>Deploy the contract to MST Testnet, set <span className="mono">VITE_TENDERSHIELD_CONTRACT_ADDRESS</span> in frontend/.env.local, then restart the frontend.</Callout>}
+              <div className="row">
+                <Button icon={<Wallet size={15} />} loading={walletBusy} onClick={connect}>Connect BridgeKey</Button>
+              </div>
+              {payload && <>
+                <div className="field">
+                  <label htmlFor="dossier-hash">Dossier PDF SHA-256 (optional)</label>
+                  <input id="dossier-hash" className="input mono" value={dossierHash} onChange={(e) => setDossierHash(e.target.value.trim())} placeholder="64 hex characters; empty means no PDF" />
+                </div>
+                <Button variant="brand" disabled={!wallet || !contractConfigured() || !!chain} loading={commitStage !== "idle"} onClick={commit}>
+                  {commitStage === "wallet" ? "Waiting for BridgeKey" : commitStage === "pending" ? "Transaction pending" : chain ? "Already committed" : "Commit evidence"}
+                </Button>
+              </>}
+              {walletMessage && <Callout tone="danger">
+                <span>{walletMessage}</span>
+                {walletMessage.includes("wallet provider") || walletMessage.includes("BridgeKey was not found") ? (
+                  <span> Get the <a href="https://chromewebstore.google.com/detail/bridgekey/bfjojdcfenehemjgjlepdjomkpginlkg" target="_blank" rel="noreferrer">BridgeKey Chrome extension</a>, then reopen this page in Chrome.</span>
+                ) : null}
+              </Callout>}
+              {chain && <>
+                <Badge tone="pass">Evidence committed</Badge>
+                <span className="muted" style={{ fontSize: 12 }}>Auditor · <span className="mono">{chain.auditor}</span></span>
+                <span className="muted" style={{ fontSize: 12 }}>Recorded · {fmtDateTime(new Date(Number(chain.recordedAt) * 1000).toISOString())}</span>
+                <span className="muted" style={{ fontSize: 12 }}>Evidence hash · <span className="hash">{chain.evidenceHash}</span></span>
+              </>}
+              {txHash && <a className="row mono" href={`${MST_TESTNET_EXPLORER}/tx/${txHash}`} target="_blank" rel="noreferrer" style={{ fontSize: 12, overflowWrap: "anywhere" }}><ExternalLink size={13} /> Transaction {txHash}</a>}
+              {wallet && <a href="https://faucet.mstblockchain.com/" target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>Fund this auditor wallet with testnet MSTC if it needs transaction gas.</a>}
+              {contractConfigured() && <a className="row mono" href={`${MST_TESTNET_EXPLORER}/address/${TENDERSHIELD_CONTRACT_ADDRESS}`} target="_blank" rel="noreferrer" style={{ fontSize: 12, overflowWrap: "anywhere" }}><ExternalLink size={13} /> Contract {TENDERSHIELD_CONTRACT_ADDRESS}</a>}
+            </div>
+          </Card>
           <Card title="Commitment workflow" icon={<Lock size={15} />}>
             <div className="step-list">
               {steps.map((s, i) => (

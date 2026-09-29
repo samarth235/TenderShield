@@ -26,7 +26,9 @@ npm run typecheck
 | `/intelligence` | Bidder pairs ranked by proposal similarity against the tender median, section bars for the selected pair, and all matching passages side by side in an expandable list |
 | `/findings` | Findings split into investigation signals, compliance and data quality |
 | `/findings/:id` | Evidence card. Toggling evidence on/off re-scores the finding live (counterfactual robustness test). Also shows the auditor disposition, source documents, audit trail, reasoning chain and robustness report |
-| `/integrity` | Finalise and seal the evidence (SHA-256), view the on-chain payload, verify, and the tamper demo |
+| `/integrity` | Finalise evidence, sign its hash with BridgeKey on MST Testnet, verify the contract record against the current backend hash, and run the tamper demo |
+
+For the MST Testnet contract setup and deployment steps, see [`../blockchain/README.md`](../blockchain/README.md). Set `VITE_TENDERSHIELD_CONTRACT_ADDRESS` in `.env.local` after deployment. The page keeps backend verification available before deployment and labels it as a backend-only check.
 
 ## Design system
 

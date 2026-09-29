@@ -1,0 +1,24 @@
+{
+  "name": "tendershield-blockchain",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:mst": "hardhat run scripts/deploy.ts --network mst_testnet"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ethers": "^6.15.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^4.0.0",
+    "@nomicfoundation/hardhat-mocha": "^3.0.0",
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "chai": "^5.2.0",
+    "hardhat": "^3.0.0",
+    "mocha": "^11.0.0",
+    "typescript": "^5.9.0"
+  }
+}

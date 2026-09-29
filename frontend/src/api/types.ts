@@ -347,8 +347,17 @@ export interface Snapshot {
   documents?: number;
   findings?: number;
   dispositions?: { finding_id: string; decision: string; auditor: string }[];
-  chain_payload?: Record<string, unknown>;
+  chain_payload?: ChainPayload;
   audit_head?: number;
+}
+
+export interface ChainPayload {
+  case_id: string;
+  tender_id: string;
+  evidence_hash: string;
+  audit_head_hash: string;
+  timestamp: string;
+  auditor_actions: string[];
 }
 
 export interface Verification {

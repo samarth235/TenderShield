@@ -12,6 +12,8 @@ backend/var/
 # Environment
 .env
 backend/.env
+blockchain/.env
+frontend/.env.local
 
 # Node / frontend
 node_modules/
