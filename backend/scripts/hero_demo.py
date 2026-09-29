@@ -115,22 +115,6 @@ def main() -> int:
     print(f"    Changed: {[d['filename'] for d in v['changed_documents']]}")
     print("\n    Evidence integrity failure detected.")
     ok(c.post("/api/demo/restore"))
-
-    step(14, "Bidder uploads a renewed V2 (new version, not a mismatch)")
-    doc = t["document_id"]
-    created = ok(c.post("/api/demo/new-version", json={"document_id": doc}))
-    v = ok(c.get(f"/api/evidence/snapshots/{snap['snapshot_id']}/verify"))
-    print(f"    {created['version']['label']} {created['version']['sha256'][:12]}  snapshot: {v['status']} (match={v['match']})")
-    for ch in created["comparison"]["changes"]:
-        print(f"    {ch['label']}: {ch['old_display']} -> {ch['new_display']}  [{ch['impact']}]")
-    explained = ok(c.post(f"/api/documents/{doc}/versions/2/explain", json={}))["explanation"]
-    print(f"    Explanation ({explained['method']}): {explained['summary']}")
-
-    step(15, "Auditor accepts V2; it is sealed and anchored separately")
-    accepted = ok(c.post(f"/api/documents/{doc}/versions/2/review",
-                         json={"decision": "ACCEPT", "auditor": "Demo Auditor", "notes": "Renewal confirmed"}))
-    print(f"    V2 {accepted['version']['status']}  MST record {accepted['version']['chain_payload']['case_id']}")
-    print(f"    V1 still verifies: {ok(c.get(f'/api/documents/{doc}/versions/1/verify'))['status']}")
     return 0
 
 

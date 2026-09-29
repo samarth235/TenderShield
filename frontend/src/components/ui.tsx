@@ -160,7 +160,7 @@ export function DocLink({ documentId, page, label }: { documentId: string; page?
   );
 }
 
-export function Callout({ tone, children }: { tone?: "warn" | "danger" | "ok" | "info"; children: ReactNode }) {
+export function Callout({ tone, children }: { tone?: "warn" | "danger" | "ok"; children: ReactNode }) {
   const Icon = tone === "danger" ? XCircle : tone === "ok" ? CheckCircle2 : tone === "warn" ? AlertTriangle : Info;
   return (
     <div className={`callout${tone ? ` callout--${tone}` : ""}`}>

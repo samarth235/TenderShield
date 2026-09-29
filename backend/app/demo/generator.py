@@ -14,7 +14,6 @@ from pathlib import Path
 
 from ..config import get_settings
 from ..db import dumps, put_artifact, reset_db, session
-from ..evidence.versions import ensure_initial_versions
 from ..ingestion.pdf_text import register_document
 from . import documents as docs
 from .history import build_history
@@ -83,7 +82,6 @@ def load_demo() -> dict:
         put_artifact(conn, DEMO_TENDER_ID, "demo_ground_truth", {"bid_vendor": truth, "planted_tenders": planted}, now)
 
         registered = render_documents(conn, tender_dir, settings.random_seed)
-        ensure_initial_versions(conn, DEMO_TENDER_ID)  # every document starts its history as V1
 
     return {
         "tender_id": DEMO_TENDER_ID,

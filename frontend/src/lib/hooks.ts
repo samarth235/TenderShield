@@ -32,19 +32,6 @@ export const useFinding = (fid: string) =>
 
 export const useAuditLog = () => useQuery({ queryKey: ["audit", TID], queryFn: () => api.auditLog(TID), retry: noRetryOn404 });
 
-export const useVersions = (docId: string) =>
-  useQuery({ queryKey: ["versions", docId], queryFn: () => api.versions(docId), retry: noRetryOn404, enabled: !!docId });
-
-/** Comparison + advisory explanation for a version against the one it was compared with. */
-export const useVersionExplanation = (docId: string, version: number | null) =>
-  useQuery({
-    queryKey: ["explain", docId, version],
-    queryFn: () => api.explainVersion(docId, version!),
-    enabled: !!docId && !!version && version > 1,
-    staleTime: Infinity,
-    retry: false,
-  });
-
 export const useSnapshots = () =>
   useQuery({ queryKey: ["snapshots", TID], queryFn: () => api.snapshots(TID), retry: noRetryOn404 });
 

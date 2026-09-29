@@ -38,11 +38,6 @@ All responses are JSON unless noted. Errors use FastAPI's shape `{"detail": "...
 | Modify a document | `POST /api/demo/tamper` `{}` (default: Vendor A's compliance PDF) |
 | VERIFY | `GET /api/evidence/snapshots/{sid}/verify` |
 | Reset the tamper | `POST /api/demo/restore` |
-| Scenario 2: upload a renewed V2 | `POST /api/demo/new-version` `{}` |
-| Document history | `GET /api/documents/{doc}/versions` |
-| Verify one version | `GET /api/documents/{doc}/versions/{n}/verify` |
-| Compare + explain V1 → V2 | `POST /api/documents/{doc}/versions/2/explain` `{}` |
-| Auditor decision | `POST /api/documents/{doc}/versions/2/review` `{"decision": "ACCEPT", "auditor": "..."}` |
 
 The demo tender id is `TN-2026-014`. Finding ids are `{tender_id}-Fnn`; the demo's headline finding (Vendor A ↔ Vendor B) is always `TN-2026-014-F01`.
 
@@ -63,7 +58,6 @@ The demo tender id is `TN-2026-014`. Finding ids are `{tender_id}-Fnn`; the demo
 | POST | `/api/demo/load?analyze=true` | resets the DB, generates 260 registry vendors / 480 historical tenders (~1,770 award records) / 14 PDFs; with `analyze=true` also runs the pipeline |
 | POST | `/api/demo/tamper` | body `{"document_id": "DOC-V001-COMP"}` (optional). Edits the stored file on disk |
 | POST | `/api/demo/restore` | restores tampered files |
-| POST | `/api/demo/new-version` | body `{"document_id": "DOC-V001-COMP"}` (optional). Creates a renewed compliance PDF as the next version (409 if already uploaded) |
 
 ### Tenders & documents
 | Method | Path | Notes |
@@ -116,19 +110,7 @@ Document ids in the demo: `DOC-TENDER`, `DOC-SUBMISSION-LOG`, `DOC-V00n-TECH` (t
 | POST | `/api/tenders/{tid}/evidence/finalize` | freezes evidence → `snapshot_id`, `bundle_hash`, `chain_payload` |
 | GET | `/api/tenders/{tid}/evidence/snapshots` | snapshots for a tender |
 | GET | `/api/evidence/snapshots/{sid}?include_bundle=true` | snapshot summary; optionally the full bundle and its exact canonical JSON |
-| GET | `/api/evidence/snapshots/{sid}/verify` | recomputes the hash, re-fingerprinting the exact document versions the snapshot committed |
-
-### Document versions
-| Method | Path | Notes |
-|---|---|---|
-| GET | `/api/documents/{doc}/versions` | version history; each version has `sha256`, `status`, `parent_version_id`, `anchor`, `chain_payload` |
-| POST | `/api/documents/{doc}/versions` | multipart `file` (PDF), `created_by`, `note`. Creates the next immutable version (`PENDING_REVIEW`); returns it plus the comparison with its parent. 409 if identical to an existing version |
-| GET | `/api/documents/{doc}/versions/{n}` | one version + its extracted page text |
-| GET | `/api/documents/{doc}/versions/{n}/file` | the stored PDF of that version |
-| GET | `/api/documents/{doc}/versions/{n}/verify` | `INTEGRITY_VERIFIED` \| `HISTORICALLY_VERIFIED` \| `NEW_VERSION_DETECTED` \| `INTEGRITY_MISMATCH` |
-| GET | `/api/documents/{doc}/changes?from_version=1&to_version=2` | deterministic field + text diff with rulebook re-checks |
-| POST | `/api/documents/{doc}/versions/{n}/explain` | body `{"method": "auto"\|"llm"\|"template"}` (optional). Comparison + advisory explanation |
-| POST | `/api/documents/{doc}/versions/{n}/review` | body `{"decision": "ACCEPT"\|"REQUEST_VERIFICATION"\|"FLAG_FOR_INVESTIGATION", "auditor": "...", "notes": "", "finalize": true}`. ACCEPT makes the version official and seals a new snapshot |
+| GET | `/api/evidence/snapshots/{sid}/verify` | recomputes the hash from current evidence |
 | GET | `/api/tenders/{tid}/dossier-data` | everything the Assurance Dossier PDF needs |
 
 ### Exploration mode (uploads)
@@ -240,16 +222,12 @@ Node `type` ∈ `vendor, director, address, contact, tender, document`. Edge `ty
 ```
 
 ### Verify (`GET /evidence/snapshots/{sid}/verify`)
-`status` is `INTEGRITY_VERIFIED`, `NEW_VERSION_DETECTED` (the snapshot still matches, `match` is true, and a newer document version exists; see `newer_versions`) or `INTEGRITY_MISMATCH`.
 ```json
 {
   "snapshot_id": "...", "committed_hash": "0adee5...", "current_hash": "f81aa9...",
   "match": false, "status": "INTEGRITY_MISMATCH",
-  "headline": "Integrity mismatch",
-  "explanation": "The historically committed evidence no longer matches its original fingerprint.",
   "changed_components": ["documents"],
-  "changed_documents": [{"document_id": "DOC-V001-COMP", "filename": "ComplianceDocs_A.pdf", "version_id": "DOC-V001-COMP@v1", "committed_sha256": "...", "current_sha256": "..."}],
-  "newer_versions": [],
+  "changed_documents": [{"document_id": "DOC-V001-COMP", "filename": "ComplianceDocs_A.pdf", "committed_sha256": "...", "current_sha256": "..."}],
   "audit_chain": {"valid": true, "head_hash": "..."},
   "note": "Integrity verification proves the evidence is unchanged since commitment; it does not prove ..."
 }
@@ -263,16 +241,4 @@ Node `type` ∈ `vendor, director, address, contact, tender, document`. Edge `ty
 2. Commit `chain_payload` on-chain: `case_id`, `evidence_hash` (= `bundle_hash`), `audit_head_hash`, `timestamp`, auditor action(s). Add the dossier PDF's own SHA-256 as the report hash. Nothing else goes on-chain.
 3. To verify, call `GET /api/evidence/snapshots/{sid}/verify` and compare **`current_hash`** with the hash read from the contract. Equal → `INTEGRITY VERIFIED`; different → `INTEGRITY MISMATCH` (use `changed_documents` to show what changed).
 4. The bundle hash is `SHA-256(canonical JSON)`. Canonical JSON = `json.dumps(bundle, sort_keys=True, ensure_ascii=False)` with no extra whitespace options (Python defaults: `", "` and `": "` separators). `GET /api/evidence/snapshots/{sid}?include_bundle=true` returns the exact `canonical_json` string, so it can be re-hashed independently.
-5. Actions taken after finalisation (new dispositions, counterfactual runs) do not change an existing snapshot. Re-running `analyze` or modifying a stored document file does. Uploading a new document **version** does not: a snapshot re-fingerprints the versions it committed, and reports the newer one as `NEW_VERSION_DETECTED`.
-6. Each finalised document version also has its own `chain_payload` (`GET /api/documents/{doc}/versions`): `case_id` = `{snapshot_id}:{document_id}@v{n}`, `evidence_hash` = that version's file SHA-256, `audit_head_hash`, `timestamp`, `auditor_actions` = `["V1_FINALIZED"]` or `["V2_ACCEPTED"]`. It is committed with the same `commitEvidence` call as a separate record, so V1's record is never overwritten.
-
-### Integrity semantics
-
-| Situation | Status | Meaning |
-|---|---|---|
-| Stored version matches its recorded fingerprint, and it is the latest | `INTEGRITY_VERIFIED` | "Document matches the version committed at snapshot S1." |
-| Older version still matches; a newer version exists | `HISTORICALLY_VERIFIED` | history intact |
-| New version awaiting auditor review | `NEW_VERSION_DETECTED` | "The current document differs from the historically committed version." Not a finding |
-| A stored version's file was changed in place | `INTEGRITY_MISMATCH` | "The historically committed evidence no longer matches its original fingerprint." |
-
-The explanation layer (Claude when configured, otherwise a rule-based template) only explains and triages. It receives the hash results and rule checks as fixed facts, has no status field, cannot accept a version, and output containing verdict words (fraud, fake, legitimate, invalid, ...) is discarded in favour of the template.
+5. Actions taken after finalisation (new dispositions, counterfactual runs) do not change an existing snapshot. Re-running `analyze` or modifying a document does.

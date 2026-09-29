@@ -37,10 +37,6 @@ The dossier hash is optional because this repository currently exposes dossier *
 
 The contract permits one commitment per snapshot ID. A later finalisation creates a new snapshot ID and can be committed separately.
 
-## Document versions
-
-Each finalised document version is anchored as its own record with the unchanged contract: `caseId` is `{snapshot_id}:{document_id}@v{n}` (for example `SNAP-55EC30303F11:DOC-V001-COMP@v1`), `evidenceHash` is that version's file SHA-256, and `auditorAction` is `V1_FINALIZED` or `V2_ACCEPTED`. A renewed V2 gets a new `caseId`, so V1's record is never overwritten, and the contract's "Evidence already committed" check rejects any attempt to rewrite it. No contract or ABI change was needed; the version identifier travels in `caseId`. Only identifiers and hashes go on-chain, never document content.
-
 ## Browser and demo troubleshooting
 
 - Use a normal Chrome tab with the [BridgeKey extension](https://chromewebstore.google.com/detail/bridgekey/bfjojdcfenehemjgjlepdjomkpginlkg) enabled, or BridgeKey's own Web3 browser. Codex's embedded preview cannot load Chrome extensions, so it will show “No EVM wallet provider found.”

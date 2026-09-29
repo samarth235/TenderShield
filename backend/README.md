@@ -76,8 +76,7 @@ app/
   graph/               NetworkX relationship graph + views
   intelligence/        document similarity (TF-IDF / SBERT), behaviour + Isolation Forest
   reasoning/           scoring rule, findings + reasoning chains, counterfactuals
-  evidence/            audit chain, evidence bundles / verification, document versions + change
-                       analysis / explanation, dossier data
+  evidence/            audit chain, evidence bundles / verification, dossier data
 scripts/               seed_demo, hero_demo, export_openapi
 samples/               example bidder uploads (CSV / JSON)
 tests/                 pytest suite

@@ -90,7 +90,7 @@ export async function commitEvidenceToBlockchain(payload: ChainPayload, dossierH
   const address = requireContractAddress();
   const { address: auditor, provider } = await connectWallet();
   const contract = new ethers.Contract(address, TENDERSHIELD_ABI, await provider.getSigner());
-  if (await contract.evidenceExists(payload.case_id)) throw new Error(`${payload.case_id} is already committed on MST Testnet; existing records are never overwritten.`);
+  if (await contract.evidenceExists(payload.case_id)) throw new Error("This snapshot is already committed on MST Testnet.");
   const tx = await contract.commitEvidence(
     payload.case_id,
     payload.tender_id,
