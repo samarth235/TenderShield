@@ -10,6 +10,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.utils import simpleSplit
 from reportlab.pdfgen import canvas
 
+from .market import gstin
 from .scenario import DEMO_TENDER, PARAPHRASE, SECTION_BANKS
 
 FONT = "Helvetica"
@@ -136,7 +137,7 @@ def _amount(value: float, unit: str) -> str:
 
 
 def compliance_pages(vendor: dict, facts: dict) -> list[list[str]]:
-    gstin = f"{vendor['state_code']}{vendor['pan']}1Z5"
+    gstin_no = gstin(vendor["state_code"], vendor["pan"])
     iso27 = (
         f"ISO/IEC 27001 Certificate - Valid Until: {facts['iso27001_valid_until']}"
         if facts.get("iso27001_valid_until")
@@ -144,7 +145,7 @@ def compliance_pages(vendor: dict, facts: dict) -> list[list[str]]:
     )
     declarations = [
         "## Section D - Statutory Registrations and Declarations",
-        f"GST Registration: {'Registered' if facts['gst_registered'] else 'Not registered'} (GSTIN {gstin})",
+        f"GST Registration: {'Registered' if facts['gst_registered'] else 'Not registered'} (GSTIN {gstin_no})",
         f"PAN: {vendor['pan']} (copy enclosed)" if facts["pan_available"] else "PAN: Not furnished",
         "Blacklisting / Debarment Declaration: "
         + ("Blacklisted" if facts["blacklisted"] else "Not blacklisted or debarred by any authority"),

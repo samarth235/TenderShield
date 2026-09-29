@@ -256,6 +256,11 @@ function RobustnessPanel({ fid }: { fid: string }) {
 
 export function FindingDetail() {
   const { findingId = "" } = useParams();
+  // Keyed so evidence toggles and the draft disposition reset when moving to another finding.
+  return <FindingView key={findingId} findingId={findingId} />;
+}
+
+function FindingView({ findingId }: { findingId: string }) {
   const q = useFinding(findingId);
   const qc = useQueryClient();
   const toast = useToast();

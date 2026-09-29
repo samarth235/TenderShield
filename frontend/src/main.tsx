@@ -12,6 +12,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import { Layout } from "./components/Layout";
+import { RouteError } from "./components/NotLoaded";
 import { LoadingBlock, ToastProvider } from "./components/ui";
 import { Compliance } from "./pages/Compliance";
 import { FindingDetail } from "./pages/FindingDetail";
@@ -31,27 +32,34 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: "/", element: <Overview /> },
-      { path: "/rulebook", element: <Navigate to="/compliance" replace /> },
-      { path: "/compliance", element: <Compliance /> },
       {
-        path: "/graph",
-        element: (
-          <Suspense fallback={<LoadingBlock rows={6} />}>
-            <GraphPage />
-          </Suspense>
-        ),
-      },
-      { path: "/intelligence", element: <Intelligence /> },
-      { path: "/findings", element: <Findings /> },
-      { path: "/findings/:findingId", element: <FindingDetail /> },
-      {
-        path: "/integrity",
-        element: (
-          <Suspense fallback={<LoadingBlock rows={6} />}>
-            <IntegrityPage />
-          </Suspense>
-        ),
+        // Pathless wrapper so a page error renders inside the layout instead of replacing it.
+        errorElement: <RouteError />,
+        children: [
+          { path: "/", element: <Overview /> },
+          { path: "/rulebook", element: <Navigate to="/compliance" replace /> },
+          { path: "/compliance", element: <Compliance /> },
+          {
+            path: "/graph",
+            element: (
+              <Suspense fallback={<LoadingBlock rows={6} />}>
+                <GraphPage />
+              </Suspense>
+            ),
+          },
+          { path: "/intelligence", element: <Intelligence /> },
+          { path: "/findings", element: <Findings /> },
+          { path: "/findings/:findingId", element: <FindingDetail /> },
+          {
+            path: "/integrity",
+            element: (
+              <Suspense fallback={<LoadingBlock rows={6} />}>
+                <IntegrityPage />
+              </Suspense>
+            ),
+          },
+          { path: "*", element: <Navigate to="/" replace /> },
+        ],
       },
     ],
   },

@@ -24,7 +24,7 @@ function Landing() {
           <Badge tone="brand">Explainable tender assurance</Badge>
           <h1>Turn fragmented procurement records into evidence you can defend.</h1>
           <p>
-            TendorShield reads the tender, checks every bidder against every requirement, and connects vendors,
+            TenderShield reads the tender, checks every bidder against every requirement, and connects vendors,
             directors, addresses and bidding history into a relationship graph. Each finding is explained, stress-tested
             by removing evidence, decided by a human auditor, and sealed with a cryptographic hash.
           </p>
@@ -32,7 +32,7 @@ function Landing() {
             <Button variant="brand" size="lg" icon={<Play size={16} />} loading={load.isPending} onClick={() => load.mutate()}>
               Load demonstration tender
             </Button>
-            <span className="dim" style={{ fontSize: 13 }}>TN-2026-014 · 6 bidders · 120 historical tenders · runs offline</span>
+            <span className="dim" style={{ fontSize: 13 }}>TN-2026-014 · 6 bidders · 480 historical tenders · runs offline</span>
           </div>
           {load.isError && <p style={{ color: "var(--fail)" }}>{String(load.error)} — is the API running (`make run`)?</p>}
           <div className="lifecycle">

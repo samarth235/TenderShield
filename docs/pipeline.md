@@ -69,6 +69,29 @@ The families are corporate (director / address / contact), behavioural (co-biddi
 | Compliance failure | E (V005) | deterministic FAIL | ISO 9001 expired before bid date |
 | Missing information | F (V006) | UNKNOWN / insufficient data | ownership disclosure missing, directors unavailable |
 
-Random background noise can also produce LOW "relationship noted" items, for example C ↔ F with 3 co-bids. This shows that single weak signals are not escalated.
+Ordinary market structure also produces LOW "relationship noted" items. Vendor E works the same Mumbai-region traffic market as A and B, so each pair meets in 5 tenders, well above the independence baseline. That is behavioural evidence from one family only, so it is not escalated.
+
+### Simulated market (`app/demo/market.py`, `app/demo/history.py`)
+
+The background is modelled on urban-local-body works procurement rather than random draws:
+
+- **Registry:** 260 contractors. That is the six bidders, 20 hand-authored background actors (V007-V026) and 234 generated firms. Each firm has a constitution (public / private limited, LLP, partnership, proprietorship), CIN or LLPIN, PAN with the correct entity character, a GSTIN with a valid check digit, DINs for company directors and LLP partners (partners of firms have none), a registered address with a real PIN code, and work categories, home market and reach.
+- **History:** 480 awarded tenders from January 2021 to January 2026, spread across 8 regional markets (MMR, Pune, Nashik, Nagpur, Gujarat, Chennai, Hyderabad, Bengaluru), 21 buyers and 6 work segments (traffic/ITS, roads, drains, street lighting, water supply, buildings). Each segment has its own value distribution and pricing. Volume peaks at fiscal-year end and is thin in 2021. Bidders are firms working that segment and market that meet the 20%-of-estimate turnover criterion, are more than a year old and are not debarred. Tenders average about 3.7 bids, and some are single-bid. The lowest technically qualified bid wins, and about 5% of bids are rejected at technical evaluation. Most bids are filed on the last day.
+- **Messy records:** Award records spell names the way clerks do ("M/s.", upper case, Pvt/Private, Engg., Shri/Shree, typos). They carry a GSTIN only about half the time, often the firm's registration in the tender's state. About 5% of bids come from firms missing from the registry. Entity resolution matches GSTIN, then PAN inside GSTIN, then normalised name, then fuzzy name. It links 98% of records with no false matches.
+
+Planted background structure (none of it touches the current tender's findings, but all of it is visible in the graph and the behaviour model):
+
+| Structure | Vendors | What the data shows |
+|---|---|---|
+| Hidden network around the A/B ring | V007 Shreeji Traffic Solutions, V008 Sharma Realty | V007 shares Vendor B's landline and files cover bids in 5 of the 9 ring tenders (disqualified: too small). Its partner Sunita Sharma co-directs V008 with Vendor A's director. |
+| Pune road-works ring | V009, V010, V011 | 12 tenders with a three-way winner rotation. V009 and V011 share a director, and V010 and V011 share an office. |
+| Nagpur street-lighting pair | V012, V013 (+ V014) | 8 alternating wins. All three use one bid consultant's e-mail domain; V014 is an innocent client of that consultant. |
+| Legitimate group companies | V015, V016 | Same directors, head office and e-mail domain, and they never bid against each other. Corporate links alone stay LOW. |
+| Dominant national players | V017, V018 | Meet in most large ITS tenders and genuinely compete. The Isolation Forest still flags them, which is why the model never counts as an evidence family on its own. |
+| Independent directors | Meera Iyer (C, D, V019, V020), Dr. Venkatesh Subramanian (V015, V018) | Board interlocks with no bidding coordination. |
+| Virtual-office address | V021-V024 | Four unrelated firms registered at one Thane address. |
+| Debarred firm reborn | V025, V026 | V025 is debarred by PMC in Feb 2024. V026, with the same directors, is incorporated two months later and starts bidding. |
+
+The Pune, Nagpur and A/B rings are the top population outliers of the Isolation Forest. The tender graph shows bidders plus the registry vendors one corporate hop away, so the Shreeji / Sharma Realty network around Vendors A and B and the Meera Iyer boards around Vendors C and D both appear.
 
 The dataset is deterministic: `TS_RANDOM_SEED=14` and PDFs are rendered with `invariant=1`, so the same seed produces the same data.

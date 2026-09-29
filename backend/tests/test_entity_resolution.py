@@ -1,5 +1,11 @@
 from app.db import get_artifact, session
-from app.entities.resolution import company_core, normalise_address, normalise_company, person_name_compatible
+from app.entities.resolution import (
+    company_core,
+    normalise_address,
+    normalise_company,
+    person_name_compatible,
+    premises_numbers,
+)
 
 from .conftest import TENDER
 
@@ -39,3 +45,26 @@ def test_shared_entities(analyzed):
     assert links[("V001", "V002")] == {"director", "address"}
     assert links[("V003", "V004")] == {"director"}
     assert {d["vendor_id"] for d in entities["data_quality"]} == {"V006"}
+
+
+def test_award_record_conventions():
+    assert normalise_company("M/S BHARAT BUILDCON PRIVATE LIMITED") == normalise_company("Bharat Buildcon Pvt. Ltd.")
+    assert company_core("Shri Ganesh Infra Projects") == company_core("Shree Ganesh Infrastructure Projects")
+
+
+def test_same_street_different_plot_is_not_same_premises():
+    a, _ = normalise_address("Plot No. 14, Sector 5, Vashi, Navi Mumbai, Maharashtra 400703")
+    b, _ = normalise_address("Room No. 7, Sai Darshan CHS, Sector 9, Vashi, Navi Mumbai, Maharashtra 400703")
+    assert premises_numbers(a) != premises_numbers(b)
+
+
+def test_background_network(analyzed):
+    with session() as conn:
+        entities = get_artifact(conn, TENDER, "entities")
+    links = {tuple(l["vendors"]): {x["type"] for x in l["links"]} for l in entities["shared_links"]}
+    assert links[("V002", "V007")] == {"contact"}                       # shell shares Vendor B's landline
+    assert links[("V001", "V008")] == links[("V007", "V008")] == {"director"}
+    assert links[("V015", "V016")] == {"director", "address", "contact"}  # legitimate group companies
+    assert links[("V021", "V024")] == {"address"}                       # virtual-office address
+    assert links[("V012", "V013")] == {"contact"}                       # shared bid consultant
+    assert ("V001", "V007") not in links                                  # same sector, different premises

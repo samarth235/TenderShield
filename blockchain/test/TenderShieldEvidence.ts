@@ -27,6 +27,28 @@ describe("TenderShieldEvidence", function () {
     expect(await contract.evidenceExists("SNAP-TEST-001")).to.equal(true);
   });
 
+  it("stores each document version as its own record without overwriting the historical one", async function () {
+    const contract = await ethers.deployContract("TenderShieldEvidence");
+    await contract.waitForDeployment();
+    const v1 = "SNAP-S1:DOC-V001-COMP@v1";
+    const v2 = "SNAP-S2:DOC-V001-COMP@v2";
+    const h1 = `0x${"a1".repeat(32)}`;
+    const h2 = `0x${"c3".repeat(32)}`;
+    await (await contract.commitEvidence(v1, "TN-TEST", h1, auditHash, ethers.ZeroHash, "V1_FINALIZED")).wait();
+    await (await contract.commitEvidence(v2, "TN-TEST", h2, auditHash, ethers.ZeroHash, "V2_ACCEPTED")).wait();
+
+    expect((await contract.getEvidence(v1)).evidenceHash).to.equal(h1);
+    expect((await contract.getEvidence(v1)).auditorAction).to.equal("V1_FINALIZED");
+    expect((await contract.getEvidence(v2)).evidenceHash).to.equal(h2);
+    try {
+      await contract.commitEvidence(v1, "TN-TEST", h2, auditHash, ethers.ZeroHash, "OVERWRITE");
+      expect.fail("a historical version record must not be overwritten");
+    } catch (error) {
+      expect(String(error)).to.include("Evidence already committed");
+    }
+    expect((await contract.getEvidence(v1)).evidenceHash).to.equal(h1);
+  });
+
   it("rejects a second commitment for the same snapshot", async function () {
     const contract = await ethers.deployContract("TenderShieldEvidence");
     await contract.waitForDeployment();

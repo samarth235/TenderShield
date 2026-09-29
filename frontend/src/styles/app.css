@@ -1950,6 +1950,113 @@ a.source-chip:hover {
   color: #fff;
 }
 
+.seal--info {
+  background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+}
+
+.seal--info .seal__icon {
+  background: var(--accent);
+  color: #fff;
+}
+
+.callout--info {
+  background: var(--accent-soft);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
+}
+
+/* Seven-step integrity story shown at the top of the Integrity page. */
+.story {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.story__step {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  min-width: 0;
+}
+
+.story__num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.story__title {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.story__step--done {
+  border-color: color-mix(in srgb, var(--pass) 40%, var(--line));
+  background: var(--pass-soft);
+}
+
+.story__step--done .story__num {
+  color: var(--pass);
+}
+
+.story__step--bad {
+  border-color: color-mix(in srgb, var(--fail) 45%, var(--line));
+  background: var(--fail-soft);
+}
+
+.story__step--bad .story__num {
+  color: var(--fail);
+}
+
+.story__step--next {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.version-row {
+  cursor: pointer;
+}
+
+.version-row:hover td {
+  background: var(--surface-2);
+}
+
+.version-row--selected td {
+  background: var(--accent-soft);
+}
+
+.version-row--selected:hover td {
+  background: var(--accent-soft);
+}
+
+.diff-old {
+  color: var(--ink-3);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--ink-3) 60%, transparent);
+}
+
+.diff-new {
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .story {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .story {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* ---------------------------------------------------------------- responsive */
 
 @media (max-width: 1100px) {

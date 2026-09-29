@@ -365,12 +365,162 @@ export interface Verification {
   committed_hash: string;
   current_hash: string;
   match: boolean;
-  status: "INTEGRITY_VERIFIED" | "INTEGRITY_MISMATCH";
+  /** NEW_VERSION_DETECTED: the snapshot still matches; a newer document version exists (not a mismatch). */
+  status: "INTEGRITY_VERIFIED" | "NEW_VERSION_DETECTED" | "INTEGRITY_MISMATCH";
+  headline?: string;
+  explanation?: string;
   changed_components: string[];
-  changed_documents: { document_id: string; filename: string; committed_sha256: string | null; current_sha256: string | null }[];
+  changed_documents: { document_id: string; filename: string; version_id?: string | null; committed_sha256: string | null; current_sha256: string | null }[];
+  newer_versions?: {
+    document_id: string;
+    filename: string;
+    committed_version: number;
+    committed_version_id: string;
+    latest_version: number;
+    latest_version_id: string;
+    latest_status: VersionStatus;
+  }[];
   audit_chain: { valid: boolean; head_hash?: string; broken_at_entry?: number };
   verified_at: string;
   note: string;
+}
+
+/* ---------------------------------------------------------------- document versions */
+
+export type VersionStatus = "ACTIVE" | "SUPERSEDED" | "PENDING_REVIEW" | "VERIFICATION_REQUESTED" | "FLAGGED";
+export type ReviewDecision = "ACCEPT" | "REQUEST_VERIFICATION" | "FLAG_FOR_INVESTIGATION";
+export type VersionIntegrityStatus = "INTEGRITY_VERIFIED" | "HISTORICALLY_VERIFIED" | "NEW_VERSION_DETECTED" | "INTEGRITY_MISMATCH";
+
+export interface VersionChainPayload extends ChainPayload {
+  document_id: string;
+  version_id: string;
+  version: number;
+}
+
+export interface DocumentVersion {
+  version_id: string;
+  document_id: string;
+  tender_id: string;
+  version: number;
+  label: string;
+  parent_version_id: string | null;
+  created_at: string;
+  created_by: string;
+  filename: string;
+  sha256: string;
+  pages: number;
+  status: VersionStatus;
+  meta: { origin?: string; note?: string; [k: string]: unknown };
+  anchor: { anchor_id: string; snapshot_id: string; finalized_at: string; audit_head_hash: string; action: string } | null;
+  chain_payload: VersionChainPayload | null;
+  committed_in_snapshots?: string[];
+}
+
+export interface VersionHistory {
+  document_id: string;
+  tender_id: string;
+  vendor_id: string | null;
+  kind: string;
+  filename: string;
+  official_version: number | null;
+  latest_version: number | null;
+  pending_review: number[];
+  versions: DocumentVersion[];
+}
+
+export interface VersionVerification {
+  document_id: string;
+  version_id: string;
+  version: number;
+  label: string;
+  version_status: VersionStatus;
+  status: VersionIntegrityStatus;
+  match: boolean;
+  headline: string;
+  explanation: string;
+  recorded_sha256: string;
+  current_sha256: string | null;
+  committed_in_snapshots: string[];
+  official_version: number | null;
+  latest_version: number | null;
+  chain_payload: VersionChainPayload | null;
+  verified_at: string;
+  note: string;
+}
+
+export interface RuleCheck {
+  rule_id: string;
+  requirement: string | null;
+  expected: string;
+  mandatory: boolean;
+  before: ResultStatus;
+  after: ResultStatus;
+  after_reason: string;
+  outcome_changed: boolean;
+}
+
+export interface FieldChange {
+  field: string;
+  label: string;
+  old_value: unknown;
+  new_value: unknown;
+  old_display: string;
+  new_display: string;
+  change_type: "modified" | "added" | "removed";
+  old_source: { page: number; excerpt: string } | null;
+  new_source: { page: number; excerpt: string } | null;
+  category: "identity" | "certificate" | "validity" | "eligibility" | "declared_value";
+  rule_check: RuleCheck | null;
+  potentially_routine: boolean;
+  affects_eligibility: boolean;
+  requires_verification: boolean;
+  impact: "rule_failed" | "eligibility" | "routine" | "verify" | "informational";
+  note: string;
+}
+
+export interface VersionComparison {
+  document_id: string;
+  tender_id: string;
+  vendor_id: string | null;
+  filename: string;
+  from_version: string;
+  to_version: string;
+  from_version_id: string;
+  to_version_id: string;
+  from_status: VersionStatus;
+  to_status: VersionStatus;
+  hashes: { from: string; to: string; differ: boolean };
+  changes: FieldChange[];
+  unchanged: { field: string; label: string; value: string }[];
+  text_changes: { page: number; change_type: "added" | "removed"; text: string }[];
+  counts: { changes: number; affects_eligibility: number; requires_verification: number; potentially_routine: number; rule_failed: number };
+  method: "deterministic";
+}
+
+export interface VersionExplanation {
+  method: "llm" | "template";
+  model: string | null;
+  summary: string;
+  what_changed: string[];
+  potentially_routine: string[];
+  affects_eligibility: string[];
+  requires_verification: string[];
+  auditor_checks: string[];
+  integrity_facts: {
+    hashes_differ: boolean;
+    historical_version_unchanged: boolean;
+    from_version: { label: string; status: VersionIntegrityStatus; hash_matches_record: boolean };
+    to_version: { label: string; status: VersionIntegrityStatus; hash_matches_record: boolean; review_status: VersionStatus };
+  };
+  counts: VersionComparison["counts"];
+  warnings: string[];
+  guardrail: string;
+}
+
+export interface VersionReviewResult {
+  version: DocumentVersion;
+  audit_entry: AuditEntry;
+  snapshot: Snapshot | null;
 }
 
 export interface AuditLog {

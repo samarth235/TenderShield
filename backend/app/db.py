@@ -136,9 +136,32 @@ CREATE TABLE IF NOT EXISTS snapshots (
     bundle_hash TEXT NOT NULL,
     audit_head INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS document_versions (
+    version_id TEXT PRIMARY KEY,
+    document_id TEXT NOT NULL,
+    tender_id TEXT NOT NULL,
+    version INTEGER NOT NULL,
+    parent_version_id TEXT,
+    created_at TEXT NOT NULL,
+    created_by TEXT NOT NULL,
+    filename TEXT NOT NULL,
+    path TEXT NOT NULL,
+    sha256 TEXT NOT NULL,
+    pages INTEGER NOT NULL DEFAULT 0,
+    status TEXT NOT NULL,
+    meta TEXT NOT NULL DEFAULT '{}',
+    anchor TEXT,
+    UNIQUE (document_id, version)
+);
+CREATE TABLE IF NOT EXISTS document_version_pages (
+    version_id TEXT NOT NULL,
+    page INTEGER NOT NULL,
+    text TEXT NOT NULL,
+    PRIMARY KEY (version_id, page)
+);
 """
 
-JSON_COLUMNS = {"meta", "directors", "value", "body", "removed", "run_result", "payload", "bundle"}
+JSON_COLUMNS = {"meta", "directors", "value", "body", "removed", "run_result", "payload", "bundle", "anchor"}
 
 
 def _db_path() -> Path:

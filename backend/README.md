@@ -68,7 +68,7 @@ app/
   config.py, db.py     settings, SQLite schema + helpers
   pipeline.py          end-to-end analysis workflow with per-stage timings
   api/                 routes + request schemas
-  demo/                deterministic synthetic dataset, PDF rendering, tamper demo
+  demo/                deterministic simulated market (registry + 5-year award history), PDFs, tamper demo
   ingestion/           PDF text extraction, bidder fact extraction, exploration uploads
   nlp/                 clause segmentation, pattern + Claude extractors, rulebook model
   compliance/          deterministic rule engine
@@ -76,7 +76,8 @@ app/
   graph/               NetworkX relationship graph + views
   intelligence/        document similarity (TF-IDF / SBERT), behaviour + Isolation Forest
   reasoning/           scoring rule, findings + reasoning chains, counterfactuals
-  evidence/            audit chain, evidence bundles / verification, dossier data
+  evidence/            audit chain, evidence bundles / verification, document versions + change
+                       analysis / explanation, dossier data
 scripts/               seed_demo, hero_demo, export_openapi
 samples/               example bidder uploads (CSV / JSON)
 tests/                 pytest suite

@@ -109,17 +109,26 @@ def _serialise(g: nx.MultiGraph, nodes: set[str], extra_edges: list[dict] | None
 
 
 def tender_view(g: nx.MultiGraph, tender_id: str) -> dict:
-    """Bidders of the tender, their corporate entities, shared-history tenders and bid documents."""
+    """Bidders of the tender, their corporate entities and second-degree corporate network,
+    shared-history tenders and bid documents."""
     tnode = f"tender:{tender_id}"
     bidders = sorted(n for n in g.neighbors(tnode) if g.nodes[n].get("type") == "vendor")
     bidder_ids = [g.nodes[n]["vendor_id"] for n in bidders]
     nodes = {tnode, *bidders}
+    corporate = ("director", "address", "contact")
     for b in bidders:
         for n in g.neighbors(b):
-            t = g.nodes[n]["type"]
-            if t in ("director", "address", "contact"):
+            if g.nodes[n]["type"] in (*corporate, "document"):
                 nodes.add(n)
-            elif t == "document":
+    # Registry vendors tied to a bidder through a director, address or contact, and the
+    # corporate records they share with each other - the second-degree network.
+    related = {m for n in list(nodes) if g.nodes[n]["type"] in corporate for m in g.neighbors(n)
+               if g.nodes[m]["type"] == "vendor" and m not in bidders}
+    circle = set(bidders) | related
+    nodes |= related
+    for v in related:
+        for n in g.neighbors(v):
+            if g.nodes[n]["type"] in corporate and sum(m in circle for m in g.neighbors(n)) >= 2:
                 nodes.add(n)
     # Historical tenders where at least two current bidders met.
     for n, data in g.nodes(data=True):
@@ -171,7 +180,7 @@ def relationship_paths(g: nx.MultiGraph, a: str, b: str, include_tenders: bool =
 def run_graph_stage(conn: sqlite3.Connection, tender_id: str) -> dict:
     g = build_graph(conn, tender_id)
     view = tender_view(g, tender_id)
-    bidder_nodes = [n["id"] for n in view["nodes"] if n["type"] == "vendor"]
+    bidder_nodes = [n["id"] for n in view["nodes"] if n["type"] == "vendor" and n["is_bidder"]]
     corporate = nx.Graph()
     corporate.add_nodes_from(bidder_nodes)
     for a, b in combinations(bidder_nodes, 2):

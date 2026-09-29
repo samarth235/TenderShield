@@ -38,6 +38,19 @@ class TamperRequest(BaseModel):
     document_id: Optional[str] = None
 
 
+class VersionReviewRequest(BaseModel):
+    decision: Literal["ACCEPT", "REQUEST_VERIFICATION", "FLAG_FOR_INVESTIGATION"]
+    auditor: str = Field(..., min_length=1)
+    notes: str = ""
+    finalize: bool = Field(True, description="On ACCEPT, seal a new evidence snapshot that commits the new version")
+
+
+class ExplainRequest(BaseModel):
+    method: Optional[Literal["auto", "llm", "template"]] = Field(
+        None, description="auto = Claude when credentials are configured, else the rule-based template")
+    from_version: Optional[int] = Field(None, description="Defaults to the version the new one was compared against")
+
+
 class BidderRecord(BaseModel):
     vendor_id: Optional[str] = None
     name: str

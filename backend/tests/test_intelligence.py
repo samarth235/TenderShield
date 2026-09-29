@@ -29,8 +29,17 @@ def test_behaviour_flags_planted_pair(analyzed):
         beh = get_artifact(conn, TENDER, "behaviour")
     pairs = {tuple(p["vendors"]): p for p in beh["pairs"]}
     ab = pairs[("V001", "V002")]
-    assert ab["co_bids"] == 5 and ab["rotation_count"] == 5
+    assert ab["co_bids"] == 9 and ab["rotation_count"] == 8  # one ring tender went to an outsider
     assert all(ab["flags"].values())
     assert ab["anomaly"]["is_outlier"]
     cd = pairs[("V003", "V004")]
     assert cd["co_bids"] == 1 and not any(cd["flags"].values())
+
+
+def test_background_rings_surface_in_population_outliers(analyzed):
+    with session() as conn:
+        beh = get_artifact(conn, TENDER, "behaviour")
+    outliers = {tuple(o["vendors"]) for o in beh["population_outliers"]}
+    # The Pune road-works ring and the Nagpur street-lighting pair are unrelated to the current tender.
+    assert {("V009", "V010"), ("V009", "V011"), ("V010", "V011"), ("V012", "V013")} <= outliers
+    assert beh["historical_tenders"] >= 470 and beh["model"]["training_pairs"] > 1000

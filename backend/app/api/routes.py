@@ -19,9 +19,10 @@ from ..config import get_settings
 from ..db import dumps, fetch_all, fetch_one, get_artifact, session
 from ..demo.generator import load_demo
 from ..demo.scenario import DEMO_TENDER_ID
-from ..demo.tamper import restore_documents, tamper_document
-from ..evidence import audit
+from ..demo.tamper import create_demo_version, restore_documents, tamper_document
+from ..evidence import audit, versions
 from ..evidence.bundle import finalize_snapshot, list_snapshots, load_bundle, snapshot_summary, verify_snapshot
+from ..evidence.changes import compare_versions, explain_changes, integrity_facts
 from ..evidence.dossier import dossier_data
 from ..graph.builder import build_graph, relationship_paths, tender_view, vendor_view
 from ..ingestion.facts import ingest_vendor_facts
@@ -38,9 +39,11 @@ from .schemas import (
     BiddersUpload,
     CounterfactualRequest,
     DispositionRequest,
+    ExplainRequest,
     ExtractRequest,
     FinalizeRequest,
     TamperRequest,
+    VersionReviewRequest,
 )
 
 router = APIRouter(prefix="/api")
@@ -112,6 +115,22 @@ def demo_restore() -> dict:
         return restore_documents(conn, DEMO_TENDER_ID)
 
 
+@router.post("/demo/new-version", tags=["demo"])
+def demo_new_version(body: TamperRequest) -> dict:
+    """Scenario 2: the bidder uploads a renewed compliance document as V2 (history untouched)."""
+    with session() as conn:
+        try:
+            created = create_demo_version(conn, body.document_id)
+            return {"version": created, "comparison": compare_versions(conn, created["document_id"],
+                                                                        to_version=created["version"])}
+        except LookupError as exc:
+            raise HTTPException(404, str(exc)) from exc
+        except FileExistsError as exc:
+            raise HTTPException(409, f"Renewed version already uploaded - {exc}") from exc
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from exc
+
+
 # --- Tenders & documents ---------------------------------------------------------
 
 @router.get("/tenders", tags=["tenders"])
@@ -165,6 +184,112 @@ def get_document_file(document_id: str) -> FileResponse:
     if doc is None or not Path(doc["path"]).exists():
         raise HTTPException(404, f"Unknown document {document_id}")
     return FileResponse(doc["path"], media_type="application/pdf", filename=doc["filename"])
+
+
+# --- Document versions ------------------------------------------------------------
+
+@router.get("/documents/{document_id}/versions", tags=["versions"])
+def get_versions(document_id: str) -> dict:
+    with session() as conn:
+        try:
+            return versions.list_versions(conn, document_id)
+        except LookupError as exc:
+            raise HTTPException(404, str(exc)) from exc
+
+
+@router.post("/documents/{document_id}/versions", tags=["versions"])
+async def post_version(
+    document_id: str,
+    file: UploadFile = File(..., description="New version of the document (PDF)"),
+    created_by: str = Form(..., description="Who supplied this version"),
+    note: str = Form(""),
+) -> dict:
+    """Create a new immutable version. Earlier versions are never modified."""
+    content = await file.read()
+    with session() as conn:
+        try:
+            created = versions.create_version(conn, document_id, content, file.filename or "", created_by, note)
+            return {"version": created, "comparison": compare_versions(conn, document_id, to_version=created["version"])}
+        except LookupError as exc:
+            raise HTTPException(404, str(exc)) from exc
+        except FileExistsError as exc:
+            raise HTTPException(409, str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from exc
+
+
+def _version_call(fn, *args):
+    try:
+        return fn(*args)
+    except LookupError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+@router.get("/documents/{document_id}/versions/{version}", tags=["versions"])
+def get_version(document_id: str, version: int) -> dict:
+    with session() as conn:
+        row = _version_call(versions.get_version_row, conn, document_id, version)
+        out = versions.serialize(row, versions.snapshots_pinning(conn, row["tender_id"]))
+        out["page_text"] = [{"page": p, "text": t} for p, t in versions.version_pages(conn, row["version_id"])]
+        return out
+
+
+@router.get("/documents/{document_id}/versions/{version}/file", tags=["versions"])
+def get_version_file(document_id: str, version: int) -> FileResponse:
+    with session() as conn:
+        path, filename = _version_call(versions.version_file, conn, document_id, version)
+    if not path.exists():
+        raise HTTPException(404, "Stored file missing")
+    return FileResponse(path, media_type="application/pdf", filename=f"V{version}_{filename}")
+
+
+@router.get("/documents/{document_id}/versions/{version}/verify", tags=["versions"])
+def verify_version(document_id: str, version: int) -> dict:
+    with session() as conn:
+        return _version_call(versions.verify_version, conn, document_id, version)
+
+
+@router.get("/documents/{document_id}/changes", tags=["versions"])
+def get_changes(document_id: str, from_version: Optional[int] = None, to_version: Optional[int] = None) -> dict:
+    """Deterministic field + text comparison between two versions, with rulebook re-checks."""
+    with session() as conn:
+        return _version_call(compare_versions, conn, document_id, from_version, to_version)
+
+
+@router.post("/documents/{document_id}/versions/{version}/explain", tags=["versions"])
+def explain_version(document_id: str, version: int, body: Optional[ExplainRequest] = None) -> dict:
+    """Comparison + advisory explanation (Claude when configured, rule-based template otherwise)."""
+    body = body or ExplainRequest()
+    with session() as conn:
+        comparison = _version_call(compare_versions, conn, document_id, body.from_version, version)
+        facts = integrity_facts(conn, comparison)
+    # The LLM call happens outside the DB session; it only ever sees the deterministic facts.
+    return {"comparison": comparison, "explanation": explain_changes(comparison, facts, body.method)}
+
+
+@router.post("/documents/{document_id}/versions/{version}/review", tags=["versions"])
+def review_version(document_id: str, version: int, body: VersionReviewRequest) -> dict:
+    """Auditor decision (ACCEPT / REQUEST_VERIFICATION / FLAG_FOR_INVESTIGATION), recorded in the audit chain."""
+    with session() as conn:
+        try:
+            result = versions.review_version(conn, document_id, version, body.decision, body.auditor, body.notes)
+        except LookupError as exc:
+            raise HTTPException(404, str(exc)) from exc
+        except PermissionError as exc:
+            raise HTTPException(409, str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from exc
+        result["snapshot"] = None
+        if body.decision == "ACCEPT" and body.finalize:
+            # The accepted version becomes a new official evidence state with its own snapshot + anchor.
+            try:
+                result["snapshot"] = finalize_snapshot(conn, result["version"]["tender_id"], body.auditor,
+                                                       f"Accepted {document_id} V{version}")
+            except LookupError:
+                pass  # no findings yet: the version is official and is anchored at the next finalisation
+            row = versions.get_version_row(conn, document_id, version)
+            result["version"] = versions.serialize(row, versions.snapshots_pinning(conn, row["tender_id"]))
+        return result
 
 
 # --- Analysis workflow -----------------------------------------------------------

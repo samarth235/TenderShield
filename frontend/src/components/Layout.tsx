@@ -76,6 +76,7 @@ export function Layout() {
             Demo tender <b>{r.tender_id}</b> loaded and analysed in {Math.round(r.analysis?.duration_ms ?? 0)} ms
           </span>,
         ),
+      onError: (error) => toast(<span>Could not load the demo tender: {error instanceof Error ? error.message : String(error)}</span>),
     });
 
   return (
@@ -84,7 +85,7 @@ export function Layout() {
         <div className="brand">
           <BrandMark />
           <div>
-            <div className="brand__name">TendorShield</div>
+            <div className="brand__name">TenderShield</div>
             <div className="brand__tag">Evidence intelligence</div>
           </div>
         </div>

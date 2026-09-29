@@ -16,14 +16,17 @@ def client():
 
 def test_hero_demo_flow(client):
     loaded = client.post("/api/demo/load", params={"analyze": "true"}).json()
-    assert loaded["bidders"] == 6 and loaded["historical_tenders"] == 120
+    assert loaded["bidders"] == 6 and loaded["historical_tenders"] == 480 and loaded["registered_vendors"] == 260
     assert loaded["analysis"]["stages"][2]["summary"]["evaluations"] == 108
 
     rules = client.get(f"/api/tenders/{TENDER}/rules").json()["rules"]
     assert len(rules) == 18
 
     graph = client.get(f"/api/tenders/{TENDER}/graph").json()
-    assert graph["stats"]["nodes"]["vendor"] == 6
+    vendors = {n["vendor_id"]: n for n in graph["nodes"] if n["type"] == "vendor"}
+    assert sum(n["is_bidder"] for n in vendors.values()) == 6
+    # Second-degree network: Vendor A's director's family firm and the shell sharing Vendor B's phone.
+    assert {"V007", "V008"} <= {vid for vid, n in vendors.items() if not n["is_bidder"]}
     paths = client.get(f"/api/tenders/{TENDER}/graph/paths", params={"a": "V001", "b": "V002"}).json()["paths"]
     assert {p["via"]["type"] for p in paths} == {"director", "address"}
 

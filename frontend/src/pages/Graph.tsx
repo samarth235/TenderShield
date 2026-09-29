@@ -145,6 +145,8 @@ export function GraphPage() {
   const [neighbours, setNeighbours] = useState<GraphNode[]>([]);
   const [pair, setPair] = useState<[string, string]>(["V001", "V002"]);
   const [paths, setPaths] = useState<RelationshipPath[] | null>(null);
+  const [tracing, setTracing] = useState(false);
+  const [traceError, setTraceError] = useState("");
 
   const levels = useMemo(() => {
     const rank = ["LOW", "INSUFFICIENT_DATA", "FAIL", "MEDIUM", "HIGH"];
@@ -182,13 +184,31 @@ export function GraphPage() {
       }
     });
     cyRef.current = cy;
+    setSelected(null);
+    setPaths(null);
     const focus = params.get("focus");
     if (focus) cy.getElementById(`vendor:${focus}`).emit("tap");
-    return () => cy.destroy();
+    // Node and edge colours come from CSS tokens, so restyle when the theme toggles.
+    const themeWatch = new MutationObserver(() => cy.style(style()));
+    themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => {
+      themeWatch.disconnect();
+      cy.destroy();
+    };
   }, [graph.data, toggles, levels, params]);
 
   const explain = async () => {
-    const res = await api.paths(TID, pair[0], pair[1]);
+    setTracing(true);
+    setTraceError("");
+    let res: Awaited<ReturnType<typeof api.paths>>;
+    try {
+      res = await api.paths(TID, pair[0], pair[1]);
+    } catch (error) {
+      setTraceError(error instanceof Error ? error.message : String(error));
+      return;
+    } finally {
+      setTracing(false);
+    }
     setPaths(res.paths);
     const cy = cyRef.current;
     if (!cy) return;
@@ -256,9 +276,10 @@ export function GraphPage() {
                   </select>
                 ))}
               </div>
-              <Button variant="primary" icon={<Waypoints size={15} />} onClick={explain} disabled={pair[0] === pair[1]}>
+              <Button variant="primary" icon={<Waypoints size={15} />} loading={tracing} onClick={explain} disabled={pair[0] === pair[1]}>
                 Trace connection
               </Button>
+              {traceError && <p style={{ color: "var(--fail)", fontSize: 13 }}>Could not trace the connection: {traceError}</p>}
               {paths && paths.length === 0 && <p className="muted">No shared director, address, contact or tender links these two vendors.</p>}
               {paths && paths.length > 0 && (
                 <div>

@@ -25,13 +25,16 @@ ADDRESS_MATCH_THRESHOLD = 85.0
 ABBREVIATIONS = {
     "pvt": "private", "ltd": "limited", "co": "company", "corp": "corporation", "engg": "engineering",
     "intl": "international", "&": "and", "sec": "sector", "no": "", "rd": "road", "st": "street",
+    "infra": "infrastructure", "shri": "shree", "sri": "shree", "bros": "brothers", "off": "office",
 }
 LEGAL_SUFFIXES = {"private", "limited", "llp", "company", "corporation", "inc"}
-GENERIC_EMAIL_DOMAINS = {"gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "rediffmail.com"}
+GENERIC_EMAIL_DOMAINS = {"gmail.com", "yahoo.com", "yahoo.co.in", "ymail.com", "outlook.com", "hotmail.com",
+                         "rediffmail.com"}
+HONORIFIC = re.compile(r"^\s*m\s*/\s*s\.?\s+")  # "M/s." prefix used in Indian award records
 
 
 def normalise_tokens(text: str) -> list[str]:
-    text = text.lower().replace("&", " and ")
+    text = HONORIFIC.sub("", text.lower()).replace("&", " and ")
     text = re.sub(r"[^\w\s]", " ", text)
     tokens = []
     for token in text.split():
@@ -59,6 +62,11 @@ def normalise_address(address: str) -> tuple[str, str | None]:
     return " ".join(tokens), pin.group(1) if pin else None
 
 
+def premises_numbers(normalised_address: str) -> set[str]:
+    """Plot / unit / sector numbers - two addresses on the same street with different numbers are different premises."""
+    return set(re.findall(r"\d+", normalised_address))
+
+
 def normalise_phone(phone: str) -> str:
     return re.sub(r"\D", "", phone)[-10:]
 
@@ -79,6 +87,9 @@ def person_name_compatible(a: str, b: str) -> float:
 def resolve_bidders(conn: sqlite3.Connection, vendors: list[dict]) -> dict:
     """Resolve historical bid records (raw names / GSTINs) to registered vendors; writes bids.vendor_id."""
     by_gstin = {v["gstin"]: v for v in vendors if v.get("gstin")}
+    # A GSTIN embeds the holder's PAN (characters 3-12): a firm registered in several states
+    # bids with a different GSTIN in each, but the PAN still identifies it.
+    by_pan = {v["pan"]: v for v in vendors if v.get("pan")}
     cores = [(v, company_core(v["name"]), normalise_company(v["name"])) for v in vendors]
     bids = fetch_all(conn, "SELECT bid_id, bidder_name, bidder_gstin, vendor_id FROM bids")
     stats = {"records": len(bids), "by_identifier": 0, "exact_normalised": 0, "fuzzy": 0, "unmatched": 0,
@@ -95,6 +106,8 @@ def resolve_bidders(conn: sqlite3.Connection, vendors: list[dict]) -> dict:
         match, method, score = None, None, 0.0
         if bid["bidder_gstin"] and bid["bidder_gstin"] in by_gstin:
             match, method, score = by_gstin[bid["bidder_gstin"]], "identifier", 100.0
+        elif bid["bidder_gstin"] and bid["bidder_gstin"][2:12] in by_pan:
+            match, method, score = by_pan[bid["bidder_gstin"][2:12]], "identifier", 100.0
         else:
             norm = normalise_company(bid["bidder_name"])
             core = company_core(bid["bidder_name"])
@@ -162,7 +175,7 @@ def resolve_shared_entities(vendors: list[dict]) -> dict:
         record = {"vendor_id": vendor["vendor_id"], "raw": vendor["registered_address"]}
         target = None
         for ent in addresses:
-            if pin and ent["pincode"] == pin:
+            if pin and ent["pincode"] == pin and premises_numbers(ent["normalised"]) == premises_numbers(norm):
                 score = fuzz.token_set_ratio(ent["normalised"], norm)
                 if score >= ADDRESS_MATCH_THRESHOLD:
                     target = ent

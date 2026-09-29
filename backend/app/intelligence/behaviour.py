@@ -72,7 +72,7 @@ def pair_features(participation: dict[str, dict[str, dict]]) -> tuple[dict[tuple
     for (a, b), tenders in common.items():
         na, nb = vendor_stats[a]["participations"], vendor_stats[b]["participations"]
         rotation, winners, price_gaps, time_gaps, history = 0, set(), [], [], []
-        for t in sorted(tenders):
+        for t in sorted(tenders, key=lambda t: (participation[t][a]["submitted_at"] or "", t)):  # chronological
             ba, bb = participation[t][a], participation[t][b]
             outcomes = {ba["outcome"], bb["outcome"]}
             if outcomes == {"WON", "RUNNER_UP"}:
