@@ -1,0 +1,231 @@
+{
+ "split": "test",
+ "notices": 47,
+ "lines": 89,
+ "extraction_precision": 0.91,
+ "not_scope_by_source": {
+  "document": 8
+ },
+ "classification": {
+  "accuracy": 0.63,
+  "macro_f1": 0.495,
+  "per_class": {
+   "civil_works": {
+    "support": 41,
+    "precision": 0.833,
+    "recall": 0.732,
+    "f1": 0.779
+   },
+   "consultancy_design": {
+    "support": 1,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "electrical": {
+    "support": 2,
+    "precision": 0.333,
+    "recall": 0.5,
+    "f1": 0.4
+   },
+   "ict_software": {
+    "support": 3,
+    "precision": 1.0,
+    "recall": 0.333,
+    "f1": 0.5
+   },
+   "industrial_machinery": {
+    "support": 12,
+    "precision": 1.0,
+    "recall": 0.917,
+    "f1": 0.957
+   },
+   "mechanical_hvac_plumbing": {
+    "support": 10,
+    "precision": 0.25,
+    "recall": 0.1,
+    "f1": 0.143
+   },
+   "other_goods_services": {
+    "support": 1,
+    "precision": 0.25,
+    "recall": 1.0,
+    "f1": 0.4
+   },
+   "structural_fabrication": {
+    "support": 2,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "telecom_networks": {
+    "support": 1,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "vehicles_equipment": {
+    "support": 8,
+    "precision": 1.0,
+    "recall": 0.625,
+    "f1": 0.769
+   }
+  }
+ },
+ "predicted_other": 4,
+ "model": {
+  "trained_at": "2026-11-12T09:49:48+00:00"
+ },
+ "errors": [
+  {
+   "text": "Construction of Class Rooms under Assam School Education and Adolescent Well-Being Project (ASAP) under Goalpara & South",
+   "gold": "civil_works",
+   "pred": "other_goods_services"
+  },
+  {
+   "text": "T0+8 Weeks N/A N/A Supply, Delivery ,Installation ,commissioning and Job Completion of Desktop PCs as per quantity of Bo",
+   "gold": "ict_software",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Upgradation of existing MCF , Palaparamba, Ward 5, Kuthuparamba Municipality",
+   "gold": "civil_works",
+   "pred": "other_goods_services"
+  },
+  {
+   "text": "Tender Notice No.: 10 of 2024-25 Department: Narmada, Water Resources, Water Supply & Kalpsar Department Division: Ukai ",
+   "gold": "civil_works",
+   "pred": "mechanical_hvac_plumbing"
+  },
+  {
+   "text": "Tender Notice No.: 5 of 2024-25 Department: Narmada, Water Resources, Water Supply & Kalpsar Department Division: Ukai D",
+   "gold": "civil_works",
+   "pred": "mechanical_hvac_plumbing"
+  },
+  {
+   "text": "Tender Notice No.: 18 of 2025-26 Department: Narmada, Water Resources, Water Supply & Kalpsar Department Division: Ukai ",
+   "gold": "civil_works",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Providing and installation of Dam Top Lighting and other electrification works at Ukai Dam.",
+   "gold": "electrical",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Providing and installation of CCTV Surveillance System, Fire Safety Arrangements, Boom Barrier and related works includi",
+   "gold": "telecom_networks",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Providing and installation of SCADA-based Gate Operation, ARMC & Monitoring Control System, Instrumentation and other re",
+   "gold": "ict_software",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Upgradation/Revival/Augmentation of Surface Drains, L-Drains, Cross Drains and Outfall Drains.",
+   "gold": "civil_works",
+   "pred": "mechanical_hvac_plumbing"
+  },
+  {
+   "text": "IN-DRINKING WATER-554219-CW-RFQ/UJN Repair & Restoritaion of damage Haldwari Water Supply Scheme due to Natural Calamity",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "IN-DRINKING WATER-554220-CW-RFQ/UJN Repair & Restoritaion of damage 08 Water Supply Scheme due to Deviya Aapda in year 2",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "554237-GO-RFQ / UJN Supply of 02 Nos. mini super sucker machine (3 KL capacity) RFQ Rs. 2.00 Lakh Rs. 5900.00",
+   "gold": "vehicles_equipment",
+   "pred": "electrical"
+  },
+  {
+   "text": "Supply of a Garbage Collection Vehicle having Closed container with Rear opening (two door) MS/Galvanized steel for Refu",
+   "gold": "vehicles_equipment",
+   "pred": "structural_fabrication"
+  },
+  {
+   "text": "Development, Operation and Maintenance of Natani Ka Bara-Malakhera-Maujpur section",
+   "gold": "civil_works",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Fabrication, Supply, Installation, Testing and Commissioning with required Plumbing , Civil and Electrical works for ins",
+   "gold": "structural_fabrication",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Supply Installation, Testing and Commissioning of 3 seater Module Toilet system with all Civil, Plumbing and Electrical ",
+   "gold": "structural_fabrication",
+   "pred": "electrical"
+  },
+  {
+   "text": "NAME OF WORK; - Restoration of rain damages of WSS Kullu Town in Distt.",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Kullu (H.P) (SH:- Laying, jointing and testing of gravity main, Construction of crate work along the sarvari khad to pro",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "civil_works"
+  },
+  {
+   "text": "A.M.P. for the year 2025-26 on Parla Kasan Rachhera Harizan Basti road (Village road) DRRP No P0805VR0158 Km 0/00 to 1/0",
+   "gold": "civil_works",
+   "pred": "signalling_control"
+  },
+  {
+   "text": "A.M.P. for the year 2025-26 on Motipur Dudar Dhamyana road (PMGSY) DRRP No HP0805MRL085 Km 2/00 to 6/00, Bari Dhanyari r",
+   "gold": "civil_works",
+   "pred": "signalling_control"
+  },
+  {
+   "text": "Special repair Anpurna Bekary se Ravidas Temple Road at Distt. Mandi (H.P.) (Sub Head: - Providing metalling tarring and",
+   "gold": "civil_works",
+   "pred": "structural_fabrication"
+  },
+  {
+   "text": "Repair & Restoration of damaged 8 water supply scheme due to Deviya Apda Year 2025-26 in Block Sahaspur & Doiwala,Dist- ",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Repairing and Cleaning of Damaged & Chocked Sewer Line in Rispana River From Balbeer Road Bridge To Chuna Bhatta Bridge,",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Repairing and Cleaning of Damaged & Chocked Sewer Line in Rispana River FromFrom Chuna Bhatta Bridge To Mayur Vihar Brid",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Repairing and Cleaning of Damaged & Chocked Sewer Line in Rispana River From From Chuna Bhatta Bridge To Mayur Vihar Bri",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Repairing and Cleaning of Damaged & Chocked Sewer Line in Rispana River From Rispana Bridge (Vidhan Sabha) to Rajeev Nag",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "KSWMP \u2013 Procurement of 4- Wheel, Tipping Container NBDW goods carriage Diesel Powered SCV /LCV 1.3 to 1.8 Payload Capaci",
+   "gold": "vehicles_equipment",
+   "pred": "medical_lab"
+  },
+  {
+   "text": "Procurement of Post-Harvest Equipment for Producer Groups",
+   "gold": "industrial_machinery",
+   "pred": "other_goods_services"
+  },
+  {
+   "text": "Special repair of RH Bilaspur. (SH:- White washing, tile work, cupboard etc. at Hospital Mess). 6.",
+   "gold": "civil_works",
+   "pred": "operation_maintenance"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+supplier_key,name,country,n_awards,total_inr_cr,max_inr_cr,first_award,last_award,capabilities,msme_status
+NAME:IND:rajasthan state mine and mineral,RAJASTHAN STATE MINES AND MINERALS LTD.,India,30,199.9414,29.4692,1999-09-06,2005-03-05,"{""civil_works"": 2, ""vehicles_equipment"": 28}",SIZE_PROXY_SMALL
+NAME:IND:individual consultant,Individual Consultant,India,30,13.7316,6.7204,2003-05-19,2017-02-10,"{""consultancy_design"": 17, ""vehicles_equipment"": 1, ""other_goods_services"": 10, ""ict_software"": 1, ""electrical"": 1}",SIZE_PROXY_SMALL
+NAME:IND:wapco,WAPCOS LTD.,India,24,82.7779,19.3891,2008-07-29,2018-02-03,"{""consultancy_design"": 17, ""ict_software"": 1, ""civil_works"": 4, ""other_goods_services"": 2}",SIZE_PROXY_SMALL
+NAME:IND:consulting engineering service india,CONSULTING ENGINEERING SERVICES (INDIA) PVT. LTD.,India,20,69.423,17.92,2000-11-09,2011-01-17,"{""consultancy_design"": 17, ""civil_works"": 1, ""operation_maintenance"": 1, ""ict_software"": 1}",SIZE_PROXY_SMALL
+NAME:IND:krishna electrical industrie,KRISHNA ELECTRICAL INDUSTRIES LTD.,India,18,98.0683,9.3598,2001-01-03,2006-03-16,"{""electrical"": 16, ""other_goods_services"": 2}",SIZE_PROXY_SMALL
+NAME:IND:novarti india,NOVARTIS INDIA LTD.,India,17,138.8234,21.0235,1999-09-16,2008-03-12,"{""other_goods_services"": 12, ""structural_fabrication"": 3, ""medical_lab"": 2}",SIZE_PROXY_SMALL
+NAME:IND:smec india,SMEC [INDIA] PVT. LTD.,India,15,59.3343,11.5766,2003-08-25,2014-11-20,"{""ict_software"": 2, ""civil_works"": 1, ""consultancy_design"": 10, ""other_goods_services"": 2}",SIZE_PROXY_SMALL
+NAME:IND:sintex industrie,SINTEX INDUSTRIES LTD.,India,15,3.1851,0.3356,2004-01-01,2004-01-01,"{""ict_software"": 10, ""medical_lab"": 4, ""vehicles_equipment"": 1}",SIZE_PROXY_SMALL
+NAME:IND:techno engineering chandigarh,"M/S TECHNO ENGINEERING CO., CHANDIGARH",India,13,57.7088,5.5921,2002-05-22,2003-12-02,"{""other_goods_services"": 4, ""structural_fabrication"": 9}",SIZE_PROXY_SMALL
+NAME:IND:pricewaterhouse cooper,PRICEWATERHOUSE COOPERS,India,13,32.8763,8.4831,2008-09-12,2016-09-20,"{""consultancy_design"": 8, ""other_goods_services"": 2, ""ict_software"": 1, ""civil_works"": 1, ""operation_maintenance"": 1}",SIZE_PROXY_SMALL
+NAME:IND:r k awasthi,M/S R. K. AWASTHI,India,12,50.5236,6.8214,1999-09-30,2004-08-24,"{""civil_works"": 12}",SIZE_PROXY_SMALL
+NAME:IND:niit gis,NIIT GIS LTD.,India,12,6.8066,1.6386,2011-01-01,2015-02-11,"{""instrumentation_sensors"": 1, ""ict_software"": 9, ""operation_maintenance"": 1, ""consultancy_design"": 1}",SIZE_PROXY_SMALL
+NAME:IND:ramky engineer,RAMKY ENGINEERS PVT. LTD.,India,11,73.3952,24.7937,2000-01-12,2003-08-21,"{""other_goods_services"": 7, ""civil_works"": 3, ""operation_maintenance"": 1}",SIZE_PROXY_SMALL
+NAME:IND:rite,RITES,India,11,71.2557,18.9115,1999-10-11,2014-01-28,"{""consultancy_design"": 4, ""electrical"": 1, ""other_goods_services"": 5, ""vehicles_equipment"": 1}",SIZE_PROXY_SMALL
+NAME:IND:tata consultancy service,TATA CONSULTANCY SERVICES,India,11,49.7239,16.1015,2000-03-29,2014-12-16,"{""ict_software"": 3, ""consultancy_design"": 4, ""other_goods_services"": 3, ""electrical"": 1}",SIZE_PROXY_SMALL
+NAME:IND:stup consultant,STUP CONSULTANTS,India,11,48.1044,15.0971,2002-10-25,2017-12-21,"{""consultancy_design"": 9, ""ict_software"": 1, ""civil_works"": 1}",SIZE_PROXY_SMALL
+NAME:IND:niketan consultant,NIKETAN CONSULTANTS,India,11,19.6281,2.9657,2003-02-01,2009-12-04,"{""consultancy_design"": 8, ""medical_lab"": 1, ""ict_software"": 2}",SIZE_PROXY_SMALL
+NAME:IND:bright drug industrie,BRIGHT DRUG INDUSTRIES,India,10,0.1555,0.0566,1999-11-22,2000-01-01,"{""medical_lab"": 6, ""other_goods_services"": 4}",SIZE_PROXY_SMALL
+NAME:IND:k s m bashir mohd and sons,K.S.M. BASHIR MOHD & SONS,India,10,33.8236,4.3308,2000-05-29,2002-07-27,"{""civil_works"": 10}",SIZE_PROXY_SMALL
+NAME:IND:bhel,BHEL,India,10,86.4761,23.7913,2001-01-01,2008-02-25,"{""instrumentation_sensors"": 1, ""electrical"": 5, ""other_goods_services"": 1, ""ict_software"": 3}",SIZE_PROXY_SMALL

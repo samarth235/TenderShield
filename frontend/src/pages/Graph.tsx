@@ -8,9 +8,18 @@ import type { GraphNode, GraphView, RelationshipPath } from "../api/types";
 import { ErrorCard, NotLoaded } from "../components/NotLoaded";
 import { Badge, Button, Card, LevelBadge, LoadingBlock, PageHead, Switch } from "../components/ui";
 import { humanize } from "../lib/format";
-import { isNotLoaded, TID, useFindings, useGraph, useTender } from "../lib/hooks";
+import { isNotLoaded, useTid, useFindings, useGraph, useTender } from "../lib/hooks";
 
-const cssVar = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim() || "#888";
+// Tokens are color-mix() expressions, which Cytoscape cannot parse; resolve them to rgb() via a probe element.
+const cssVar = (name: string) => {
+  const probe = document.createElement("span");
+  probe.style.color = `var(${name})`;
+  probe.style.display = "none";
+  document.body.appendChild(probe);
+  const value = getComputedStyle(probe).color;
+  probe.remove();
+  return value || "#1b1b1b";
+};
 
 type Toggles = { tenders: boolean; documents: boolean; contacts: boolean };
 
@@ -75,7 +84,7 @@ function style(): cytoscape.StylesheetJson {
         width: 58,
         height: 34,
         "background-color": cssVar("--chrome"),
-        color: "#fff",
+        color: "#ffffff",
         "text-valign": "center",
         "text-margin-y": 0,
         "font-size": 11,
@@ -134,6 +143,7 @@ function style(): cytoscape.StylesheetJson {
 }
 
 export function GraphPage() {
+  const TID = useTid();
   const graph = useGraph();
   const tender = useTender();
   const findings = useFindings();
@@ -188,11 +198,7 @@ export function GraphPage() {
     setPaths(null);
     const focus = params.get("focus");
     if (focus) cy.getElementById(`vendor:${focus}`).emit("tap");
-    // Node and edge colours come from CSS tokens, so restyle when the theme toggles.
-    const themeWatch = new MutationObserver(() => cy.style(style()));
-    themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     return () => {
-      themeWatch.disconnect();
       cy.destroy();
     };
   }, [graph.data, toggles, levels, params]);

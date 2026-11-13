@@ -1,0 +1,65 @@
+{
+  "model": "capability_classifier",
+  "trained_at": "2026-11-13T04:35:49+00:00",
+  "algorithm": "TF-IDF (word 1-2g + char 3-5g) + multinomial logistic regression, lexicon-blended at inference",
+  "training_data": [
+    {
+      "name": "Common Procurement Vocabulary (CPV 2008)",
+      "origin": "Commission Regulation (EC) No 213/2008 - official EU procurement vocabulary",
+      "rows": 9454,
+      "labels": "capability from CPV code prefix (taxonomy.py), no manual labels"
+    },
+    {
+      "name": "Annotated tender lines",
+      "path": "data/annotations/capability_gold.csv",
+      "rows": 53,
+      "sample_weight": 8.0
+    }
+  ],
+  "class_counts": {
+    "civil_works": 784,
+    "electrical": 401,
+    "signalling_control": 84,
+    "instrumentation_sensors": 316,
+    "ict_software": 851,
+    "telecom_networks": 235,
+    "mechanical_hvac_plumbing": 464,
+    "industrial_machinery": 235,
+    "structural_fabrication": 213,
+    "consultancy_design": 409,
+    "operation_maintenance": 427,
+    "vehicles_equipment": 567,
+    "medical_lab": 641,
+    "other_goods_services": 3827
+  },
+  "metrics": {
+    "cv_folds": 5,
+    "cv_accuracy": 0.7875,
+    "cv_macro_f1": 0.7383,
+    "per_class_f1": {
+      "civil_works": 0.8088,
+      "consultancy_design": 0.749,
+      "electrical": 0.7479,
+      "ict_software": 0.8185,
+      "industrial_machinery": 0.6314,
+      "instrumentation_sensors": 0.7573,
+      "mechanical_hvac_plumbing": 0.6609,
+      "medical_lab": 0.7919,
+      "operation_maintenance": 0.8703,
+      "other_goods_services": 0.8346,
+      "signalling_control": 0.6748,
+      "structural_fabrication": 0.5248,
+      "telecom_networks": 0.7582,
+      "vehicles_equipment": 0.7075
+    }
+  },
+  "transfer_eval_on_annotated_tender_lines": {
+    "rows": 53,
+    "accuracy": 0.717,
+    "macro_f1": 0.3813
+  },
+  "limitations": [
+    "CPV descriptions are short catalogue phrases; long Indian BOQ lines are a domain shift - the lexicon blend and the annotated-line evaluation exist for this reason.",
+    "Single label per text; a mixed BOQ line is assigned its dominant capability."
+  ]
+}

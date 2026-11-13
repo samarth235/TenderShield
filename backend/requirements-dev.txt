@@ -2,3 +2,5 @@
 pytest>=8.2
 httpx>=0.27
 ruff>=0.6
+# Embedded PostgreSQL for running the test suite against Postgres without Docker (make test-pg)
+pgserver>=0.1.4

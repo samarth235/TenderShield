@@ -2,10 +2,197 @@
   "openapi": "3.1.0",
   "info": {
     "title": "TenderShield Nexus API",
-    "description": "Explainable tender assurance & evidence intelligence: rule extraction, compliance, relationship graph, bid intelligence, evidence reasoning, counterfactual robustness, human disposition and evidence integrity.",
+    "description": "SDG 9.3 procurement restructuring & supplier intelligence (primary), and explainable tender assurance (secondary): rule extraction, compliance, relationship graph, bid intelligence, evidence reasoning, counterfactual robustness, human disposition and evidence integrity.",
     "version": "0.1.0"
   },
   "paths": {
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login",
+        "operationId": "login_api_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Login Api Auth Login Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Me",
+        "operationId": "me_api_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Me Api Auth Me Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/users": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "List Users",
+        "operationId": "list_users_api_auth_users_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response List Users Api Auth Users Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Add User",
+        "operationId": "add_user_api_auth_users_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Add User Api Auth Users Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/users/{user_id}": {
+      "patch": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Update User",
+        "operationId": "update_user_api_auth_users__user_id__patch",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update User Api Auth Users  User Id  Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/health": {
       "get": {
         "tags": [
@@ -22,6 +209,30 @@
                   "additionalProperties": true,
                   "type": "object",
                   "title": "Response Health Api Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ready": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Ready",
+        "description": "Readiness probe: the database answers. /api/health is liveness only.",
+        "operationId": "ready_api_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Ready Api Ready Get"
                 }
               }
             }
@@ -310,6 +521,59 @@
                     "additionalProperties": true
                   },
                   "title": "Response List Documents Api Tenders  Tender Id  Documents Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "restructuring"
+        ],
+        "summary": "Add Tender Document",
+        "description": "Attach another part of the real tender bundle (Scope of Work, Technical Specifications...).",
+        "operationId": "add_tender_document_api_tenders__tender_id__documents_post",
+        "parameters": [
+          {
+            "name": "tender_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tender Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_add_tender_document_api_tenders__tender_id__documents_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Add Tender Document Api Tenders  Tender Id  Documents Post"
                 }
               }
             }
@@ -1987,6 +2251,621 @@
           }
         }
       }
+    },
+    "/api/meta/capabilities": {
+      "get": {
+        "tags": [
+          "restructuring"
+        ],
+        "summary": "Capabilities",
+        "operationId": "capabilities_api_meta_capabilities_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Capabilities Api Meta Capabilities Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/models": {
+      "get": {
+        "tags": [
+          "market"
+        ],
+        "summary": "Models",
+        "operationId": "models_api_models_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Models Api Models Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/market/status": {
+      "get": {
+        "tags": [
+          "market"
+        ],
+        "summary": "Market Status",
+        "operationId": "market_status_api_market_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Market Status Api Market Status Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/market/suppliers": {
+      "get": {
+        "tags": [
+          "market"
+        ],
+        "summary": "Market Suppliers",
+        "operationId": "market_suppliers_api_market_suppliers_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "capability",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Capability"
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Country"
+            }
+          },
+          {
+            "name": "sme_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Sme Only"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "default": 25,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Market Suppliers Api Market Suppliers Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/market/suppliers/{supplier_key}": {
+      "get": {
+        "tags": [
+          "market"
+        ],
+        "summary": "Market Supplier",
+        "operationId": "market_supplier_api_market_suppliers__supplier_key__get",
+        "parameters": [
+          {
+            "name": "supplier_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Supplier Key"
+            }
+          },
+          {
+            "name": "awards",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "default": 50,
+              "title": "Awards"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Market Supplier Api Market Suppliers  Supplier Key  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/market/import": {
+      "post": {
+        "tags": [
+          "market"
+        ],
+        "summary": "Market Import",
+        "description": "Load a published dataset file (World Bank awards CSV, OCDS JSON/JSONL, or an award-notice CSV).",
+        "operationId": "market_import_api_market_import_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_market_import_api_market_import_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Market Import Api Market Import Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/market/udyam": {
+      "post": {
+        "tags": [
+          "market"
+        ],
+        "summary": "Market Udyam",
+        "operationId": "market_udyam_api_market_udyam_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_market_udyam_api_market_udyam_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Market Udyam Api Market Udyam Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenders/{tender_id}/boq": {
+      "post": {
+        "tags": [
+          "restructuring"
+        ],
+        "summary": "Upload Boq",
+        "operationId": "upload_boq_api_tenders__tender_id__boq_post",
+        "parameters": [
+          {
+            "name": "tender_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tender Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_boq_api_tenders__tender_id__boq_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Upload Boq Api Tenders  Tender Id  Boq Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenders/{tender_id}/components/values": {
+      "put": {
+        "tags": [
+          "restructuring"
+        ],
+        "summary": "Set Component Values",
+        "operationId": "set_component_values_api_tenders__tender_id__components_values_put",
+        "parameters": [
+          {
+            "name": "tender_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tender Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComponentValues"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Set Component Values Api Tenders  Tender Id  Components Values Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenders/{tender_id}/restructure": {
+      "post": {
+        "tags": [
+          "restructuring"
+        ],
+        "summary": "Restructure",
+        "operationId": "restructure_api_tenders__tender_id__restructure_post",
+        "parameters": [
+          {
+            "name": "tender_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tender Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/RestructureRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Restructure Api Tenders  Tender Id  Restructure Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenders/{tender_id}/restructuring": {
+      "get": {
+        "tags": [
+          "restructuring"
+        ],
+        "summary": "Get Restructuring",
+        "operationId": "get_restructuring_api_tenders__tender_id__restructuring_get",
+        "parameters": [
+          {
+            "name": "tender_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tender Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Restructuring Api Tenders  Tender Id  Restructuring Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenders/{tender_id}/restructuring/dossier": {
+      "post": {
+        "tags": [
+          "restructuring"
+        ],
+        "summary": "Restructuring Dossier",
+        "operationId": "restructuring_dossier_api_tenders__tender_id__restructuring_dossier_post",
+        "parameters": [
+          {
+            "name": "tender_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tender Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Restructuring Dossier Api Tenders  Tender Id  Restructuring Dossier Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenders/{tender_id}/restructuring/dossier.pdf": {
+      "get": {
+        "tags": [
+          "restructuring"
+        ],
+        "summary": "Restructuring Dossier File",
+        "operationId": "restructuring_dossier_file_api_tenders__tender_id__restructuring_dossier_pdf_get",
+        "parameters": [
+          {
+            "name": "tender_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tender Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2139,6 +3018,91 @@
         ],
         "title": "BiddersUpload"
       },
+      "Body_add_tender_document_api_tenders__tender_id__documents_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "tender_annex",
+              "scope",
+              "specification"
+            ],
+            "title": "Kind",
+            "default": "tender_annex"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_add_tender_document_api_tenders__tender_id__documents_post"
+      },
+      "Body_market_import_api_market_import_post": {
+        "properties": {
+          "adapter": {
+            "type": "string",
+            "enum": [
+              "worldbank_awards",
+              "ocds",
+              "awards_csv"
+            ],
+            "title": "Adapter"
+          },
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "adapter",
+          "file"
+        ],
+        "title": "Body_market_import_api_market_import_post"
+      },
+      "Body_market_udyam_api_market_udyam_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "description": "CSV: supplier_name|supplier_key, category, udyam_number, verified_on, source_url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_market_udyam_api_market_udyam_post"
+      },
       "Body_upload_bidders_csv_api_uploads__tender_id__bidders_csv_post": {
         "properties": {
           "file": {
@@ -2166,6 +3130,21 @@
           "file"
         ],
         "title": "Body_upload_bidders_file_api_uploads__tender_id__bidders_json_post"
+      },
+      "Body_upload_boq_api_tenders__tender_id__boq_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "description": "Bill of Quantities: .xlsx, .xls or .csv"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_boq_api_tenders__tender_id__boq_post"
       },
       "Body_upload_tender_api_uploads_tender_post": {
         "properties": {
@@ -2236,6 +3215,28 @@
           "file"
         ],
         "title": "Body_upload_tender_api_uploads_tender_post"
+      },
+      "ComponentValues": {
+        "properties": {
+          "values": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Values",
+            "description": "capability -> value in \u20b9 crore (e.g. from the BOQ abstract)"
+          },
+          "actor": {
+            "type": "string",
+            "title": "Actor",
+            "default": "procurement-officer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "values"
+        ],
+        "title": "ComponentValues"
       },
       "CounterfactualRequest": {
         "properties": {
@@ -2349,6 +3350,100 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "LoginRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "LoginRequest"
+      },
+      "NewUser": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 10,
+            "title": "Password"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "viewer",
+              "officer",
+              "admin"
+            ],
+            "title": "Role",
+            "default": "viewer"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "NewUser"
+      },
+      "RestructureRequest": {
+        "properties": {
+          "weights": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Weights",
+            "description": "Override any of ['competition', 'coordination', 'coverage', 'integration_risk', 'scale_loss', 'sme_access']"
+          },
+          "params": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Params",
+            "description": "Override any of ['bidder_saturation', 'max_supernodes', 'min_capable_pool', 'min_viable_package_cr', 'per_package_overhead', 'small_enterprise_turnover_cr', 'turnover_share_required']"
+          },
+          "countries": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Countries",
+            "description": "Market scope, e.g. ['India']; default TS_MARKET_COUNTRIES or all"
+          },
+          "actor": {
+            "type": "string",
+            "title": "Actor",
+            "default": "system"
+          }
+        },
+        "type": "object",
+        "title": "RestructureRequest"
+      },
       "TamperRequest": {
         "properties": {
           "document_id": {
@@ -2365,6 +3460,39 @@
         },
         "type": "object",
         "title": "TamperRequest"
+      },
+      "UserUpdate": {
+        "properties": {
+          "role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "viewer",
+                  "officer",
+                  "admin"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          },
+          "active": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Active"
+          }
+        },
+        "type": "object",
+        "title": "UserUpdate"
       },
       "ValidationError": {
         "properties": {

@@ -26,6 +26,10 @@ def entry_hash(prev_hash: str, tender_id: str, finding_id: str | None, action: s
 
 def append(conn: sqlite3.Connection, tender_id: str, action: str, actor: str, payload: dict,
            finding_id: str | None = None) -> dict:
+    # The signed-in user is the actor of record; a client-supplied name cannot override it.
+    from ..auth import current_actor
+
+    actor = current_actor() or actor
     last = conn.execute("SELECT entry_hash FROM audit_log WHERE tender_id = ? ORDER BY entry_id DESC LIMIT 1",
                         (tender_id,)).fetchone()
     prev = last["entry_hash"] if last else GENESIS

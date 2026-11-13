@@ -1,0 +1,9 @@
+award_id,tender_ref,title,description,buyer,supplier_name,supplier_country,amount,currency,signed_on,cpv,country
+T1,TR-1,Pipeline works,Laying of DI pipelines and valves for water supply,Test Board,Alpha Pipes Pvt Ltd,India,180000000,INR,2023-04-01,45232100,India
+T2,TR-2,Pipeline works,Laying of HDPE pipes,Test Board,Alpha Pipes Pvt Ltd,India,90000000,INR,2022-04-01,45232100,India
+T3,TR-3,Meters,Supply of ultrasonic water meters,Test Board,Beta Instruments,India,25000000,INR,2024-01-10,38421100,India
+T4,TR-4,Meters,Supply and calibration of flow meters,Test Board,Beta Instruments,India,30000000,INR,2023-01-10,38421110,India
+T5,TR-5,SCADA,SCADA software for water network,Test Board,Gamma Soft Solutions,India,40000000,INR,2024-06-01,48000000,India
+T6,TR-6,Meters + SCADA,Smart metering with central software,Test Board,Beta Instruments,India,20000000,INR,2024-08-01,48000000,India
+T7,TR-7,Civil,RCC chambers and road restoration,Test Board,Alpha Pipes Pvt Ltd - Delta Infra Ltd JV,India,500000000,INR,2021-01-01,45200000,India
+T8,TR-8,Civil,Building works,Test Board,Delta Infra Ltd,India,700000000,INR,2020-01-01,45210000,India

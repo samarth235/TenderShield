@@ -6,7 +6,7 @@ import { api } from "../api/client";
 import { ErrorCard, NotLoaded } from "../components/NotLoaded";
 import { Badge, Card, DocLink, LoadingBlock, PageHead } from "../components/ui";
 import { fmtPct } from "../lib/format";
-import { isNotLoaded, TID, useSimilarity, useTender } from "../lib/hooks";
+import { isNotLoaded, useTid, useSimilarity, useTender } from "../lib/hooks";
 
 // Same cut-off the backend uses for a "high-overlap" section.
 const HIGH_OVERLAP = 0.8;
@@ -15,6 +15,7 @@ const simColor = (v: number, median: number) =>
   v >= HIGH_OVERLAP ? "var(--high)" : v > median + 0.1 ? "var(--medium)" : "var(--low)";
 
 export function Intelligence() {
+  const TID = useTid();
   const sim = useSimilarity();
   const tender = useTender();
   const [picked, setPicked] = useState<[string, string] | null>(null);

@@ -1,0 +1,40 @@
+# Local development stack: PostgreSQL + the API serving the built dashboard.
+#   cp backend/.env.example backend/.env   # then set TS_AUTH_SECRET and TS_ADMIN_* for the first boot
+#   docker compose up --build
+#   open http://localhost:8000
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: tendershield
+      POSTGRES_USER: tendershield
+      POSTGRES_PASSWORD: tendershield-dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tendershield -d tendershield"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    env_file:
+      - path: backend/.env
+        required: false
+    environment:
+      TS_DATABASE_URL: postgresql://tendershield:tendershield-dev@db:5432/tendershield
+      TS_DATA_DIR: /data
+    volumes:
+      - appdata:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:
+  appdata:

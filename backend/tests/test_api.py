@@ -5,12 +5,12 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 
-from .conftest import TENDER
+from .conftest import TENDER, auth_headers
 
 
 @pytest.fixture(scope="module")
 def client():
-    with TestClient(app) as c:
+    with TestClient(app, headers=auth_headers("officer")) as c:
         yield c
 
 

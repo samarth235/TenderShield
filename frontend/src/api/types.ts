@@ -14,6 +14,7 @@ export interface Health {
   llm_available: boolean;
   llm_model: string;
   embedding_backend: string;
+  demo_enabled?: boolean;
 }
 
 export interface StageReport {
@@ -376,4 +377,89 @@ export interface Verification {
 export interface AuditLog {
   entries: AuditEntry[];
   chain: { valid: boolean; head_hash?: string; broken_at_entry?: number };
+}
+
+// --- Procurement restructuring (primary objective) ------------------------------
+
+export interface RestructuringPackage {
+  package: string;
+  components: string[];
+  scope: string;
+  value_inr_cr: number | null;
+  required_turnover_cr: number | null;
+  sme_size_accessible: boolean;
+  suppliers_with_full_capability_evidence: number;
+  of_which_meet_similar_work_scale: number;
+  sme_candidates: number;
+  expected_bidders_indicator: number | null;
+}
+
+export interface RestructuringComponent {
+  component_id: string;
+  capability: string;
+  label: string;
+  n_items: number;
+  value_inr_cr: number | null;
+  value_basis: string;
+  pages: number[];
+  mean_confidence: number;
+  items: { text?: string; confidence: number; page?: number | null; document_id?: string }[];
+}
+
+export interface DependencyEdge {
+  source: string;
+  target: string;
+  weight: number;
+  strength: string;
+  types: string[];
+  prior_rationale: string;
+  text_evidence: { type: string; quote?: string; page?: number | null }[];
+}
+
+export interface Scenario {
+  tag: string;
+  summary: string;
+  score: number;
+  n_packages: number;
+  metrics: Record<string, number | null>;
+}
+
+export interface RelationshipEdge {
+  a: string;
+  b: string;
+  a_name: string | null;
+  b_name: string | null;
+  types: string[];
+  review_score: number;
+  signal: string;
+  alternative_explanations: string[];
+}
+
+export interface RestructuringPlan {
+  tender_id: string;
+  tender_title: string;
+  generated_at: string;
+  estimated_value_inr_cr: number | null;
+  components: RestructuringComponent[];
+  dependency_graph: { edges: DependencyEdge[]; strong_groups: string[][] };
+  structures: {
+    weights: Record<string, number>;
+    feasible_structures: number;
+    scenarios: Record<"A_integrated" | "B_recommended" | "C_max_separation", Scenario | null>;
+    sensitivity: { draws: number; perturbation: string; recommended_stays_best: number; most_common_alternative: string | null };
+    recommendation_differs_from_current: boolean;
+  };
+  relationships: { screened_suppliers: number; edges: RelationshipEdge[]; clusters: string[][]; requires_review: number; note: string };
+  recommendation: {
+    headline: string;
+    recommended_structure: string;
+    current_structure: string | null;
+    score_recommended: number;
+    score_current: number | null;
+    packages: RestructuringPackage[];
+    keep_integrated: { components: string[]; labels: string[]; why: string[] }[];
+    decision_note: string;
+  };
+  data_quality: { level: string; issue: string; fix: string; components?: string[] }[];
+  market_scope: { countries: string[] | string; awards_in_scope: number; sources: string[] };
 }

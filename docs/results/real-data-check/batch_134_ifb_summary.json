@@ -1,0 +1,1913 @@
+[
+ {
+  "id": "OP00480444",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00480484",
+  "tid": "UP-F0259A82",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY NO 83 (BILASPUR-I) (SH:- Providing and laying 25mm thick Bituminous concrete on l",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (6, 0.645)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00480450",
+  "tid": "UP-6D126C5B",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY 42(MANALI) Annual periodic Maintenance Plan for the year 2025-26 on Sainik Chowk ",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 2,
+  "components": [
+   "Civil & building construction (2, 0.427)",
+   "Software, ICT & control systems (1, 0.613)"
+  ],
+  "sources": [
+   "document",
+   "line_item"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00480552",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00480531",
+  "tid": "UP-62D7C5E2",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY NO 84(BILASPUR-I) (SH:- Providing and laying 25mm thick Bituminous concrete on Ci",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (4, 0.636)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00479206",
+  "status": "no text"
+ },
+ {
+  "id": "OP00479327",
+  "tid": "UP-C53E6C31",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of Primary - 4W Covered Container Truck (1.6T Min. 7.5 to 8.5 Cu.m) for NBDW T",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Vehicles & heavy equipment (1, 0.426)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00479321",
+  "tid": "UP-6FDB032B",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of Primary - 4W Hopper-Tipper Truck (Min. 3 Cu.m) for BDW Transportation -1 No",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Vehicles & heavy equipment (1, 0.381)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00479031",
+  "tid": "UP-0350B540",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of Primary - 4W Container Tipper Truck (1.6T Min. 7.5 Cu.m) for NBDW Transport",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Vehicles & heavy equipment (1, 0.35)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00478963",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00479024",
+  "tid": "UP-1CD957DA",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of Primary - 3W Container Auto (375 kg Min. 1.6 Cu.m) for NBDW Transportation ",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Vehicles & heavy equipment (1, 0.367)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00478570",
+  "tid": "UP-9E506454",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY 8, (KARSOG DIVISION)  Periodical Maintenance on Shimla Mandi road via Tattapani r",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 1,
+  "components": [
+   "Signalling, traffic & safety control (1, 0.466)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00478560",
+  "tid": "UP-EB8F00E5",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY- 7 (KARSOG DIVISION) Periodical Maintenance on Shimla Mandi road via Tattapani (S",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 2,
+  "components": [
+   "Signalling, traffic & safety control (3, 0.501)",
+   "Civil & building construction (1, 0.671)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.86
+ },
+ {
+  "id": "OP00478213",
+  "tid": "UP-08C5F662",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY NO 5 (Ner Chowk Division) Annual Maintenance Mandi Gagal Chail Chowk Janjehli Chh",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.43)"
+  ],
+  "sources": [
+   "title"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00478227",
+  "tid": "UP-77DA119D",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY No 4 (Sunder Nagar Division) AMP on  Jachh Prechhi   road    km  0/0 to  8/00    ",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (3, 0.596)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00478206",
+  "tid": "UP-B9F3D67F",
+  "status": "ok",
+  "group": "CW",
+  "title": "(ACTIVITY No. 3 Sunder Nagar Division ) AMP on  Sundernagar  to  Maloh  road km  0/0 to   ",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 2,
+  "components": [
+   "Signalling, traffic & safety control (2, 0.558)",
+   "Civil & building construction (1, 0.581)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.86
+ },
+ {
+  "id": "OP00478255",
+  "tid": "UP-7CE59198",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY No-6(Nerchowk)AMP on Majhiali Kothi Gehri road,Talyahad Sarkaghat road and Reur D",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.497)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00471353",
+  "tid": "UP-3ED41DA9",
+  "status": "ok",
+  "group": "GO",
+  "title": "Project No 438/26 - Procurement of 4.5T tipping type vehicle for BDW Collection (Purchase ",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Operation & maintenance services (1, 0.443)"
+  ],
+  "sources": [
+   "title"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00477404",
+  "tid": "UP-1637BBB0",
+  "status": "ok",
+  "group": "CW",
+  "title": "(ACTIVITY-1, Mandi II RF). Motipur Dudar Dhamyana road (Km 2/00 to 6/00, Bari Dhanyari roa",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 4,
+  "components": [
+   "Signalling, traffic & safety control (2, 0.932)",
+   "Civil & building construction (2, 0.781)",
+   "Structural steel & specialised fabrication (1, 0.474)",
+   "Operation & maintenance services (1, 0.372)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.88
+ },
+ {
+  "id": "OP00477607",
+  "tid": "UP-6C615EDD",
+  "status": "ok",
+  "group": "CW",
+  "title": "(ACTIVITY No. 2, Mandi II, RF )A.M.P. for Parla Kasan Rachhera Harizan Basti road (Village",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 4,
+  "components": [
+   "Signalling, traffic & safety control (2, 0.932)",
+   "Civil & building construction (2, 0.781)",
+   "Structural steel & specialised fabrication (1, 0.474)",
+   "Operation & maintenance services (1, 0.372)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.88
+ },
+ {
+  "id": "OP00477626",
+  "tid": "UP-DE91E051",
+  "status": "ok",
+  "group": "CW",
+  "title": "ACTIVITY 37(JOGINDER NAGAR) Periodical Maintenance of Dhelu Har to Tikroo road (SH:- Provi",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 3,
+  "components": [
+   "Operation & maintenance services (2, 0.827)",
+   "Civil & building construction (2, 0.814)",
+   "Signalling, traffic & safety control (1, 0.812)"
+  ],
+  "sources": [
+   "document",
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.633
+ },
+ {
+  "id": "OP00469451",
+  "status": "no text"
+ },
+ {
+  "id": "OP00475448",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00475383",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00475038",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00474853",
+  "tid": "UP-A6367B89",
+  "status": "ok",
+  "group": "GO",
+  "title": "Re-tender: The Project proposes to procure a **Millet Processing and Value Addition Plant*",
+  "project": "State of Maharashtra's Agribusiness and Rural Tran",
+  "n_components": 1,
+  "components": [
+   "Industrial & process machinery (9, 0.463)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00474295",
+  "tid": "UP-4E080269",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of 15 Nos. Multi Utility Vehicle cum 1.25 KL Water Tanker",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Electrical systems & power (2, 0.376)",
+   "Vehicles & heavy equipment (1, 0.63)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00474297",
+  "tid": "UP-6C485D68",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of 2 Nos. 3 KL Mini Super sucker machine",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Electrical systems & power (2, 0.376)",
+   "Vehicles & heavy equipment (1, 0.63)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00474315",
+  "tid": "UP-559DF8C0",
+  "status": "ok",
+  "group": "CW",
+  "title": "Construction of Protection work for Damage retaining wall and Boundary wall near MPS (towa",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Civil & building construction (1, 0.954)",
+   "Software, ICT & control systems (1, 0.808)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00474143",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00474300",
+  "tid": "UP-A967C64D",
+  "status": "ok",
+  "group": "CW",
+  "title": "Procurement of 1 Nos. 10 KL mini\u2013Super Sucker Cum Jetting Machine",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Electrical systems & power (2, 0.376)",
+   "Vehicles & heavy equipment (1, 0.63)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00474303",
+  "tid": "UP-49509B3C",
+  "status": "ok",
+  "group": "CW",
+  "title": "Repair & Restoration of damaged 8 water supply scheme due to Deviya Apda Year 2025-26 in B",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (1, 0.651)",
+   "Software, ICT & control systems (1, 0.808)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00474285",
+  "tid": "UP-20023C62",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of 77 Nos. of 3.5 KL Water Tankers",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Electrical systems & power (2, 0.376)",
+   "Vehicles & heavy equipment (1, 0.63)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00474306",
+  "tid": "UP-77498A64",
+  "status": "ok",
+  "group": "CW",
+  "title": "Repaing and Cleaning of Damaged & Chocked Sewer Line in Rispana River from Balbeer Road Br",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (1, 0.606)",
+   "Software, ICT & control systems (1, 0.808)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00474309",
+  "tid": "UP-C6EE7127",
+  "status": "ok",
+  "group": "CW",
+  "title": "Repaing and Cleaning of Damaged & Chocked Sewer Line in Rispana River from Chuna Bhatta Br",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (1, 0.591)",
+   "Software, ICT & control systems (1, 0.808)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00474318",
+  "tid": "UP-79164035",
+  "status": "ok",
+  "group": "CW",
+  "title": "Repair & Restoration of damaged & Protection works on Rising Main/Intake well/Cross wall/M",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 1,
+  "components": [
+   "Mechanical, HVAC, pumps & plumbing (1, 0.358)"
+  ],
+  "sources": [
+   "title"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00474313",
+  "tid": "UP-11E827BA",
+  "status": "ok",
+  "group": "CW",
+  "title": "Repaing and Cleaning of Damaged & Chocked Sewer Line in Rispana River from Rispana Bridge ",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (1, 0.61)",
+   "Software, ICT & control systems (1, 0.808)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00473873",
+  "tid": "UP-24FC098E",
+  "status": "ok",
+  "group": "CW",
+  "title": "Ukai - Strengthening work to control the seepage of NOF Section of Ukai Dam.",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.779)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00473843",
+  "status": "no text"
+ },
+ {
+  "id": "OP00472824",
+  "tid": "UP-A096C7D8",
+  "status": "ok",
+  "group": "CW",
+  "title": "Repairing and Restoration of damaged Haldwari W/S Scheme due to Natural Calamity (Deviya A",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (1, 0.66)",
+   "Software, ICT & control systems (1, 0.808)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00473939",
+  "status": "no text"
+ },
+ {
+  "id": "OP00473658",
+  "tid": "UP-626FA5E9",
+  "status": "ok",
+  "group": "CW",
+  "title": "(ACTIVITY-1, Mandi II RF). Motipur Dudar Dhamyana road (Km 2/00 to 6/00, Bari Dhanyari roa",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 4,
+  "components": [
+   "Signalling, traffic & safety control (2, 0.932)",
+   "Civil & building construction (2, 0.781)",
+   "Structural steel & specialised fabrication (1, 0.474)",
+   "Operation & maintenance services (1, 0.372)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.88
+ },
+ {
+  "id": "OP00473294",
+  "tid": "UP-211F5F12",
+  "status": "ok",
+  "group": "CW",
+  "title": "Laying jointing and testing of gravity main construction  of crate work along the sarvari ",
+  "project": "Resilient Action for Development and Disaster Reco",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.58)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00473134",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00472822",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00471186",
+  "tid": "UP-FB4D47BF",
+  "status": "ok",
+  "group": "CW",
+  "title": "Development, Operation and Maintenance of Sathin-Gotan",
+  "project": "Rajasthan Highway Modernization Project (RHMP)",
+  "n_components": 1,
+  "components": [
+   "Operation & maintenance services (1, 0.884)"
+  ],
+  "sources": [
+   "title"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00471901",
+  "tid": "UP-FA13ADAD",
+  "status": "ok",
+  "group": "CW",
+  "title": "Construction of viaduct and elevated station building (Pkg-2) (for 13.3 kms out of total 2",
+  "project": "Gurugram Metro Rail Project - Sustainable Multimod",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.431)"
+  ],
+  "sources": [
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00471127",
+  "tid": "UP-D2B4FA05",
+  "status": "ok",
+  "group": "CW",
+  "title": "KSWMP-Vadakara Municipality-Renovation of existing MCF/RRF at Narayana Nagaram of Ward No.",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.973)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00470965",
+  "tid": "UP-830897A1",
+  "status": "ok",
+  "group": "NC",
+  "title": "Hiring of an Agency for Implementation and Management of the Meghalaya i-Learning Project ",
+  "project": "Meghalaya Multisectoral Project for Adolescent Wel",
+  "n_components": 1,
+  "components": [
+   "Medical & laboratory equipment (1, 0.17)"
+  ],
+  "sources": [
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00470824",
+  "tid": "UP-3ED640CC",
+  "status": "ok",
+  "group": "CW",
+  "title": "Development, Operation and Maintenance of Rajgarh-Bhadra Road",
+  "project": "Rajasthan Highway Modernization Project (RHMP)",
+  "n_components": 1,
+  "components": [
+   "Operation & maintenance services (1, 0.757)"
+  ],
+  "sources": [
+   "title"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00470898",
+  "tid": "UP-CFA99880",
+  "status": "ok",
+  "group": "CW",
+  "title": "Development, Operation and Maintenance of Natani Ka Bara-Malakhera-Maujpur section",
+  "project": "Rajasthan Highway Modernization Project (RHMP)",
+  "n_components": 1,
+  "components": [
+   "Operation & maintenance services (1, 0.879)"
+  ],
+  "sources": [
+   "title"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00469896",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00469471",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00469501",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00469475",
+  "tid": "UP-98DB689C",
+  "status": "ok",
+  "group": "CW",
+  "title": "Upgradationof existing Windrow compost Plant TKS Puram- Inter lock tile paving in road way",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.784)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00469478",
+  "tid": "UP-88EC43CA",
+  "status": "ok",
+  "group": "CW",
+  "title": "KSWMP - UPGRADATIO N OF MCF IN WARD 29,31 CONSTRUCTION OF WASHING AREA CHANGING AREA-4UNIT",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.682)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00469484",
+  "tid": "UP-65577AA1",
+  "status": "ok",
+  "group": "CW",
+  "title": "Upgradation of existing RRF Narayanamangalam - Construction of Vehicle yard-Kodungallur Mu",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.682)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00468622",
+  "tid": "UP-390317CD",
+  "status": "ok",
+  "group": "CW",
+  "title": "UJN - Repair & Restoration of Protection work and retaining wall at 1100 KL OHT damage und",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Civil & building construction (1, 0.649)",
+   "Software, ICT & control systems (1, 0.808)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00468077",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00466389",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00466381",
+  "tid": "UP-C75510A7",
+  "status": "ok",
+  "group": "CW",
+  "title": "Upgradation of RRF with Extension of area and Construction of Toilet, Washing & Changing a",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.741)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00466393",
+  "tid": "UP-8EC6B710",
+  "status": "ok",
+  "group": "GO",
+  "title": "NBDW Vehicle procurement for Pandalam Municipality",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Structural steel & specialised fabrication (1, 0.374)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00465850",
+  "tid": "UP-6A54B753",
+  "status": "ok",
+  "group": "CW",
+  "title": "UJN - Repair & Restoration of damaged & Protection works on Rising Main/Intake well/Cross ",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.735)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00465219",
+  "tid": "UP-F9C4DF3A",
+  "status": "ok",
+  "group": "CW",
+  "title": "UJN - Construction of Protection work for Damage retaining wall and Boundary wall near MPS",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (2, 0.66)",
+   "Civil & building construction (1, 0.799)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00465213",
+  "tid": "UP-73674A51",
+  "status": "ok",
+  "group": "CW",
+  "title": "UJN - Repaing and Cleaning of Damaged & Chocked Sewer Line in Rispana River from Chuna Bha",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (2, 0.66)",
+   "Civil & building construction (1, 0.799)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00465255",
+  "tid": "UP-A46D8FFC",
+  "status": "ok",
+  "group": "GO",
+  "title": "UJN - Procurement of 15 Nos. Multi Utility Vehicle cum 1.25 KL Water Tanker",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Electrical systems & power (2, 0.376)",
+   "Vehicles & heavy equipment (1, 0.63)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00465229",
+  "tid": "UP-B9D30749",
+  "status": "ok",
+  "group": "GO",
+  "title": "UJN - Procurement of 1 Nos. 10 KL mini\u2013Super Sucker Cum Jetting Machine.",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Electrical systems & power (2, 0.376)",
+   "Vehicles & heavy equipment (1, 0.63)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00465206",
+  "tid": "UP-2E9B4A20",
+  "status": "ok",
+  "group": "CW",
+  "title": "UJN - Repaing and Cleaning of Damaged & Chocked Sewer Line in Rispana River from Rispana B",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (2, 0.66)",
+   "Civil & building construction (1, 0.799)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00465251",
+  "tid": "UP-978C24E6",
+  "status": "ok",
+  "group": "GO",
+  "title": "UJN - Procurement of 2 Nos. 3 KL Mini Super sucker machine",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Electrical systems & power (2, 0.376)",
+   "Vehicles & heavy equipment (1, 0.63)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.663
+ },
+ {
+  "id": "OP00465196",
+  "tid": "UP-7A8181C3",
+  "status": "ok",
+  "group": "CW",
+  "title": "UJN - Repair & Restoration of damaged 8 water supply scheme due to Deviya Apda Year 2025-2",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (2, 0.66)",
+   "Civil & building construction (1, 0.799)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00465201",
+  "tid": "UP-EED6F9DE",
+  "status": "ok",
+  "group": "CW",
+  "title": "UJN - Repair & Restoration of damaged Haldwari W/S Scheme due to Natural Calamity (Deviya ",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (2, 0.66)",
+   "Civil & building construction (1, 0.799)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00465209",
+  "tid": "UP-51E285F0",
+  "status": "ok",
+  "group": "CW",
+  "title": "UJN - Repaing and Cleaning of Damaged & Chocked Sewer Line in Rispana River from Balbeer R",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 2,
+  "components": [
+   "Operation & maintenance services (2, 0.66)",
+   "Civil & building construction (1, 0.799)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.577
+ },
+ {
+  "id": "OP00377540",
+  "status": "no text"
+ },
+ {
+  "id": "OP00464558",
+  "tid": "UP-C041D83E",
+  "status": "ok",
+  "group": "CW",
+  "title": "EPC- Restoration of 132 kV GIS Bageshwar Sub-station and its associated line under CERC,U-",
+  "project": "Uttarakhand Disaster Preparedness and Resilience P",
+  "n_components": 1,
+  "components": [
+   "Electrical systems & power (1, 0.353)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00464660",
+  "tid": "UP-47107D35",
+  "status": "ok",
+  "group": "GO",
+  "title": "Supply of IT and electronic equipment for 17 Lighthouse School Complexes",
+  "project": "Nagaland: Enhancing Classroom Teaching and Resourc",
+  "n_components": 1,
+  "components": [
+   "Electrical systems & power (1, 0.477)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00464656",
+  "tid": "UP-467E62F6",
+  "status": "ok",
+  "group": "GO",
+  "title": "Supply and installation of furniture and fixtures in 17 Lighthouse School Complexes in 4 p",
+  "project": "Nagaland: Enhancing Classroom Teaching and Resourc",
+  "n_components": 1,
+  "components": [
+   "Electrical systems & power (1, 0.477)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00464277",
+  "tid": "UP-860D1734",
+  "status": "ok",
+  "group": "CW",
+  "title": "Renovation and Interior Works of the State Project Management Unit (SPMU) for the UP-AGREE",
+  "project": "Uttar Pradesh Agriculture Growth and Rural Enterpr",
+  "n_components": 1,
+  "components": [
+   "Software, ICT & control systems (1, 0.357)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00463441",
+  "tid": "UP-07CF4211",
+  "status": "ok",
+  "group": "CW",
+  "title": "Construction of Toilet block, Washing and Changing area and providing drinking water facil",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.666)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00462481",
+  "tid": "UP-328061A3",
+  "status": "ok",
+  "group": "CW",
+  "title": "Strengthening work hill no.2 along with jetty road at ukai dam ta.Songadh Dist.Tapi.",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.93)"
+  ],
+  "sources": [
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00377463",
+  "tid": "UP-BF0866C1",
+  "status": "ok",
+  "group": "CW",
+  "title": "Package 4- Construction of additional 5 classrooms in 1 secondary school and 7 classrooms ",
+  "project": "Assam: School Education and Adolescent Wellbeing P",
+  "n_components": 2,
+  "components": [
+   "Civil & building construction (2, 0.6)",
+   "Design, engineering & supervision services (1, 0.421)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.813
+ },
+ {
+  "id": "OP00462488",
+  "tid": "UP-77F487B3",
+  "status": "ok",
+  "group": "CW",
+  "title": "Carrying out dam body grouting below 50mt. depth by hydraulic feed core drilling to contro",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.35)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00462610",
+  "tid": "UP-A8B55152",
+  "status": "ok",
+  "group": "CW",
+  "title": "KSWMP-Vadakara Municipality-Renovation of Existing MCF/RRF at Narayana Nagaram of Ward No.",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.973)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00377708",
+  "tid": "UP-2285B82A",
+  "status": "ok",
+  "group": "CW",
+  "title": "Package 33- Construction of additional 5 Nos. of classrooms with labs and additional facil",
+  "project": "Assam: School Education and Adolescent Wellbeing P",
+  "n_components": 2,
+  "components": [
+   "Civil & building construction (2, 0.6)",
+   "Design, engineering & supervision services (1, 0.421)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.813
+ },
+ {
+  "id": "OP00462499",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00462336",
+  "tid": "UP-6806F5EC",
+  "status": "ok",
+  "group": "CW",
+  "title": "Carrying out ground penetration radar survey tomography and minimum 125 mm concrete core s",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.35)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00462325",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00461540",
+  "tid": "UP-103136B8",
+  "status": "ok",
+  "group": "CW",
+  "title": "KSWMP-Payyoli Municipality-Extension of MRF and Parking shed Construction at Ward 37-Proje",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.619)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00461494",
+  "tid": "UP-88606711",
+  "status": "ok",
+  "group": "CW",
+  "title": "Upgardation /revival/augmentation of surface darins, L-drains, cross outfall drains",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Mechanical, HVAC, pumps & plumbing (1, 0.549)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00461565",
+  "tid": "UP-E8664812",
+  "status": "ok",
+  "group": "CW",
+  "title": "KSWMP-Payyoli Municipality-Renovation of Existing MRF and Construction of Front Side Shed ",
+  "project": "Kerala Solid Waste Management Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.575)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00461202",
+  "tid": "UP-30F6B844",
+  "status": "ok",
+  "group": "CW",
+  "title": "Protection work between goge dam and RT wall of ukai dam Ta.Songadh Dist.Tapi.",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 2,
+  "components": [
+   "Mechanical, HVAC, pumps & plumbing (1, 0.555)",
+   "Civil & building construction (1, 0.589)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.903
+ },
+ {
+  "id": "OP00461223",
+  "tid": "UP-D67ECF50",
+  "status": "ok",
+  "group": "CW",
+  "title": "Construction of Quality Control Unit Faciliating With Latest Equipments at Ukai Ta.Songadh",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Mechanical, HVAC, pumps & plumbing (1, 0.549)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00460989",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00460736",
+  "tid": "UP-B7DC1087",
+  "status": "ok",
+  "group": "CW",
+  "title": "Slope Protection work between approach channel of Head Regulator and Hill no. 3 (VIP Rest ",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 2,
+  "components": [
+   "Mechanical, HVAC, pumps & plumbing (1, 0.555)",
+   "Civil & building construction (1, 0.586)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.903
+ },
+ {
+  "id": "OP00460694",
+  "tid": "UP-240855A9",
+  "status": "ok",
+  "group": "CW",
+  "title": "Cleaning by redrilling the foundation drill holes of Ukai Masonry dam at Ukai.",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.613)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00460818",
+  "tid": "UP-5DF04286",
+  "status": "ok",
+  "group": "GO",
+  "title": "Project wishes to enhance capacity bulilding for CBO under SMART Project at ICAR IIMR Cent",
+  "project": "State of Maharashtra's Agribusiness and Rural Tran",
+  "n_components": 1,
+  "components": [
+   "Industrial & process machinery (9, 0.461)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00460713",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00460684",
+  "tid": "UP-042FE965",
+  "status": "ok",
+  "group": "CW",
+  "title": "Carrying out upto 150 mm dia core samples by drilling in Ukai dam at Ukai.",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.613)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00460700",
+  "tid": "UP-B49B1CE3",
+  "status": "ok",
+  "group": "CW",
+  "title": "Carrying out drilling and grouting from top of RT Dam to control the leakage at Ukai Dam.",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.613)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00459273",
+  "status": "no text"
+ },
+ {
+  "id": "OP00460403",
+  "tid": "UP-766F7EB8",
+  "status": "ok",
+  "group": "CW",
+  "title": "Protection Work of Damaged Portion near RT Wall of Diversion Channel of Ukai Dam.",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 2,
+  "components": [
+   "Civil & building construction (3, 0.689)",
+   "Operation & maintenance services (1, 0.382)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 0.987
+ },
+ {
+  "id": "OP00460421",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00459911",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00459917",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00459922",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00459971",
+  "tid": "UP-0E763DC6",
+  "status": "ok",
+  "group": "CW",
+  "title": "Ukai - Upstream surface treatment to Spillway and RT Dam section of Ukai Dam",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Operation & maintenance services (1, 0.41)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00459937",
+  "tid": "UP-5D4A6C20",
+  "status": "ok",
+  "group": "CW",
+  "title": "Ukai - Gabion work near T.R.C. left side Protection bund of Ukai Dam Ta.Songadh Dist.Tapi.",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Mechanical, HVAC, pumps & plumbing (1, 0.381)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00459711",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00459718",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00459740",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00459481",
+  "tid": "UP-170E4E48",
+  "status": "ok",
+  "group": "CW",
+  "title": "Procurement of Civil Works for Retrofitting /Augmentation of 1 existing school in Biswanat",
+  "project": "Assam Integrated River Basin Management Program",
+  "n_components": 1,
+  "components": [
+   "Design, engineering & supervision services (1, 0.43)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00459546",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00459244",
+  "tid": "UP-6E8D3854",
+  "status": "ok",
+  "group": "CW",
+  "title": "Constructing Jalbhavan near Dharoi Colony and Section Office Building near Dharoi Dam Site",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.909)"
+  ],
+  "sources": [
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": 2.9161,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00400595",
+  "status": "no text"
+ },
+ {
+  "id": "OP00457570",
+  "status": "no text"
+ },
+ {
+  "id": "OP00457304",
+  "tid": "UP-6D922540",
+  "status": "ok",
+  "group": "CW",
+  "title": "Repair and renovation work under ASSIST project for (i) ANM School of Nursing, Hailakandi,",
+  "project": "Assam State Secondary Healthcare Initiative for Se",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (1, 0.684)"
+  ],
+  "sources": [
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00457308",
+  "tid": "UP-09633C08",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of 80 Pairs of 2 Seated Desk and Benches for Smart Classroom of B.Sc Nursing C",
+  "project": "Assam State Secondary Healthcare Initiative for Se",
+  "n_components": 1,
+  "components": [
+   "Design, engineering & supervision services (1, 0.668)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00457091",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00456585",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00456853",
+  "tid": "UP-7BB11F42",
+  "status": "ok",
+  "group": "CW",
+  "title": "Repair and renovation work in Sivasagar Civil Hospital, Joysagar , Assam under ASSIST Proj",
+  "project": "Assam State Secondary Healthcare Initiative for Se",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (2, 0.542)"
+  ],
+  "sources": [
+   "document",
+   "line_item"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00456861",
+  "tid": "UP-79F6825F",
+  "status": "ok",
+  "group": "GO",
+  "title": "Procurement of Window Server OS for hosting the NDM application at SDC",
+  "project": "Assam State Secondary Healthcare Initiative for Se",
+  "n_components": 2,
+  "components": [
+   "Design, engineering & supervision services (1, 0.668)",
+   "Software, ICT & control systems (1, 0.392)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": null,
+  "stays_best": 0.813
+ },
+ {
+  "id": "OP00456583",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00456316",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00456305",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00308929",
+  "status": "no text"
+ },
+ {
+  "id": "OP00455190",
+  "status": "restructure 422"
+ },
+ {
+  "id": "OP00455089",
+  "tid": "UP-A2AD5BC6",
+  "status": "ok",
+  "group": "GO",
+  "title": "Supply, Installation, and Commissioning of Desktop Computers for Various Offices of WBSEDC",
+  "project": "West Bengal Electricity Distribution Grid Moderniz",
+  "n_components": 2,
+  "components": [
+   "Software, ICT & control systems (2, 0.758)",
+   "Civil & building construction (1, 0.528)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 2,
+  "splits": true,
+  "estimate": 0.339,
+  "stays_best": 0.683
+ },
+ {
+  "id": "OP00455180",
+  "tid": "UP-4EC4FC2D",
+  "status": "ok",
+  "group": "NC",
+  "title": "Procurement of Service Provider for Resource Mapping & Techno-Managerial Support for RH-TD",
+  "project": "Assam Integrated River Basin Management Program",
+  "n_components": 1,
+  "components": [
+   "Design, engineering & supervision services (1, 0.633)"
+  ],
+  "sources": [
+   "document"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00455139",
+  "tid": "UP-9B339CF4",
+  "status": "ok",
+  "group": "CW",
+  "title": "Dharoi - Providing protective Coating on various components of Dharoi Project",
+  "project": "Second Dam Rehabilitation and Improvement Project",
+  "n_components": 1,
+  "components": [
+   "Software, ICT & control systems (1, 0.253)"
+  ],
+  "sources": [
+   "title"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00454420",
+  "tid": "UP-F4A5E12D",
+  "status": "ok",
+  "group": "CW",
+  "title": "Construction of Multi-commodity pack house, Vapour Heat Treatment (VHT) unit with integrat",
+  "project": "State of Maharashtra's Agribusiness and Rural Tran",
+  "n_components": 1,
+  "components": [
+   "Civil & building construction (3, 0.92)"
+  ],
+  "sources": [
+   "document",
+   "scope_field"
+  ],
+  "recommended_packages": 1,
+  "splits": false,
+  "estimate": null,
+  "stays_best": 1.0
+ },
+ {
+  "id": "OP00454671",
+  "status": "no text"
+ },
+ {
+  "id": "OP00454737",
+  "status": "no text"
+ },
+ {
+  "id": "OP00454751",
+  "status": "no text"
+ },
+ {
+  "id": "OP00454747",
+  "status": "no text"
+ },
+ {
+  "id": "OP00454762",
+  "status": "no text"
+ }
+]

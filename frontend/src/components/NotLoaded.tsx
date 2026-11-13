@@ -1,30 +1,27 @@
-import { DatabaseZap, RefreshCw, TriangleAlert } from "lucide-react";
+import { DatabaseZap, RefreshCw, TriangleAlert, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
-import { isRouteErrorResponse, useRouteError } from "react-router-dom";
+import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
 
 import { ApiError } from "../api/client";
-import { useLoadDemo } from "../lib/hooks";
+import { useTid } from "../lib/hooks";
 import { Button, Card, EmptyState, LoadingBlock } from "./ui";
 
 export function NotLoaded({ what }: { what: string }) {
-  const load = useLoadDemo();
+  const tid = useTid();
   return (
     <Card>
       <EmptyState
         icon={<DatabaseZap size={30} />}
-        title={`No ${what} yet`}
+        title={tid ? `No ${what} for ${tid} yet` : "No tender selected"}
         action={
-          <Button variant="brand" icon={<RefreshCw size={15} />} loading={load.isPending} onClick={() => load.mutate()}>
-            Load demonstration tender
-          </Button>
+          <Link className="btn btn--brand" to="/">
+            <Upload size={15} /> {tid ? "Back to tender" : "Upload a tender"}
+          </Link>
         }
       >
-        Load the preloaded demonstration tender (TN-2026-014). The backend analyses it end to end in about a second.
-        {load.isError && (
-          <span style={{ display: "block", marginTop: 8, color: "var(--fail)" }}>
-            {load.error instanceof Error ? load.error.message : String(load.error)}
-          </span>
-        )}
+        {tid
+          ? `This stage has not run for ${tid}. Add the missing inputs (bidders, BOQ) and run the analysis.`
+          : "Upload a real tender document, or pick one you uploaded earlier, to begin."}
       </EmptyState>
     </Card>
   );

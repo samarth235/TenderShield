@@ -1,48 +1,74 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { api, ApiError, DEMO_TENDER } from "../api/client";
+import { api, ApiError, type UploadTenderInput } from "../api/client";
+import { useCurrentTender, useTid } from "./tender";
 
-export const TID = DEMO_TENDER;
+export { useTid };
 
 const noRetryOn404 = (count: number, err: unknown) =>
   !(err instanceof ApiError && (err.status === 404 || err.status === 409)) && count < 1;
 
 export const useHealth = () => useQuery({ queryKey: ["health"], queryFn: api.health, refetchInterval: 15000, retry: false });
 
-export const useTender = () => useQuery({ queryKey: ["tender", TID], queryFn: () => api.tender(TID), retry: noRetryOn404 });
+export const useTender = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["tender", TID], queryFn: () => api.tender(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
-export const useRules = () => useQuery({ queryKey: ["rules", TID], queryFn: () => api.rules(TID), retry: noRetryOn404 });
+export const useRules = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["rules", TID], queryFn: () => api.rules(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
-export const useCompliance = () =>
-  useQuery({ queryKey: ["compliance", TID], queryFn: () => api.compliance(TID), retry: noRetryOn404 });
+export const useCompliance = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["compliance", TID], queryFn: () => api.compliance(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
-export const useGraph = () => useQuery({ queryKey: ["graph", TID], queryFn: () => api.graph(TID), retry: noRetryOn404 });
+export const useGraph = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["graph", TID], queryFn: () => api.graph(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
-export const useSimilarity = () =>
-  useQuery({ queryKey: ["similarity", TID], queryFn: () => api.similarity(TID), retry: noRetryOn404 });
+export const useSimilarity = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["similarity", TID], queryFn: () => api.similarity(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
-export const useBehaviour = () =>
-  useQuery({ queryKey: ["behaviour", TID], queryFn: () => api.behaviour(TID), retry: noRetryOn404 });
+export const useBehaviour = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["behaviour", TID], queryFn: () => api.behaviour(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
-export const useFindings = () =>
-  useQuery({ queryKey: ["findings", TID], queryFn: () => api.findings(TID), retry: noRetryOn404 });
+export const useFindings = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["findings", TID], queryFn: () => api.findings(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
 export const useFinding = (fid: string) =>
   useQuery({ queryKey: ["finding", fid], queryFn: () => api.finding(fid), retry: noRetryOn404, enabled: !!fid });
 
-export const useAuditLog = () => useQuery({ queryKey: ["audit", TID], queryFn: () => api.auditLog(TID), retry: noRetryOn404 });
+export const useAuditLog = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["audit", TID], queryFn: () => api.auditLog(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
-export const useSnapshots = () =>
-  useQuery({ queryKey: ["snapshots", TID], queryFn: () => api.snapshots(TID), retry: noRetryOn404 });
+export const useSnapshots = () => {
+  const TID = useTid();
+  return useQuery({ queryKey: ["snapshots", TID], queryFn: () => api.snapshots(TID), retry: noRetryOn404, enabled: !!TID });
+};
 
-/** Reloads the demo dataset + analysis and refreshes every cached view. */
-export function useLoadDemo() {
+export const useTenders = () => useQuery({ queryKey: ["tenders"], queryFn: api.tenders });
+
+/** Uploads a real tender PDF, extracts its rulebook and makes it the current tender. */
+export function useUploadTender() {
   const qc = useQueryClient();
+  const { setTid } = useCurrentTender();
   return useMutation({
-    mutationFn: api.loadDemo,
-    onSuccess: (result) => {
-      if (result.analysis) qc.setQueryData(["analysis", TID], result.analysis);
-      return qc.invalidateQueries({ predicate: (q) => q.queryKey[0] !== "analysis" });
+    mutationFn: (input: UploadTenderInput) => api.uploadTender(input),
+    onSuccess: (created) => {
+      setTid(created.tender_id);
+      return qc.invalidateQueries();
     },
   });
 }
@@ -51,6 +77,7 @@ export const isNotLoaded = (err: unknown) => err instanceof ApiError && (err.sta
 
 export function useRunAnalysis() {
   const qc = useQueryClient();
+  const TID = useTid();
   return useMutation({
     mutationFn: () => api.analyze(TID),
     onSuccess: (report) => {
@@ -60,9 +87,11 @@ export function useRunAnalysis() {
   });
 }
 
-export const useAnalysisReport = () =>
-  useQuery<import("../api/types").AnalysisReport | null>({
+export const useAnalysisReport = () => {
+  const TID = useTid();
+  return useQuery<import("../api/types").AnalysisReport | null>({
     queryKey: ["analysis", TID],
     queryFn: () => null,
     staleTime: Infinity,
   });
+};

@@ -1,7 +1,7 @@
 import { AlertTriangle, CheckCircle2, ExternalLink, FileText, Info, Loader2, X, XCircle } from "lucide-react";
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
-import { api } from "../api/client";
+import { api, openAuthed } from "../api/client";
 import { humanize, levelTone, resultTone, statusTone, type Tone } from "../lib/format";
 
 export function Badge({ tone = "outline", dot, children, title }: { tone?: Tone; dot?: boolean; children: ReactNode; title?: string }) {
@@ -149,9 +149,15 @@ export function Meter({ value, max = 1, color, ticks = [] }: { value: number; ma
   );
 }
 
+/** Click handler for links to API files: fetches with the session token instead of navigating. */
+export function openDoc(e: React.MouseEvent<HTMLAnchorElement>) {
+  e.preventDefault();
+  openAuthed(e.currentTarget.getAttribute("href") ?? "").catch(() => {});
+}
+
 export function DocLink({ documentId, page, label }: { documentId: string; page?: number | null; label?: string }) {
   return (
-    <a className="doc-link" href={api.documentUrl(documentId, page)} target="_blank" rel="noreferrer">
+    <a className="doc-link" href={api.documentUrl(documentId, page)} onClick={openDoc} target="_blank" rel="noreferrer">
       <FileText size={12} />
       {label ?? documentId}
       {page ? ` · p.${page}` : ""}

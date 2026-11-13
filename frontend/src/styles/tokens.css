@@ -1,109 +1,83 @@
 /*
  * TenderShield Nexus design tokens.
- * Direction: "forensic ledger" - neutral canvas, black text, deep navy brand,
- * IBM Plex type, and a muted semantic palette for evidence states.
+ *
+ * Mandated palette (light theme only, no dark variant):
+ *   --c-primary  #005EA2  primary actions, links, brand
+ *   --c-white    #FFFFFF  surfaces
+ *   --c-ink      #1B1B1B  text and chrome
+ *   --c-base     #F0F0F0  page background, subtle fills
+ *   --c-alert    #B50909  errors, high-severity signals
+ *
+ * Every other token is one of these five, or a color-mix() tint of them, so the
+ * whole interface stays inside the palette.
  */
 :root {
+  --c-primary: #005ea2;
+  --c-white: #ffffff;
+  --c-ink: #1b1b1b;
+  --c-base: #f0f0f0;
+  --c-alert: #b50909;
+
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Surfaces */
-  --bg: #f4f5f7;
-  --surface: #ffffff;
-  --surface-2: #f8f9fb;
-  --surface-3: #eceff4;
-  --chrome: #14233c;
-  --chrome-2: #1f3354;
+  --bg: var(--c-base);
+  --surface: var(--c-white);
+  --surface-2: color-mix(in srgb, var(--c-base) 45%, var(--c-white));
+  --surface-3: var(--c-base);
+  --chrome: var(--c-ink);
+  --chrome-2: color-mix(in srgb, var(--c-ink) 85%, var(--c-white));
 
-  /* Ink: body text is black; lighter steps are reserved for secondary labels */
-  --ink: #000000;
-  --ink-2: #1f2328;
-  --ink-3: #555b66;
-  --ink-inverse: #ffffff;
+  /* Ink */
+  --ink: var(--c-ink);
+  --ink-2: var(--c-ink);
+  --ink-3: color-mix(in srgb, var(--c-ink) 72%, var(--c-white));
+  --ink-inverse: var(--c-white);
 
   /* Lines */
-  --line: #dde2ea;
-  --line-strong: #c3cad6;
+  --line: color-mix(in srgb, var(--c-ink) 12%, var(--c-base));
+  --line-strong: color-mix(in srgb, var(--c-ink) 25%, var(--c-base));
 
-  /* Brand + interaction: deep navy with a steel-blue accent */
-  --brand: #1f3a68;
-  --brand-soft: #e3e9f3;
-  --accent: #245a8d;
-  --accent-soft: #e2ecf5;
-  --focus: #245a8d;
+  /* Brand + interaction */
+  --brand: var(--c-primary);
+  --brand-soft: color-mix(in srgb, var(--c-primary) 10%, var(--c-white));
+  --accent: var(--c-primary);
+  --accent-soft: color-mix(in srgb, var(--c-primary) 10%, var(--c-white));
+  --focus: var(--c-primary);
 
-  /* Evidence semantics: muted, print-safe tones */
-  --high: #9b2c2c;
-  --high-soft: #f5e4e3;
-  --medium: #9a5a1e;
-  --medium-soft: #f4eadf;
-  --low: #4a5a73;
-  --low-soft: #e7ebf1;
-  --pass: #1f6b47;
-  --pass-soft: #e1efe7;
-  --fail: #a12626;
-  --fail-soft: #f6e2e1;
-  --unknown: #5a3f8c;
-  --unknown-soft: #ebe6f4;
-  --na: #767b84;
-  --na-soft: #eceef1;
+  /* Evidence / status semantics, expressed in palette colours */
+  --high: var(--c-alert);
+  --high-soft: color-mix(in srgb, var(--c-alert) 10%, var(--c-white));
+  --medium: color-mix(in srgb, var(--c-alert) 65%, var(--c-ink));
+  --medium-soft: color-mix(in srgb, var(--c-alert) 6%, var(--c-base));
+  --low: var(--c-primary);
+  --low-soft: color-mix(in srgb, var(--c-primary) 8%, var(--c-white));
+  --pass: var(--c-primary);
+  --pass-soft: color-mix(in srgb, var(--c-primary) 10%, var(--c-white));
+  --fail: var(--c-alert);
+  --fail-soft: color-mix(in srgb, var(--c-alert) 10%, var(--c-white));
+  --unknown: var(--c-ink);
+  --unknown-soft: var(--c-base);
+  --na: color-mix(in srgb, var(--c-ink) 60%, var(--c-white));
+  --na-soft: var(--c-base);
 
   /* Evidence families */
-  --fam-corporate: #1f4e8c;
-  --fam-behavioural: #9a5a1e;
-  --fam-document: #1d6b6b;
-  --fam-model: #5a3f8c;
+  --fam-corporate: var(--c-primary);
+  --fam-behavioural: var(--c-alert);
+  --fam-document: var(--c-ink);
+  --fam-model: color-mix(in srgb, var(--c-primary) 55%, var(--c-ink));
 
   /* Geometry */
-  --radius-sm: 6px;
-  --radius: 10px;
-  --radius-lg: 14px;
-  --shadow-sm: 0 1px 0 rgba(20, 24, 33, 0.04), 0 1px 2px rgba(20, 24, 33, 0.06);
-  --shadow: 0 1px 0 rgba(20, 24, 33, 0.04), 0 6px 20px -8px rgba(20, 24, 33, 0.16);
-  --shadow-lg: 0 24px 60px -20px rgba(16, 24, 38, 0.35);
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 8px;
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--c-ink) 8%, transparent);
+  --shadow: 0 4px 16px -6px color-mix(in srgb, var(--c-ink) 18%, transparent);
+  --shadow-lg: 0 20px 50px -20px color-mix(in srgb, var(--c-ink) 35%, transparent);
 
   --sidebar-w: 248px;
   --side-col: 400px;
   --gutter: 28px;
   color-scheme: light;
-}
-
-:root[data-theme="dark"] {
-  --bg: #0e131b;
-  --surface: #151c27;
-  --surface-2: #19212e;
-  --surface-3: #202a39;
-  --chrome: #0a0f17;
-  --chrome-2: #1a2537;
-  --ink: #eef1f5;
-  --ink-2: #c9cfd9;
-  --ink-3: #939bab;
-  --line: #263245;
-  --line-strong: #35435b;
-  --brand: #8ea8cf;
-  --brand-soft: #1c2a42;
-  --accent: #8ea8cf;
-  --accent-soft: #1c2a42;
-  --focus: #8ea8cf;
-  --high: #d9776b;
-  --high-soft: #3a1c19;
-  --medium: #d09a62;
-  --medium-soft: #36291a;
-  --low: #9fb0cc;
-  --low-soft: #1f2837;
-  --pass: #6fb28c;
-  --pass-soft: #16301f;
-  --fail: #dc7770;
-  --fail-soft: #3a1a18;
-  --unknown: #a896d3;
-  --unknown-soft: #261f3d;
-  --na: #8c919a;
-  --na-soft: #222833;
-  --fam-corporate: #8ea8cf;
-  --fam-behavioural: #d09a62;
-  --fam-document: #6fb0ad;
-  --fam-model: #a896d3;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.6);
-  color-scheme: dark;
 }

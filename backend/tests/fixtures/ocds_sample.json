@@ -1,0 +1,10 @@
+{"releases": [
+ {"ocid": "ocds-test-1", "buyer": {"name": "Test Buyer"},
+  "tender": {"title": "Water meters", "items": [{"description": "Water meters", "classification": {"scheme": "CPV", "id": "38421100"}}]},
+  "parties": [{"id": "S1", "name": "Beta Instruments", "identifier": {"scheme": "IN-TEST", "id": "B1"}},
+              {"id": "S2", "name": "Epsilon Meters", "identifier": {"scheme": "IN-TEST", "id": "E1"}}],
+  "bids": {"details": [{"tenderers": [{"id": "S1", "name": "Beta Instruments"}], "value": {"amount": 100, "currency": "INR"}},
+                       {"tenderers": [{"id": "S2", "name": "Epsilon Meters"}], "value": {"amount": 110, "currency": "INR"}}]},
+  "awards": [{"id": "A1", "status": "active", "value": {"amount": 1000000, "currency": "INR"},
+              "suppliers": [{"id": "S1", "name": "Beta Instruments"}]}]}
+]}

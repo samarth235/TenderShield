@@ -1,67 +1,95 @@
-import { ArrowRight, BookOpenText, FileStack, Grid3x3, History, Play, ShieldAlert, Users } from "lucide-react";
+import { ArrowRight, BookOpenText, FileStack, Grid3x3, History, ShieldAlert, Upload, Users } from "lucide-react";
+import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { ErrorCard } from "../components/NotLoaded";
-import { Badge, Button, Card, LevelBadge, LoadingBlock, PageHead, StatTile, StatusBadge } from "../components/ui";
+import { Badge, Button, Callout, Card, LevelBadge, LoadingBlock, PageHead, StatTile, StatusBadge } from "../components/ui";
 import { CATEGORY_LABEL, fmtCr, fmtDateTime, levelColor, prettyTitle, shortTitle } from "../lib/format";
-import { isNotLoaded, useCompliance, useFindings, useLoadDemo, useRules, useTender } from "../lib/hooks";
+import { isNotLoaded, useCompliance, useFindings, useRules, useTender, useTenders, useTid, useUploadTender } from "../lib/hooks";
+import { useAuth } from "../lib/auth";
+import { useCurrentTender } from "../lib/tender";
 
-const LIFECYCLE = ["UNDERSTAND", "VERIFY", "CONNECT", "DETECT", "EXPLAIN", "CHALLENGE", "REVIEW", "REPORT", "COMMIT", "VERIFY"];
+/** Shown when no tender is selected: invites a real upload. Nothing is pre-populated. */
+export function Landing() {
+  const upload = useUploadTender();
+  const tenders = useTenders();
+  const { setTid } = useCurrentTender();
+  const navigate = useNavigate();
+  const [file, setFile] = useState<File | null>(null);
+  const [title, setTitle] = useState("");
+  const [department, setDepartment] = useState("");
+  const { can } = useAuth();
 
-const SCENARIOS = [
-  { who: "Vendor A + Vendor B", title: "Multi-signal investigation case", body: "Shared director and premises, repeated co-bidding, rotating winners and near-identical proposals.", tone: "high" as const, result: "HIGH signal" },
-  { who: "Vendor C + Vendor D", title: "Single weak relationship", body: "Shared director only. They rarely bid together and their documents differ. Noted, not escalated.", tone: "low" as const, result: "LOW" },
-  { who: "Vendor E", title: "Genuine compliance failure", body: "ISO 9001 certificate expired before the bid date: a deterministic rule result.", tone: "fail" as const, result: "FAIL" },
-  { who: "Vendor F", title: "Missing information", body: "Director information unavailable. Missing data is flagged, never treated as wrongdoing.", tone: "unknown" as const, result: "UNKNOWN" },
-];
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!file) return;
+    upload.mutate(
+      { file, title: title.trim() || undefined, department: department.trim() || undefined },
+      { onSuccess: () => navigate("/restructuring") },
+    );
+  };
 
-function Landing() {
-  const load = useLoadDemo();
   return (
     <div className="stack" style={{ gap: 22 }}>
       <section className="hero">
         <div className="stack" style={{ position: "relative", gap: 16 }}>
-          <Badge tone="brand">Explainable tender assurance</Badge>
-          <h1>Turn fragmented procurement records into evidence you can defend.</h1>
+          <Badge tone="brand">SDG 9.3 procurement restructuring</Badge>
+          <h1>Open large public tenders to small and medium enterprises.</h1>
           <p>
-            TenderShield reads the tender, checks every bidder against every requirement, and connects vendors,
-            directors, addresses and bidding history into a relationship graph. Each finding is explained, stress-tested
-            by removing evidence, decided by a human auditor, and sealed with a cryptographic hash.
+            Upload a real tender document. TenderShield extracts its scope, maps the technical dependencies between
+            work items, proposes procurement packages, finds suppliers with published evidence of capability, and screens
+            them for relationships that need review. Every recommendation cites its source and is decided by an officer.
           </p>
-          <div className="row" style={{ marginTop: 6 }}>
-            <Button variant="brand" size="lg" icon={<Play size={16} />} loading={load.isPending} onClick={() => load.mutate()}>
-              Load demonstration tender
-            </Button>
-            <span className="dim" style={{ fontSize: 13 }}>TN-2026-014 · 6 bidders · 480 historical tenders · runs offline</span>
-          </div>
-          {load.isError && <p style={{ color: "var(--fail)" }}>{String(load.error)} — is the API running (`make run`)?</p>}
-          <div className="lifecycle">
-            {LIFECYCLE.map((s, i) => (
-              <span key={i}>{s}</span>
-            ))}
-          </div>
         </div>
       </section>
-      <div>
-        <div className="section-label" style={{ marginBottom: 10 }}>
-          Planted scenarios in the demonstration dataset
-        </div>
-        <div className="grid grid--4">
-          {SCENARIOS.map((s) => (
-            <div key={s.who} className="card scenario">
-              <div className="row row--between">
-                <span className="scenario__who">{s.who}</span>
-                <Badge tone={s.tone} dot>
-                  {s.result}
-                </Badge>
-              </div>
-              <h3 style={{ fontSize: 15 }}>{s.title}</h3>
-              <p className="dim" style={{ fontSize: 13 }}>
-                {s.body}
-              </p>
+
+      <div className="grid grid--main-side">
+        <Card title="Upload a tender" icon={<Upload size={15} />}>
+          {!can("officer") ? (
+            <p className="dim" style={{ fontSize: 13 }}>Your account is read-only. A procurement officer uploads tenders.</p>
+          ) : (
+          <form className="stack" onSubmit={submit}>
+            <div className="field">
+              <label htmlFor="tender-file">Tender document (PDF, digital text)</label>
+              <input id="tender-file" className="input" type="file" accept="application/pdf,.pdf" required
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
             </div>
+            <div className="field">
+              <label htmlFor="tender-title">Title (optional, read from the document if blank)</label>
+              <input id="tender-title" className="input" value={title} onChange={(e) => setTitle(e.target.value)} />
+            </div>
+            <div className="field">
+              <label htmlFor="tender-dept">Procuring department (optional)</label>
+              <input id="tender-dept" className="input" value={department} onChange={(e) => setDepartment(e.target.value)} />
+            </div>
+            <div className="row">
+              <Button variant="brand" icon={<Upload size={15} />} loading={upload.isPending} disabled={!file}>
+                Upload and extract
+              </Button>
+            </div>
+            {upload.isError && <Callout tone="danger">{upload.error instanceof Error ? upload.error.message : String(upload.error)}</Callout>}
+          </form>
+          )}
+        </Card>
+
+        <Card title="Existing tenders" icon={<FileStack size={15} />} flush>
+          {tenders.isLoading && <div className="card__body"><LoadingBlock rows={2} /></div>}
+          {tenders.isError && <div className="card__body"><ErrorCard error={tenders.error} /></div>}
+          {tenders.data?.length === 0 && (
+            <div className="card__body dim" style={{ fontSize: 13 }}>No tenders uploaded yet.</div>
+          )}
+          {tenders.data?.map((t) => (
+            <button key={t.tender_id} type="button" className="finding-row" style={{ width: "100%", textAlign: "left", background: "none", border: 0 }}
+              onClick={() => { setTid(t.tender_id); navigate("/restructuring"); }}>
+              <span className="finding-row__rail" />
+              <div>
+                <div className="finding-row__title">{shortTitle(t.title)}</div>
+                <div className="finding-row__meta"><span className="mono">{t.tender_id}</span><span>{t.department}</span></div>
+              </div>
+              <ArrowRight size={14} />
+            </button>
           ))}
-        </div>
+        </Card>
       </div>
     </div>
   );
@@ -73,7 +101,9 @@ export function Overview() {
   const compliance = useCompliance();
   const findings = useFindings();
   const navigate = useNavigate();
+  const TID = useTid();
 
+  if (!TID) return <Landing />;
   if (tender.isLoading) return <LoadingBlock rows={6} />;
   if (tender.error && isNotLoaded(tender.error)) return <Landing />;
   if (tender.error) return <ErrorCard error={tender.error} />;
@@ -95,7 +125,7 @@ export function Overview() {
   return (
     <>
       <PageHead
-        eyebrow={`Tender ${t.tender_id} · Overview`}
+        eyebrow={`Tender ${t.tender_id} · Assurance overview`}
         title={shortTitle(t.title)}
         sub={
           <>

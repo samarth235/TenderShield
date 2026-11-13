@@ -32,3 +32,6 @@ blockchain/typechain-types/
 # Local Claude Code / editor launch configs
 .claude/
 *.tsbuildinfo
+
+# Downloaded real datasets (fetched by backend/scripts/fetch_real_data.py; see data/real/raw/MANIFEST.json)
+data/real/raw/

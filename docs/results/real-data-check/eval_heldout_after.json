@@ -1,0 +1,146 @@
+{
+ "split": "test",
+ "notices": 47,
+ "lines": 89,
+ "extraction_precision": 0.91,
+ "not_scope_by_source": {
+  "document": 8
+ },
+ "classification": {
+  "accuracy": 0.84,
+  "macro_f1": 0.792,
+  "per_class": {
+   "civil_works": {
+    "support": 41,
+    "precision": 0.9,
+    "recall": 0.878,
+    "f1": 0.889
+   },
+   "consultancy_design": {
+    "support": 1,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "electrical": {
+    "support": 2,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "ict_software": {
+    "support": 3,
+    "precision": 1.0,
+    "recall": 0.333,
+    "f1": 0.5
+   },
+   "industrial_machinery": {
+    "support": 12,
+    "precision": 1.0,
+    "recall": 0.917,
+    "f1": 0.957
+   },
+   "mechanical_hvac_plumbing": {
+    "support": 10,
+    "precision": 0.583,
+    "recall": 0.7,
+    "f1": 0.636
+   },
+   "other_goods_services": {
+    "support": 1,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "structural_fabrication": {
+    "support": 2,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "telecom_networks": {
+    "support": 1,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "vehicles_equipment": {
+    "support": 8,
+    "precision": 0.889,
+    "recall": 1.0,
+    "f1": 0.941
+   }
+  }
+ },
+ "predicted_other": 1,
+ "model": {
+  "trained_at": "2026-11-13T04:35:49+00:00"
+ },
+ "errors": [
+  {
+   "text": "T0+8 Weeks N/A N/A Supply, Delivery ,Installation ,commissioning and Job Completion of Desktop PCs as per quantity of Bo",
+   "gold": "ict_software",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Tender Notice No.: 10 of 2024-25 Department: Narmada, Water Resources, Water Supply & Kalpsar Department Division: Ukai ",
+   "gold": "civil_works",
+   "pred": "mechanical_hvac_plumbing"
+  },
+  {
+   "text": "Tender Notice No.: 5 of 2024-25 Department: Narmada, Water Resources, Water Supply & Kalpsar Department Division: Ukai D",
+   "gold": "civil_works",
+   "pred": "mechanical_hvac_plumbing"
+  },
+  {
+   "text": "Tender Notice No.: 18 of 2025-26 Department: Narmada, Water Resources, Water Supply & Kalpsar Department Division: Ukai ",
+   "gold": "civil_works",
+   "pred": "mechanical_hvac_plumbing"
+  },
+  {
+   "text": "Providing and installation of SCADA-based Gate Operation, ARMC & Monitoring Control System, Instrumentation and other re",
+   "gold": "ict_software",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Development, Operation and Maintenance of Natani Ka Bara-Malakhera-Maujpur section",
+   "gold": "civil_works",
+   "pred": "operation_maintenance"
+  },
+  {
+   "text": "Fabrication, Supply, Installation, Testing and Commissioning with required Plumbing , Civil and Electrical works for ins",
+   "gold": "structural_fabrication",
+   "pred": "mechanical_hvac_plumbing"
+  },
+  {
+   "text": "Supply Installation, Testing and Commissioning of 3 seater Module Toilet system with all Civil, Plumbing and Electrical ",
+   "gold": "structural_fabrication",
+   "pred": "mechanical_hvac_plumbing"
+  },
+  {
+   "text": "NAME OF WORK; - Restoration of rain damages of WSS Kullu Town in Distt.",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Kullu (H.P) (SH:- Laying, jointing and testing of gravity main, Construction of crate work along the sarvari khad to pro",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Repairing and Cleaning of Damaged & Chocked Sewer Line in Rispana River From Balbeer Road Bridge To Chuna Bhatta Bridge,",
+   "gold": "mechanical_hvac_plumbing",
+   "pred": "civil_works"
+  },
+  {
+   "text": "Procurement of Post-Harvest Equipment for Producer Groups",
+   "gold": "industrial_machinery",
+   "pred": "vehicles_equipment"
+  },
+  {
+   "text": "Special repair of RH Bilaspur. (SH:- White washing, tile work, cupboard etc. at Hospital Mess). 6.",
+   "gold": "civil_works",
+   "pred": "operation_maintenance"
+  }
+ ]
+}

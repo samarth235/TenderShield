@@ -1,142 +1,22 @@
-"""SQLite persistence for tenders, vendors, evidence, findings and the audit trail.
+"""Persistence for tenders, vendors, evidence, findings, users and the audit trail.
 
-The schema is intentionally small: structured records live in typed columns, and
-stage outputs (graph, similarity, behaviour...) are stored as JSON artifacts so the
-analysis pipeline can evolve without migrations during the hackathon.
+PostgreSQL in production (TS_DATABASE_URL), SQLite for local development and tests. The schema
+lives in ``app.schema`` and is created and evolved by Alembic migrations (``migrations/``), which
+``init_db`` applies. Structured records live in typed columns; stage outputs (graph, similarity,
+restructuring plan...) are stored as JSON artifacts.
 """
 
 from __future__ import annotations
 
 import json
 import sqlite3
+import threading
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
 
-from .config import get_settings
-
-SCHEMA = """
-CREATE TABLE IF NOT EXISTS tenders (
-    tender_id TEXT PRIMARY KEY,
-    title TEXT NOT NULL,
-    department TEXT,
-    estimated_value_cr REAL,
-    published_on TEXT,
-    bid_deadline TEXT,
-    status TEXT NOT NULL,
-    is_current INTEGER NOT NULL DEFAULT 0,
-    source TEXT NOT NULL,
-    meta TEXT NOT NULL DEFAULT '{}'
-);
-CREATE TABLE IF NOT EXISTS vendors (
-    vendor_id TEXT PRIMARY KEY,
-    alias TEXT,
-    name TEXT NOT NULL,
-    gstin TEXT,
-    pan TEXT,
-    registered_address TEXT,
-    phone TEXT,
-    email TEXT,
-    incorporated TEXT,
-    msme INTEGER NOT NULL DEFAULT 0,
-    directors TEXT,
-    meta TEXT NOT NULL DEFAULT '{}'
-);
-CREATE TABLE IF NOT EXISTS bids (
-    bid_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tender_id TEXT NOT NULL,
-    vendor_id TEXT,
-    bidder_name TEXT NOT NULL,
-    bidder_gstin TEXT,
-    amount_cr REAL,
-    submitted_at TEXT,
-    outcome TEXT NOT NULL,
-    rank INTEGER
-);
-CREATE INDEX IF NOT EXISTS idx_bids_tender ON bids(tender_id);
-CREATE TABLE IF NOT EXISTS documents (
-    document_id TEXT PRIMARY KEY,
-    tender_id TEXT NOT NULL,
-    vendor_id TEXT,
-    kind TEXT NOT NULL,
-    filename TEXT NOT NULL,
-    path TEXT NOT NULL,
-    sha256 TEXT NOT NULL,
-    pages INTEGER NOT NULL DEFAULT 0,
-    meta TEXT NOT NULL DEFAULT '{}'
-);
-CREATE TABLE IF NOT EXISTS document_pages (
-    document_id TEXT NOT NULL,
-    page INTEGER NOT NULL,
-    text TEXT NOT NULL,
-    PRIMARY KEY (document_id, page)
-);
-CREATE TABLE IF NOT EXISTS vendor_facts (
-    tender_id TEXT NOT NULL,
-    vendor_id TEXT NOT NULL,
-    metric TEXT NOT NULL,
-    value TEXT NOT NULL,
-    document_id TEXT,
-    page INTEGER,
-    excerpt TEXT,
-    PRIMARY KEY (tender_id, vendor_id, metric)
-);
-CREATE TABLE IF NOT EXISTS rules (
-    tender_id TEXT NOT NULL,
-    rule_id TEXT NOT NULL,
-    body TEXT NOT NULL,
-    PRIMARY KEY (tender_id, rule_id)
-);
-CREATE TABLE IF NOT EXISTS compliance (
-    tender_id TEXT NOT NULL,
-    vendor_id TEXT NOT NULL,
-    rule_id TEXT NOT NULL,
-    result TEXT NOT NULL,
-    body TEXT NOT NULL,
-    PRIMARY KEY (tender_id, vendor_id, rule_id)
-);
-CREATE TABLE IF NOT EXISTS artifacts (
-    tender_id TEXT NOT NULL,
-    stage TEXT NOT NULL,
-    body TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    PRIMARY KEY (tender_id, stage)
-);
-CREATE TABLE IF NOT EXISTS findings (
-    finding_id TEXT PRIMARY KEY,
-    tender_id TEXT NOT NULL,
-    category TEXT NOT NULL,
-    level TEXT NOT NULL,
-    status TEXT NOT NULL,
-    body TEXT NOT NULL
-);
-CREATE TABLE IF NOT EXISTS counterfactual_runs (
-    run_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    finding_id TEXT NOT NULL,
-    removed TEXT NOT NULL,
-    run_result TEXT NOT NULL,
-    created_at TEXT NOT NULL
-);
-CREATE TABLE IF NOT EXISTS audit_log (
-    entry_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tender_id TEXT NOT NULL,
-    finding_id TEXT,
-    action TEXT NOT NULL,
-    actor TEXT NOT NULL,
-    payload TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    prev_hash TEXT NOT NULL,
-    entry_hash TEXT NOT NULL
-);
-CREATE TABLE IF NOT EXISTS snapshots (
-    snapshot_id TEXT PRIMARY KEY,
-    tender_id TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    bundle TEXT NOT NULL,
-    bundle_hash TEXT NOT NULL,
-    audit_head INTEGER NOT NULL
-);
-"""
+from .config import BACKEND_DIR, get_settings
+from .schema import MARKET_TABLES
 
 JSON_COLUMNS = {"meta", "directors", "value", "body", "removed", "run_result", "payload", "bundle"}
 
@@ -146,6 +26,12 @@ def _db_path() -> Path:
 
 
 def connect() -> sqlite3.Connection:
+    """A DB-API connection. On PostgreSQL this is ``app.pg.Connection`` (same interface)."""
+    settings = get_settings()
+    if settings.is_postgres:
+        from . import pg
+
+        return pg.connect(settings.database_url)  # type: ignore[return-value]
     conn = sqlite3.connect(_db_path(), check_same_thread=False)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
@@ -165,15 +51,43 @@ def session() -> Iterator[sqlite3.Connection]:
         conn.close()
 
 
+_migrated: set[str] = set()
+_migrate_lock = threading.Lock()
+
+
 def init_db() -> None:
-    with session() as conn:
-        conn.executescript(SCHEMA)
+    """Apply pending Alembic migrations (once per database per process)."""
+    url = get_settings().sqlalchemy_url
+    with _migrate_lock:
+        if url in _migrated:
+            return
+        from alembic import command
+        from alembic.config import Config
+
+        cfg = Config(str(BACKEND_DIR / "alembic.ini"))
+        cfg.set_main_option("script_location", str(BACKEND_DIR / "migrations"))
+        command.upgrade(cfg, "head")
+        _migrated.add(url)
+
+
+# Users and the real market datasets survive a reset of the procurement data.
+KEEP_ON_RESET = {"users", *(t.name for t in MARKET_TABLES)}
 
 
 def reset_db() -> None:
-    path = _db_path()
-    if path.exists():
-        path.unlink()
+    """Drop all procurement data, then re-apply migrations. Users and market data are kept."""
+    from sqlalchemy import create_engine, inspect
+
+    url = get_settings().sqlalchemy_url
+    engine = create_engine(url)
+    try:
+        with engine.begin() as conn:
+            for name in inspect(conn).get_table_names():
+                if name not in KEEP_ON_RESET:
+                    conn.exec_driver_sql(f'DROP TABLE IF EXISTS "{name}"')
+    finally:
+        engine.dispose()
+    _migrated.discard(url)
     init_db()
 
 
@@ -181,7 +95,7 @@ def dumps(value: Any) -> str:
     return json.dumps(value, sort_keys=True, ensure_ascii=False, default=str)
 
 
-def row_to_dict(row: sqlite3.Row | None) -> dict[str, Any] | None:
+def row_to_dict(row: Any) -> dict[str, Any] | None:
     if row is None:
         return None
     out: dict[str, Any] = {}

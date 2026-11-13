@@ -3,11 +3,16 @@
 Usage (from backend/):
   python -m scripts.hero_demo                      # in-process, no server needed
   python -m scripts.hero_demo --url http://localhost:8000
+
+In-process mode enables the fabricated demo dataset and signs in as a local rehearsal officer.
+Against a running server, the server needs TS_ENABLE_DEMO=1 and the script signs in with
+TS_DEMO_EMAIL / TS_DEMO_PASSWORD (an officer account).
 """
 
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 
 TENDER = "TN-2026-014"
@@ -17,12 +22,28 @@ def make_client(url: str | None):
     if url:
         import httpx
 
-        return httpx.Client(base_url=url, timeout=60)
+        client = httpx.Client(base_url=url, timeout=60)
+        r = client.post("/api/auth/login", json={"email": os.environ.get("TS_DEMO_EMAIL", ""),
+                                                  "password": os.environ.get("TS_DEMO_PASSWORD", "")})
+        if r.status_code != 200:
+            sys.exit(f"Sign-in failed ({r.status_code}): set TS_DEMO_EMAIL / TS_DEMO_PASSWORD to an officer account")
+        client.headers["Authorization"] = f"Bearer {r.json()['access_token']}"
+        return client
+    os.environ["TS_ENABLE_DEMO"] = "1"  # rehearsal only: the fabricated dataset is off by default
     from fastapi.testclient import TestClient
 
+    from app.auth import create_user, issue_token
+    from app.db import fetch_one, init_db, session
     from app.main import app
 
-    return TestClient(app)
+    init_db()
+    with session() as conn:
+        user = fetch_one(conn, "SELECT * FROM users WHERE email = ?", ("rehearsal@tendershield.localhost",))
+        if user is None:
+            from secrets import token_urlsafe
+
+            user = create_user(conn, "rehearsal@tendershield.localhost", token_urlsafe(18), "officer", "Demo rehearsal")
+    return TestClient(app, headers={"Authorization": f"Bearer {issue_token(user)[0]}"})
 
 
 def step(n: int, text: str) -> None:

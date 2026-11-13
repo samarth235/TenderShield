@@ -1,0 +1,60 @@
+{
+ "market_awards_by_country": {
+  "India": 7434,
+  "Ukraine": 95272
+ },
+ "india_awards_by_capability": {
+  "civil_works": 1760,
+  "other_goods_services": 1689,
+  "consultancy_design": 1237,
+  "ict_software": 721,
+  "electrical": 456,
+  "mechanical_hvac_plumbing": 375,
+  "medical_lab": 339,
+  "operation_maintenance": 240,
+  "instrumentation_sensors": 186,
+  "vehicles_equipment": 176,
+  "structural_fabrication": 92,
+  "telecom_networks": 82,
+  "signalling_control": 42,
+  "industrial_machinery": 39
+ },
+ "india_award_dates": [
+  "1992-11-28",
+  "2020-01-01"
+ ],
+ "supplier_profiles_by_country": {
+  "Ukraine": 22269,
+  "null": 17286,
+  "India": 3496,
+  "United Kingdom": 44,
+  "United States": 37
+ },
+ "india_supplier_profiles_by_msme_status": {
+  "SIZE_PROXY_LARGE": 638,
+  "SIZE_PROXY_SMALL": 2858
+ },
+ "market_bids_by_source": {
+  "prozorro:ua": 238228
+ },
+ "market_sources": [
+  {
+   "source_id": "worldbank_awards:major_contract_awards:india",
+   "adapter": "worldbank_awards",
+   "origin_url": "https://finances.worldbank.org/Procurement/Major-Contract-Awards/kdui-wcs3",
+   "licence": "CC BY 4.0",
+   "rows_awards": 12436,
+   "rows_bids": 0,
+   "file_sha256": "85ec239e9eb4d2106d45236dc9de47d11f074861cba2c348689635fc7b506ab6"
+  },
+  {
+   "source_id": "prozorro:ua",
+   "adapter": "prozorro",
+   "origin_url": "https://github.com/ThesisInstitute/procurement/tree/main/prozorro",
+   "licence": "CC BY 4.0",
+   "rows_awards": 95272,
+   "rows_bids": 238228,
+   "file_sha256": "16962e6e8f0df1c4071dd51eb9c3bd320ec6b5bf5ec293690502e2db5588fa4d"
+  }
+ ]
+}

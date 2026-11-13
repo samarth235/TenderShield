@@ -176,7 +176,7 @@ button {
 
 .nav__count--alert {
   background: var(--high);
-  color: #fff;
+  color: var(--c-white);
 }
 
 .main {
@@ -454,27 +454,17 @@ button {
 .btn--primary {
   background: var(--chrome);
   border-color: var(--chrome);
-  color: #fff;
+  color: var(--c-white);
 }
 
 .btn--primary:hover:not(:disabled) {
   background: var(--chrome-2);
 }
 
-:root[data-theme="dark"] .btn--primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #0c1119;
-}
-
 .btn--brand {
   background: var(--brand);
   border-color: var(--brand);
-  color: #fff;
-}
-
-:root[data-theme="dark"] .btn--brand {
-  color: #0e131b;
+  color: var(--c-white);
 }
 
 .btn--brand:hover:not(:disabled) {
@@ -865,7 +855,7 @@ button {
   padding: 12px 16px;
   border-radius: 12px;
   background: var(--chrome);
-  color: #fff;
+  color: var(--c-white);
   box-shadow: var(--shadow-lg);
   font-size: 13px;
   animation: rise 200ms ease-out;
@@ -883,7 +873,7 @@ button {
   position: fixed;
   inset: 0;
   z-index: 60;
-  background: rgba(10, 14, 22, 0.35);
+  background: color-mix(in srgb, var(--c-ink) 35%, transparent);
   animation: fade 160ms ease-out;
 }
 
@@ -1089,7 +1079,7 @@ button {
 
 .cell--FAIL {
   background: var(--fail);
-  color: #fff;
+  color: var(--c-white);
 }
 
 .cell--FAIL.cell--optional {
@@ -1099,7 +1089,7 @@ button {
 
 .cell--UNKNOWN {
   background: var(--unknown);
-  color: #fff;
+  color: var(--c-white);
 }
 
 .cell--NOT_APPLICABLE {
@@ -1553,7 +1543,7 @@ button {
   font-weight: 700;
   font-size: 12px;
   background: var(--brand);
-  color: #fff;
+  color: var(--c-white);
 }
 
 .level-dial {
@@ -1679,8 +1669,8 @@ a.source-chip:hover {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: var(--c-white);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--c-ink) 25%, transparent);
   transition: transform 160ms ease;
 }
 
@@ -1756,7 +1746,7 @@ a.source-chip:hover {
 
 .reason__conclusion .reason__num {
   border-color: transparent;
-  color: #fff;
+  color: var(--c-white);
 }
 
 .decision {
@@ -1884,12 +1874,12 @@ a.source-chip:hover {
 
 .seal--ok .seal__icon {
   background: var(--pass);
-  color: #fff;
+  color: var(--c-white);
 }
 
 .seal--bad .seal__icon {
   background: var(--fail);
-  color: #fff;
+  color: var(--c-white);
 }
 
 .seal__status {
@@ -1947,7 +1937,7 @@ a.source-chip:hover {
 
 .step-list__num.done {
   background: var(--pass);
-  color: #fff;
+  color: var(--c-white);
 }
 
 /* ---------------------------------------------------------------- responsive */
@@ -1999,4 +1989,37 @@ a.source-chip:hover {
 
 .nowrap {
   white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- sign-in */
+
+.login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  padding: 16px;
+}
+
+.login__panel {
+  width: 100%;
+  max-width: 400px;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+/* Wide data tables scroll inside their card instead of widening the page. */
+.table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.table-scroll .table td:first-child {
+  min-width: 220px;
 }

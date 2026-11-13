@@ -1,16 +1,38 @@
 # Render Blueprint: https://render.com/docs/blueprint-spec
-# Free plan: the disk is ephemeral and the service sleeps after 15 idle minutes.
-# TS_AUTOLOAD_DEMO re-seeds the demo tender on every cold start.
+# PostgreSQL holds all records; uploaded documents and generated dossiers go to a persistent disk.
+# Persistent disks need a paid instance type; on the free plan files under /data are lost on redeploy.
 services:
   - type: web
     name: tendershield
     runtime: docker
-    plan: free
+    plan: starter
     dockerfilePath: ./Dockerfile
-    healthCheckPath: /api/health
+    healthCheckPath: /api/ready
     autoDeploy: true
+    disk:
+      name: tendershield-data
+      mountPath: /data
+      sizeGB: 5
     envVars:
+      - key: TS_ENV
+        value: production
+      - key: TS_DATABASE_URL
+        fromDatabase:
+          name: tendershield-db
+          property: connectionString
+      - key: TS_AUTH_SECRET
+        generateValue: true
       - key: TS_EXTRACTOR
         value: pattern
-      - key: TS_AUTOLOAD_DEMO
-        value: "1"
+      - key: TS_MARKET_COUNTRIES
+        value: India
+      # Set once in the dashboard for the first boot, then remove.
+      - key: TS_ADMIN_EMAIL
+        sync: false
+      - key: TS_ADMIN_PASSWORD
+        sync: false
+
+databases:
+  - name: tendershield-db
+    databaseName: tendershield
+    plan: basic-256mb

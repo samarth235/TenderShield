@@ -1,0 +1,26 @@
+code,label
+03000000-1,"Agricultural, farming, fishing, forestry and related products"
+03100000-2,Agricultural and horticultural products
+03110000-5,"Crops, products of market gardening and horticulture"
+03111000-2,Seeds
+03111100-3,Soya beans
+03111200-4,Peanuts
+03111300-5,Sunflower seeds
+03111400-6,Cotton seeds
+03111500-7,Sesame seeds
+03111600-8,Mustard seeds
+03111700-9,Vegetable seeds
+03111800-0,Fruit seeds
+03111900-1,Flower seeds
+03112000-9,Unmanufactured tobacco
+03113000-6,Plants used for sugar manufacturing
+03113100-7,Sugar beet
+03113200-8,Sugar cane
+03114000-3,Straw and forage
+03114100-4,Straw
+03114200-5,Forage
+03115000-0,Raw vegetable materials
+03115100-1,Raw vegetable materials used in textile production
+03115110-4,Cotton
+03115120-7,Jute
+03115130-0,Flax

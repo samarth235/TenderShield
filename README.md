@@ -1,6 +1,39 @@
 # 🛡️ TenderShield Nexus
 
-### Explainable Tender Assurance & Evidence Intelligence Platform
+### SDG 9.3 Procurement Restructuring & Supplier Intelligence
+
+> **Primary objective:** restructure large public contracts into technically feasible packages so capable SMEs can compete - with evidence for every package, supplier and trade-off.
+> **Secondary objective:** screen the resulting supplier pool (and, once bids arrive, the bidders) for observable cross-relationships that need human review.
+
+AI identifies evidence, alternatives, relationships and trade-offs. The procurement authority makes the final decision.
+
+| | Where |
+|---|---|
+| Restructuring engine (primary) | [`docs/restructuring.md`](docs/restructuring.md) · `backend/app/restructuring/`, `backend/app/market/` |
+| Real datasets, models, live-demo runbook | [`docs/real-data.md`](docs/real-data.md) |
+| Tender assurance pipeline (secondary) | sections below · `docs/pipeline.md` |
+
+```bash
+make setup && make data && make market   # real data -> trained models + supplier store
+make user EMAIL=you@dept.gov.in ROLE=admin   # first account (prompts for a password)
+make run                                  # API on :8000, see /docs
+make web                                  # dashboard on :5173 - sign in, upload a tender
+```
+
+Every API route except `/api/health`, `/api/ready` and `/api/auth/login` needs a session. Roles:
+`viewer` (read only), `officer` (upload, run analyses, record decisions), `admin` (manage users at
+`/api/auth/users`). The signed-in user is the actor recorded in the audit trail.
+
+Local development uses SQLite with no setup. Set `TS_DATABASE_URL` to use PostgreSQL; migrations
+(`backend/migrations`, Alembic) run on start-up or with `make migrate`. `make test-pg` runs the suite
+against an embedded PostgreSQL. All settings are documented in [`backend/.env.example`](backend/.env.example).
+
+No data is pre-loaded: a fresh install shows an empty workspace until a real tender is uploaded. The
+fabricated demonstration tender (TN-2026-014) is only for tests and local rehearsal (`TS_ENABLE_DEMO=1`).
+
+---
+
+## Secondary objective: explainable tender assurance
 
 > **AI finds the signals. Rules verify the facts. Blockchain protects the evidence. Humans make the final decision.**
 
@@ -369,17 +402,24 @@ TenderShield/
 The repository ships as one Docker image: the FastAPI backend serves the built React dashboard from the same origin, so no CORS or API-URL configuration is needed.
 
 ```bash
-docker build -t tendershield .
-docker run -p 8000:8000 tendershield      # http://localhost:8000
+cp backend/.env.example backend/.env   # set TS_AUTH_SECRET, TS_ADMIN_EMAIL, TS_ADMIN_PASSWORD
+docker compose up --build              # API + PostgreSQL 16, http://localhost:8000
 ```
 
-The image bakes in the analysed demo tender, so the dashboard has data from the first request. `render.yaml` deploys it to Render's free plan: in Render, choose **New → Blueprint** and select this repository. On the free plan the disk is ephemeral and the service sleeps after 15 idle minutes, so dispositions, snapshots and uploads reset to the demo state on restart. The first request after sleeping takes about a minute.
+`render.yaml` deploys the image with a managed Render PostgreSQL database and a persistent disk for
+uploaded documents and generated dossiers: in Render, choose **New → Blueprint** and select this
+repository, then set `TS_ADMIN_EMAIL` / `TS_ADMIN_PASSWORD` for the first boot. The image runs with
+`TS_ENV=production`, which refuses to start without `TS_AUTH_SECRET` (the blueprint generates one).
 
 | Variable | Default in the image | Meaning |
 |---|---|---|
+| `TS_ENV` | `production` | requires `TS_AUTH_SECRET` |
+| `TS_DATABASE_URL` | unset (SQLite) | PostgreSQL connection string |
+| `TS_AUTH_SECRET` | none | signs session tokens (>= 32 chars) |
 | `TS_STATIC_DIR` | `/app/static` | built dashboard served at `/` |
-| `TS_AUTOLOAD_DEMO` | `1` | load and analyse the demo tender if the database is empty |
-| `TS_DATA_DIR` | `/data` | SQLite DB and PDFs |
+| `TS_DATA_DIR` | `/data` | uploaded documents and PDFs (mount a persistent volume) |
 | `VITE_TENDERSHIELD_CONTRACT_ADDRESS` (build arg) | MST Testnet deployment | contract used by `/integrity` |
+
+`/api/health` is the liveness probe and `/api/ready` the readiness probe (checks the database).
 
 A fresh deployment finalises its own snapshot ID, so committing it on-chain from `/integrity` needs BridgeKey as described in [blockchain setup](blockchain/README.md).

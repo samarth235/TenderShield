@@ -4,6 +4,12 @@ uvicorn[standard]>=0.30
 pydantic>=2.8
 python-multipart>=0.0.9
 python-dotenv>=1.0
+# Sessions (signed JWT bearer tokens)
+pyjwt>=2.8
+# Database: PostgreSQL driver, schema definitions and migrations (SQLite works without psycopg)
+sqlalchemy>=2.0
+alembic>=1.13
+psycopg[binary]>=3.2
 # Document processing
 pypdf>=5.0
 reportlab>=4.2
@@ -16,3 +22,6 @@ numpy>=1.26
 scikit-learn>=1.5
 # LLM requirement extraction (optional at runtime; falls back to pattern extractor)
 anthropic>=1,<2
+openpyxl>=3.1
+# CA bundle for real-data downloads (macOS python.org builds lack system certificates)
+certifi>=2024.2

@@ -1,0 +1,507 @@
+{
+  "model": "competition_model",
+  "trained_at": "2026-11-13T04:35:51+00:00",
+  "algorithm": "HistGradientBoostingRegressor (Poisson loss) on log10(value ₹ Cr) + capability one-hot",
+  "training_data": [
+    {
+      "name": "Prozorro lots (Ukraine public procurement, 2019-2023)",
+      "origin": "Prozorro public API; derived table by Thesis Institute, CC BY 4.0",
+      "url": "https://github.com/ThesisInstitute/procurement",
+      "rows": 92438,
+      "value_conversion": "UAH -> ₹ at the reference rate in app/market/fx.py"
+    }
+  ],
+  "metrics": {
+    "train_rows": 78268,
+    "test_rows": 14170,
+    "split": "time: train 2019-2021, test 2022+",
+    "poisson_deviance": 0.6907,
+    "poisson_deviance_baseline": 0.7008,
+    "mae": 1.0558,
+    "mae_baseline": 1.064,
+    "mean_bidders_test": 1.979
+  },
+  "learned_curves": {
+    "civil_works": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.547
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.729
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.768
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.765
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.765
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.792
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.506
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.506
+      }
+    ],
+    "electrical": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.631
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.478
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.356
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.361
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.369
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.369
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.369
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.369
+      }
+    ],
+    "signalling_control": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.652
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.675
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.492
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.496
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.505
+      }
+    ],
+    "instrumentation_sensors": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.239
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.248
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.26
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.181
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.188
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.188
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.188
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.188
+      }
+    ],
+    "ict_software": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.77
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.592
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.452
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.447
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.455
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.455
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.455
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.455
+      }
+    ],
+    "telecom_networks": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.465
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.428
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.304
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.299
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.307
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.307
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.307
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.307
+      }
+    ],
+    "mechanical_hvac_plumbing": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.549
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.511
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.428
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.423
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.431
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.431
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.431
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.431
+      }
+    ],
+    "industrial_machinery": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.652
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.675
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.492
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.496
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.505
+      }
+    ],
+    "structural_fabrication": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.652
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.675
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.492
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.496
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.505
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.505
+      }
+    ],
+    "consultancy_design": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.727
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.892
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.757
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 3.077
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 3.077
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 3.077
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 3.077
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 3.077
+      }
+    ],
+    "operation_maintenance": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.498
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.502
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.441
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.246
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.254
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.254
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.254
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.254
+      }
+    ],
+    "vehicles_equipment": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.294
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.377
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.248
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.213
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.234
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.234
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.234
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.234
+      }
+    ],
+    "medical_lab": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.21
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.062
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.093
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.093
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.129
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.129
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.129
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.129
+      }
+    ],
+    "other_goods_services": [
+      {
+        "value_inr_cr": 0.1,
+        "expected_bidders": 2.704
+      },
+      {
+        "value_inr_cr": 0.3,
+        "expected_bidders": 2.761
+      },
+      {
+        "value_inr_cr": 1,
+        "expected_bidders": 2.501
+      },
+      {
+        "value_inr_cr": 3,
+        "expected_bidders": 2.601
+      },
+      {
+        "value_inr_cr": 10,
+        "expected_bidders": 2.594
+      },
+      {
+        "value_inr_cr": 30,
+        "expected_bidders": 2.652
+      },
+      {
+        "value_inr_cr": 100,
+        "expected_bidders": 2.652
+      },
+      {
+        "value_inr_cr": 300,
+        "expected_bidders": 2.652
+      }
+    ]
+  },
+  "limitations": [
+    "Learned on Ukrainian open tenders; used as a relative indicator between scenarios, not a forecast of Indian bidder counts. Recalibrate with CPPP bid-opening data.",
+    "Lots in the data carry one CPV division, so the model has no notion of bundling; the bundling penalty comes from real supplier co-capability evidence instead.",
+    "Observational data: larger lots in this data attract slightly more bidders; that is a correlation (buyers, procedures and markets differ), not a causal effect of lot size."
+  ]
+}

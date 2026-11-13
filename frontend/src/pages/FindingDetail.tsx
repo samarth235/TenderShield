@@ -32,6 +32,7 @@ import {
   StatusBadge,
   Switch,
   useToast,
+  openDoc,
 } from "../components/ui";
 import { CATEGORY_LABEL, FAMILY_LABEL, fmtDateTime, humanize, levelColor, vendorLetter } from "../lib/format";
 import { isNotLoaded, useFinding } from "../lib/hooks";
@@ -41,7 +42,7 @@ const THRESHOLDS = [0.45, 0.9];
 function SourceChip({ src }: { src: EvidenceSource }) {
   if ((src.kind === "document" || src.kind === "tender_clause") && src.document_id)
     return (
-      <a className="source-chip" href={api.documentUrl(src.document_id, src.page)} target="_blank" rel="noreferrer">
+      <a className="source-chip" href={api.documentUrl(src.document_id, src.page)} onClick={openDoc} target="_blank" rel="noreferrer">
         {src.filename ?? src.document_id}
         {src.page ? ` · p.${src.page}` : ""}
         {src.clause ? ` · cl.${src.clause}` : ""}
